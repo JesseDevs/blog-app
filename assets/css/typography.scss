@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+	--size-xs: clamp(10.24px, 0.26vw + 9.22px, 13.16px);
+	--size-sm: clamp(12.8px, 0.32vw + 11.52px, 17.2px);
+	--size-base: clamp(16px, 0.4vw + 14.4px, 19px);
+	--size-md: clamp(20px, 0.5vw + 18px, 23.75px);
+	--size-lg: clamp(25px, 0.63vw + 22.5px, 29.69px);
+	--size-xl: clamp(31.25px, 0.78vw + 28.13px, 37.11px);
+	--size-xxl: clamp(39.06px, 0.98vw + 35.16px, 46.39px);
+	--size-xxxl: clamp(48.83px, 1.22vw + 43.95px, 57.98px);
+}
+
+.logo {
+	font-family: 'Roboto Slab', serif;
+	font-weight: 800;
+}
+
+.level-five-voice {
+	font-size: var(--size-xxxl);
+	text-transform: uppercase;
+	font-weight: 800;
+	letter-spacing: -.1px;
+}
+
+.level-four-voice {
+	font-size: var(--size-xxl);
+	font-weight: 700;
+}
+
+.level-three-voice {
+	font-size: var(--size-xl);
+}
+
+.level-two-voice {
+	font-size: var(--size-lg);
+}
+
+.level-one-voice {
+	font-size: var(--size-md);
+	font-weight: 400;
+}
+
+.base-voice,
+p,
+li,
+a,
+button {
+	font-size: var(--size-base)
+}
+
+small,
+.small-voice {
+	font-size: var(--size-sm);
+}
+
+strong {
+	font-weight: bolder;
+}
+
+.tiny-voice {
+	font-size: var(--size-xs);
+}
+
+:is(.calm-voice, p, li) em {
+	font-style: italic;
+}
+
+:is(.calm-voice, p, li) strong {
+	font-weight: 700;
+}
