@@ -1,9 +1,14 @@
 <template>
-	<Teleport to="site-footer">
-		<glass-container @click="handleModalContainerClick" :class="`${ui.menuClass}`">
-			<ModalContent />
-		</glass-container>
-	</Teleport>
+	<ClientOnly>
+		<Teleport to="site-footer">
+			<glass-container
+				@click="handleModalContainerClick"
+				:class="`${ui.menuClass}`"
+			>
+				<ModalContent />
+			</glass-container>
+		</Teleport>
+	</ClientOnly>
 </template>
 
 <script setup>
@@ -11,10 +16,11 @@
 	const ui = useInterfaceService();
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	glass-container {
 		height: calc(100% - 46px);
 		z-index: 100;
+		display: block;
 		width: 100%;
 		background: var(--color-black-80);
 		transition: opacity 0.8s ease;

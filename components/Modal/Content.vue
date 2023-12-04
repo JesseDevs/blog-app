@@ -2,7 +2,7 @@
 	<modal-content>
 		<nav>
 			<div class="modal-top">
-				<NuxtLink to="/register" @click="ui.closeMenu"> Log in </NuxtLink>
+				<NuxtLink to="/signin" @click="ui.closeMenu"> Log in </NuxtLink>
 				<button
 					class="simple-button"
 					@click="ui.toggleMainMenu"
@@ -17,9 +17,10 @@
 					<p>Change palette</p>
 				</button>
 			</div>
+			<div v-if="user">{{ user.email }}</div>
 			<div class="modal-footer">
 				<a class="small-voice" href="/guide/about"> About</a>
-				<a class="small-voice" href="/guide/legal"> Legal</a>
+				<a class="small-voice" href="/guide/terms">Terms of Service</a>
 				<a class="small-voice" href="/guide/privacy"> Privacy</a>
 			</div>
 		</nav>
@@ -29,6 +30,10 @@
 <script setup>
 	import { useInterfaceService } from '~/services/InterfaceService';
 	const ui = useInterfaceService();
+
+	const client = useSupabaseClient();
+	const router = useRouter();
+	const user = useSupabaseUser();
 </script>
 
 <style lang="scss" scoped>
