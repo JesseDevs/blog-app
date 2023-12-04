@@ -91,12 +91,19 @@
 					<p class="slab level-three-voice">9. Contact Information</p>
 					<p>
 						If you have any questions about this privacy policy, you can
-						contact us at [Your Contact Email]. Thank you for using [Your Blog
-						Site]!
+						contact us at
+						<a
+							class="underline"
+							href="
+EchoTheBlog@gmail.com?subject=Hello"
+						>
+							EchoTheBlog@gmail.com</a
+						>. Thank you for using
+						<strong><span class="slab">Echo</span></strong
+						>!
 					</p>
 				</div>
-				<p class="big-slab"></p
-			></text-module>
+			</text-module>
 		</inner-column>
 	</section>
 </template>
@@ -109,6 +116,10 @@
 		flex-direction: column;
 		gap: 3.5rem;
 		width: 100%;
+
+		.underline {
+			text-decoration: underline;
+		}
 		div {
 			display: flex;
 			flex-direction: column;
