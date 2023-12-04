@@ -25,6 +25,7 @@
 	--black: rgb(25 25 25);
 
 	--faded-text: rgb(165 165 165);
+	--light-fade: rgb(239, 239, 239);
 	--button-text: #000000;
 	--button-bg: #00cf35;
 
@@ -88,6 +89,10 @@ body {
 	line-height: 1.4;
 	font-style: normal;
 	font-size: var(--size-base);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1;
 }
 
 main {
