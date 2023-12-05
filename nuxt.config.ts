@@ -5,7 +5,13 @@ export default defineNuxtConfig({
 	app: {
 		pageTransition: { name: 'layout', mode: 'out-in' },
 	},
-	modules: ['nuxt-icon', '@pinia/nuxt', '@vueuse/nuxt', '@nuxt/image-edge', '@nuxtjs/supabase'],
+	modules: [
+		'nuxt-icon',
+		'@pinia/nuxt',
+		'@vueuse/nuxt',
+		'@nuxt/image-edge',
+		'@nuxtjs/supabase',
+	],
 	vue: {
 		compilerOptions: {
 			isCustomElement: (tag) => tag.includes('-'),

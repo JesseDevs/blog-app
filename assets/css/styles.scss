@@ -15,6 +15,19 @@
 	cursor: pointer;
 }
 
+.outline-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 150px;
+	border: 2px solid var(--light-fade);
+	padding: 8px 16px;
+	border-radius: 999px;
+	font-weight: 500;
+	transition: background-color .2s ease-in-out;
+}
+
 text-content {
 	display: flex;
 	flex-direction: column;
