@@ -22,10 +22,15 @@ export const useInterfaceService = defineStore('interface', () => {
 		},
 	});
 
+	const goBack = () => {
+		router.go(-1);
+	};
+
 	return {
 		mainMenuOpen,
 		menuClass,
 		toggleMainMenu,
 		closeMenu,
+		goBack,
 	};
 });
