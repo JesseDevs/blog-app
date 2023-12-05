@@ -52,88 +52,86 @@
 </script>
 
 <template>
-	<section class="register">
-		<inner-column>
-			<signup-page>
-				<div>
-					<h2 class="level-three-voice">Sign Up</h2>
-					<p class="sub-head">Get started with an account</p>
+	<GeneralContainer class="register">
+		<signup-page>
+			<div>
+				<h2 class="level-three-voice">Sign Up</h2>
+				<p class="sub-head">Get started with an account</p>
+			</div>
+			<form @submit.prevent="register()">
+				<div class="field">
+					<label for="email">Email<span>*</span></label>
+					<input
+						id="email"
+						required
+						type="email"
+						placeholder="Email"
+						v-model="credentials.email"
+						aria-label="Email"
+					/>
 				</div>
-				<form @submit.prevent="register()">
-					<div class="field">
-						<label for="email">Email<span>*</span></label>
-						<input
-							id="email"
-							required
-							type="email"
-							placeholder="Email"
-							v-model="credentials.email"
-							aria-label="Email"
-						/>
-					</div>
-					<div class="field">
-						<label for="fullName">Full Name</label>
-						<input
-							type="text"
-							id="fullName"
-							placeholder="Full Name"
-							v-model="credentials.fullName"
-							aria-label="Full Name"
-						/>
-					</div>
-					<div class="field">
-						<label for="username">Username</label>
-						<input
-							type="text"
-							id="username"
-							placeholder="Username"
-							v-model="credentials.username"
-							aria-label="Username"
-						/>
-					</div>
-					<div class="field">
-						<label for="password">Password<span>*</span></label>
-						<input
-							id="password"
-							required
-							:type="showPassword ? 'text' : 'password'"
-							placeholder="Enter your password"
-							v-model="credentials.password"
-							autocomplete="off"
-							aria-label="Password"
-						/>
-						<button class="showBTN" @click.prevent="togglePassword">
-							<Icon
-								:name="`${showPassword ? 'mi:eye' : 'mi:eye-off'}`"
-								color="rgb(128, 127, 127)"
-								size="28"
-							/>
-						</button>
-					</div>
-					<p class="form-support small-voice">
-						By signing up, you agree to the
-						<a class="small-voice" href="/guide/terms">Terms of Service</a>
-						and
-						<a class="small-voice" href="/guide/privacy">Privacy Policy</a>
-					</p>
-					<button class="button-filled" type="submit">Submit</button>
-				</form>
-				<div class="error" v-if="credentials.errorMessage">
-					<p>{{ credentials.errorMessage }}</p>
+				<div class="field">
+					<label for="fullName">Full Name</label>
+					<input
+						type="text"
+						id="fullName"
+						placeholder="Full Name"
+						v-model="credentials.fullName"
+						aria-label="Full Name"
+					/>
 				</div>
-				<glass-container
-					v-if="credentials.successMessage && isModalOpen"
-					:class="{ success: isModalOpen }"
-				>
-					<h3 class="level-two-voice">Confirmation</h3>
-					<button @click="closeModal">Close</button>
-					<p>{{ credentials.successMessage }}</p>
-				</glass-container>
+				<div class="field">
+					<label for="username">Username</label>
+					<input
+						type="text"
+						id="username"
+						placeholder="Username"
+						v-model="credentials.username"
+						aria-label="Username"
+					/>
+				</div>
+				<div class="field">
+					<label for="password">Password<span>*</span></label>
+					<input
+						id="password"
+						required
+						:type="showPassword ? 'text' : 'password'"
+						placeholder="Enter your password"
+						v-model="credentials.password"
+						autocomplete="off"
+						aria-label="Password"
+					/>
+					<button class="showBTN" @click.prevent="togglePassword">
+						<Icon
+							:name="`${showPassword ? 'mi:eye' : 'mi:eye-off'}`"
+							color="rgb(128, 127, 127)"
+							size="28"
+						/>
+					</button>
+				</div>
+				<p class="form-support small-voice">
+					By signing up, you agree to the
+					<a class="small-voice" href="/settings/terms">Terms of Service</a>
+					and
+					<a class="small-voice" href="/settings/privacy">Privacy Policy</a>
+				</p>
+				<button class="button-filled" type="submit">Submit</button>
+			</form>
+			<div class="error" v-if="credentials.errorMessage">
+				<p>{{ credentials.errorMessage }}</p>
+			</div>
+			<glass-container
+				v-if="credentials.successMessage && isModalOpen"
+				:class="{ success: isModalOpen }"
+			>
+				<h3 class="level-two-voice">Confirmation</h3>
+				<button @click="closeModal">Close</button>
+				<p>{{ credentials.successMessage }}</p>
+			</glass-container>
 
-				<div v-if="user">{{ user.email }}</div>
-			</signup-page>
-		</inner-column>
-	</section>
+			<div v-if="user">{{ user.email }}</div>
+		</signup-page>
+	</GeneralContainer>
 </template>
 
 <style lang="scss" scoped>
@@ -205,6 +203,11 @@
 		cursor: pointer;
 	}
 
+	glass-container.success {
+		opacity: 1;
+		pointer-events: auto;
+		transition: opacity 0.01s ease;
+	}
 	.success {
 		color: green;
 	}
