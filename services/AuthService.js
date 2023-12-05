@@ -1,94 +1,146 @@
 import { defineStore } from 'pinia';
 
 export const useAuthService = defineStore('auth', () => {
-	const supabase = useSupabaseClient();
-	const supaUser = useSupabaseUser();
-
+	const client = useSupabaseClient();
 	const router = useRouter();
-	const signedIn = computed(() => user.value);
-	const user = computed(() => supaUser.value);
-	// Function to handle user sign-up with email and password
-	async function signUpWithEmail(form) {
+	const user = useSupabaseUser();
+	const signedIn = computed(() => user.value !== null);
+	const userProfile = ref(null);
+
+	const updateProfileIfNeeded = async () => {
+		if (user.value) {
+			const { data, error } = await client
+				.from('profiles')
+				.select()
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				userProfile.value = data;
+			}
+		}
+	};
+
+	onMounted(async () => {
+		updateProfileIfNeeded();
+	});
+
+	watchEffect(async () => {
+		updateProfileIfNeeded();
+	});
+
+	const fetchUserProfile = async (user) => {
 		try {
-			if (!form.email || !form.password) {
-				throw new Error('Email and password are required.');
+			if (user.value) {
+				const { data, error } = await client
+					.from('profiles')
+					.select()
+					.eq('id', user.value.id)
+					.single();
+
+				if (error) {
+					console.error('Error fetching user profile:', error.message);
+				} else {
+					return data;
+				}
 			}
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+		}
+		return null; // Return null if there's an error or no user value
+	};
 
-			// Sign up the user with Supabase Auth
-			const { NewUser, error: authError } = await supabase.auth.signUp({
-				email: form.email,
-				password: form.password,
-			});
+	const credentials = reactive({
+		fullName: '',
+		username: '',
+		email: '',
+		password: '',
+		successMessage: '',
+		errorMessage: '',
+	});
 
-			if (authError) {
-				throw authError;
-			}
-
-			console.log(NewUser);
-
-			// Add user details to the custom 'users' table in Supabase database
-			const { data, error: dbError } = await supabase.from('users').upsert([
-				{
-					auth_id: user.id,
-					email: form.email,
-					username: form.username,
+	const register = async () => {
+		const { fullName, username, email, password } = credentials;
+		const { error } = await client.auth.signUp({
+			email,
+			password,
+			options: {
+				data: {
+					full_name: fullName,
+					username,
+					email,
 				},
-			]);
+				emailRedirectTo: 'http://localhost:3000/login',
+			},
+		});
 
-			if (dbError) {
-				throw dbError;
+		if (error) {
+			if (error.message.includes('unique constraint')) {
+				credentials.errorMessage = 'Email or username already exists.';
+			} else {
+				credentials.errorMessage = 'Registration failed. Please try again.';
+			}
+			console.error(error);
+			return;
+		}
+		isModalOpen.value = true;
+	};
+
+	async function signInWithEmail() {
+		const { error } = await client.auth.signInWithPassword({
+			email: credentials.email,
+			password: credentials.password,
+		});
+
+		if (!error) {
+			router.push('/');
+		} else {
+			console.error(error);
+		}
+	}
+
+	const signOutUser = async () => {
+		try {
+			const { error } = await client.auth.signOut();
+
+			if (error) {
+				throw error;
 			}
 
-			form.successMessage = `Check your email and confirm you're real`;
-		} catch (error) {
-			console.error('Sign-up error:', error);
-			form.errorMessage = error.message;
-		}
-	}
-
-	async function signInWithEmail(form) {
-		try {
-			const { data, error } = await supabase.auth.signInWithPassword({
-				email: form.email,
-				password: form.password,
-			});
-			if (error) throw error;
-			return true; // for contextual redirect
-		} catch (error) {
-			console.error('Sign-up error:', error);
-			form.errorMessage = error.message;
-		}
-	}
-
-	// trigger a redirect
-	// async function handleSignInForm(form) {
-	// 	try {
-	// 		const success = await signInWithEmail(form);
-	// 		if (success) {
-	// 			// Redirect the user to the desired page
-	// 			router.push('/dashboard');
-	// 		}
-	// 	} catch (error) {
-	// 		// Handle error or display error message
-	// 	}
-	// }
-
-	async function signOut() {
-		try {
-			const { error } = await supabase.auth.signOut();
-			if (error) throw error;
 			console.log('User signed out successfully');
+			userProfile.value = null;
+			ui.closeMenu();
 			router.push('/');
 		} catch (error) {
-			console.error(error.message);
+			console.error('Error signing out user:', error.message);
 		}
-	}
+	};
+
+	const isModalOpen = ref(false);
+	const closeModal = () => {
+		isModalOpen.value = false;
+	};
+
+	const showPassword = ref(false);
+	const togglePassword = () => {
+		if (credentials.password) {
+			showPassword.value = !showPassword.value;
+		}
+	};
 
 	return {
 		user,
-
-		signUpWithEmail,
+		signedIn,
 		signInWithEmail,
-		signOut,
+		signOutUser,
+		userProfile,
+		credentials,
+		isModalOpen,
+		register,
+		closeModal,
+		showPassword,
+		togglePassword,
 	};
 });
