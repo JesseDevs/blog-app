@@ -2,9 +2,36 @@
 	<modal-content>
 		<nav>
 			<div class="modal-top">
-				<NuxtLink to="/signin" @click="ui.closeMenu"> Log in </NuxtLink>
+				<div class="modal-BTNs">
+					<NuxtLink
+						v-if="!user"
+						to="/login"
+						@click="ui.closeMenu"
+						aria-label="Go to login page"
+					>
+						Log in
+					</NuxtLink>
+
+					<NuxtLink
+						v-if="userProfile && user"
+						:to="`/${userProfile.username}/dashboard`"
+						@click="ui.closeMenu"
+						aria-label="Go to profile"
+					>
+						Profile
+					</NuxtLink>
+
+					<button
+						v-if="user"
+						class="button-filled"
+						@click="signOutUser()"
+						aria-label="signout user"
+					>
+						<span>Sign Out</span>
+					</button>
+				</div>
 				<button
-					class="simple-button"
+					class="palette-button"
 					@click="ui.toggleMainMenu"
 					aria-label="change palette"
 				>
@@ -17,12 +44,7 @@
 					<p>Change palette</p>
 				</button>
 			</div>
-			<div v-if="user">{{ user.email }}</div>
-			<div class="modal-footer">
-				<a class="small-voice" href="/guide/about"> About</a>
-				<a class="small-voice" href="/guide/terms">Terms of Service</a>
-				<a class="small-voice" href="/guide/privacy"> Privacy</a>
-			</div>
+			<ModalFooter />
 		</nav>
 	</modal-content>
 </template>
@@ -34,6 +56,40 @@
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
+
+	const userProfile = ref(null);
+	onMounted(async () => {
+		if (user.value) {
+			const { data, error } = await client
+				.from('profiles')
+				.select()
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				userProfile.value = data;
+			}
+		}
+	});
+
+	const signOutUser = async () => {
+		try {
+			const { error } = await client.auth.signOut();
+
+			if (error) {
+				throw error;
+			}
+
+			console.log('User signed out successfully');
+			userProfile.value = null;
+			ui.closeMenu();
+			router.push('/');
+		} catch (error) {
+			console.error('Error signing out user:', error.message);
+		}
+	};
 </script>
 
 <style lang="scss" scoped>
@@ -73,9 +129,15 @@
 	}
 
 	.modal-top {
+		.modal-BTNs {
+			padding: 16px;
+			display: flex;
+
+			flex-direction: column;
+			gap: 16px;
+		}
 		a {
 			border-radius: 3px;
-			margin: 16px;
 			height: 48px;
 			padding: 6px 15px;
 			font-weight: 600;
@@ -87,7 +149,17 @@
 			display: flex;
 		}
 
-		button {
+		.button-filled {
+			color: var(--button-text);
+			background-color: var(--button-bg);
+
+			width: 100%;
+			appearance: none;
+			border: none;
+			outline: none;
+		}
+
+		.palette-button {
 			padding: 8px 16px;
 			display: flex;
 			align-items: center;
@@ -98,21 +170,12 @@
 			outline: none;
 			color: rgba(var(--white-on-dark), 0.65);
 			cursor: pointer;
+			transition: background-color 0.2s ease;
 
 			&:hover {
 				background-color: rgba(var(--white-on-dark), 0.07);
 			}
 		}
 	}
-
-	.modal-footer {
-		padding: 1rem 1rem;
-		flex-wrap: wrap;
-		line-height: 1.52;
-		display: flex;
-
-		a {
-			padding: 0px 10px;
-		}
-	}
 </style>
+~/stores/InterfaceService
