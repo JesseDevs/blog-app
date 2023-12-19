@@ -32,7 +32,11 @@
 							autocomplete="off"
 							aria-label="Password"
 						/>
-						<button class="showBTN" @click.prevent="togglePassword">
+						<button
+							class="showBTN"
+							type="button"
+							@click.prevent="togglePassword"
+						>
 							<Icon
 								:name="`${showPassword ? 'mi:eye' : 'mi:eye-off'}`"
 								color="rgb(128, 127, 127)"
@@ -68,6 +72,11 @@
 			password: credentials.password,
 		});
 
+		if (error) {
+			console.log(error);
+			alert(error);
+		}
+
 		if (!error) {
 			window.location.href = '/';
 		} else {
@@ -87,6 +96,7 @@
 	section {
 		height: 100vh;
 	}
+
 	login-page {
 		display: flex;
 		flex-direction: column;
@@ -99,6 +109,7 @@
 
 		p.form-support {
 			margin-bottom: 30px;
+
 			a {
 				font-size: inherit;
 				text-decoration: underline;
@@ -127,9 +138,11 @@
 					background-color: var(--light-fade);
 					border: none;
 					outline: none;
+
 					&::placeholder {
 						color: rgb(101, 101, 101);
 					}
+
 					&:focus {
 						outline: 1px solid rgb(128, 127, 127);
 					}
