@@ -16,7 +16,7 @@
 
 				<NuxtLink to="/" class="logo" @click="ui.closeMenu">
 					E
-					<Icon name="bi:soundwave" color="white" />
+					<Icon name="solar:volume-loud-line-duotone" size="21" color="white" />
 				</NuxtLink>
 
 				<div class="placeholder"></div>
@@ -36,7 +36,7 @@
 		top: 0;
 		width: 100%;
 		z-index: 20;
-		background-color: var(--background);
+		background-color: transparent;
 
 		inner-column {
 			padding: 3px 0.5rem;
@@ -59,12 +59,10 @@
 			svg {
 				position: absolute;
 				bottom: 0%;
-				right: 0;
-				top: 0;
-				left: -2px;
-				width: 45px;
-				height: 45px;
-				opacity: 0.3;
+				top: calc(50% + 3px);
+				left: calc(50% + 20px);
+				transform: translate(-50%, -50%);
+				opacity: 0.7;
 			}
 		}
 

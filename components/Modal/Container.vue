@@ -14,6 +14,12 @@
 <script setup>
 	import { useInterfaceService } from '~/services/InterfaceService';
 	const ui = useInterfaceService();
+
+	const handleModalContainerClick = (event) => {
+		if (!event.target.closest('modal-content')) {
+			ui.closeMenu();
+		}
+	};
 </script>
 
 <style lang="scss">

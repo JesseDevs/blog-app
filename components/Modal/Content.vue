@@ -14,7 +14,7 @@
 
 					<NuxtLink
 						v-if="userProfile && user"
-						:to="`/${userProfile.username}/dashboard`"
+						:to="`/${userProfile.username}`"
 						@click="ui.closeMenu"
 						aria-label="Go to profile"
 					>
@@ -111,6 +111,7 @@
 		bottom: 0;
 		right: 0;
 		left: -100%;
+
 		nav {
 			display: flex;
 			flex-direction: column;
@@ -136,6 +137,7 @@
 			flex-direction: column;
 			gap: 16px;
 		}
+
 		a {
 			border-radius: 3px;
 			height: 48px;
@@ -178,4 +180,3 @@
 		}
 	}
 </style>
-~/stores/InterfaceService

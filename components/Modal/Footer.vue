@@ -3,6 +3,12 @@
 		<a class="small-voice" href="/settings/about"> About</a>
 		<a class="small-voice" href="/settings/terms">Terms of Service</a>
 		<a class="small-voice" href="/settings/privacy"> Privacy</a>
+		<a class="small-voice" target="_blank" href="https://github.com/JesseDevs">
+			JesseDevs</a
+		>
+		<a class="small-voice" target="_blank" href="https://jessedevs.net/">
+			Who is Jesse?</a
+		>
 	</div>
 </template>
 
