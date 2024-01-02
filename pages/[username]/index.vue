@@ -65,8 +65,8 @@
 	const userProfile = ref(null);
 	const formattedDate = ref('');
 	const formatDate = () => {
-		if (user.value && user.value.identities && user.value.identities.length > 0) {
-			const created_at_timestamp = user.value.identities[0].created_at;
+		if (user?.value && user?.value.identities && user?.value.identities.length > 0) {
+			const created_at_timestamp = user?.value.identities[0].created_at;
 			const created_at_datetime = new Date(created_at_timestamp);
 			const options = { year: 'numeric', month: 'long' };
 			formattedDate.value = created_at_datetime.toLocaleDateString(
@@ -97,6 +97,22 @@
 			}
 		}
 	});
+
+	const fetchPosts = async () => {
+		if (!userProfile.value) return;
+
+		const { data, error } = await supabase
+			.from('posts')
+			.select('*')
+			.eq('user_id', userProfile.value.id); // Assuming user_id is the column that stores the user's ID
+
+		if (error) {
+			console.error('Error fetching posts:', error);
+			return;
+		}
+
+		posts.value = data;
+	};
 </script>
 
 <style lang="scss" scoped>
