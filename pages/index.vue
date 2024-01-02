@@ -1,36 +1,62 @@
 <template>
-	<section>
-		<inner-column>
-			<landing-block>
-				<picture>
-					<source srcset="images/tilt-1.jpeg" media="(min-width: 701px)" />
-
-					<img src="images/unsplash-1.jpg" alt="k" />
-				</picture>
-				<title-block>
-					<h1 class="logo level-five-voice">
-						<span>The Blog Site</span>
-						ECHO
-					</h1>
-				</title-block>
-				<text-content>
-					<p class="level-two-voice">
-						What goes around,<br />
-						comes around...
-					</p>
-					<NuxtLink v-if="!user" to="/register" aria-label="Go to login page">
-						Create an Echo
-					</NuxtLink>
-					<!-- <NuxtLink v-else to="/create" aria-label="Go to login page">
-						Create an Echo
-					</NuxtLink> -->
-				</text-content>
-			</landing-block>
-		</inner-column>
-	</section>
+	<div>
+		<section>
+			<inner-column>
+				<landing-block>
+					<picture>
+						<source srcset="images/tilt-1.jpeg" media="(min-width: 701px)" />
+						<img src="images/unsplash-1.jpg" alt="k" />
+					</picture>
+					<title-block>
+						<h1 class="logo level-five-voice">
+							<span>The Blog Site</span>
+							ECHO
+						</h1>
+					</title-block>
+					<text-content>
+						<p class="level-two-voice">
+							What goes around,<br />
+							comes around...
+						</p>
+						<a v-if="!user" href="/register" aria-label="Go to login page">
+							Log In
+						</a>
+						<NuxtLink
+							v-else
+							:to="`/${userProfile?.username}/Create/Post`"
+							aria-label="Go to login page"
+						>
+							Create an Echo
+						</NuxtLink>
+					</text-content>
+				</landing-block>
+			</inner-column>
+		</section>
+		<SpaceFiller />
+	</div>
 </template>
 
-<script setup></script>
+<script setup>
+	const client = useSupabaseClient();
+	const router = useRouter();
+	const user = useSupabaseUser();
+	const userProfile = ref(null);
+	onMounted(async () => {
+		if (user.value) {
+			const { data, error } = await client
+				.from('profiles')
+				.select()
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				userProfile.value = data;
+			}
+		}
+	});
+</script>
 
 <style lang="scss" scoped>
 	landing-block {
@@ -67,6 +93,8 @@
 		text-content {
 			padding-top: 100px;
 			padding-bottom: 100px;
+			max-width: 360px;
+			margin: 0 auto;
 			p {
 				line-height: 1;
 				text-align: center;

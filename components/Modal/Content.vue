@@ -21,6 +21,31 @@
 						Profile
 					</NuxtLink>
 
+					<NuxtLink
+						v-if="userProfile && user"
+						:to="`/${userProfile.username}/Create/Post`"
+						@click="ui.closeMenu"
+						aria-label="Go to profile"
+					>
+						Create an Echo
+					</NuxtLink>
+				</div>
+			</div>
+			<div class="modal-bottom">
+				<div class="modal-BTNs">
+					<button
+						class="palette-button"
+						@click="ui.toggleMainMenu"
+						aria-label="change palette"
+					>
+						<Icon
+							name="material-symbols:palette"
+							size="21"
+							color="rgba(var(--white-on-dark), 0.65)"
+						/>
+
+						<p>Change palette</p>
+					</button>
 					<button
 						v-if="user"
 						class="button-filled"
@@ -30,22 +55,9 @@
 						<span>Sign Out</span>
 					</button>
 				</div>
-				<button
-					class="palette-button"
-					@click="ui.toggleMainMenu"
-					aria-label="change palette"
-				>
-					<Icon
-						name="material-symbols:palette"
-						size="21"
-						color="rgba(var(--white-on-dark), 0.65)"
-					/>
-
-					<p>Change palette</p>
-				</button>
 			</div>
-			<ModalFooter />
 		</nav>
+		<ModalFooter />
 	</modal-content>
 </template>
 
@@ -129,15 +141,12 @@
 		}
 	}
 
-	.modal-top {
-		.modal-BTNs {
-			padding: 16px;
-			display: flex;
+	.modal-BTNs {
+		padding: 16px;
+		display: flex;
 
-			flex-direction: column;
-			gap: 16px;
-		}
-
+		flex-direction: column;
+		gap: 16px;
 		a {
 			border-radius: 3px;
 			height: 48px;
@@ -160,23 +169,23 @@
 			border: none;
 			outline: none;
 		}
+	}
 
-		.palette-button {
-			padding: 8px 16px;
-			display: flex;
-			align-items: center;
-			gap: 8px;
-			width: 100%;
-			background-color: transparent;
-			border: none;
-			outline: none;
-			color: rgba(var(--white-on-dark), 0.65);
-			cursor: pointer;
-			transition: background-color 0.2s ease;
+	.palette-button {
+		padding: 8px 16px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		background-color: transparent;
+		border: none;
+		outline: none;
+		color: rgba(var(--white-on-dark), 0.65);
+		cursor: pointer;
+		transition: background-color 0.2s ease;
 
-			&:hover {
-				background-color: rgba(var(--white-on-dark), 0.07);
-			}
+		&:hover {
+			background-color: rgba(var(--white-on-dark), 0.07);
 		}
 	}
 </style>

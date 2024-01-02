@@ -16,7 +16,13 @@
 
 				<NuxtLink to="/" class="logo" @click="ui.closeMenu">
 					E
-					<Icon name="solar:volume-loud-line-duotone" size="21" color="white" />
+					<Icon name="arcticons:waves" size="30" color="white" />
+					<Icon
+						class="speaker"
+						name="solar:volume-loud-line-duotone"
+						size="30"
+						color="white"
+					/>
 				</NuxtLink>
 
 				<div class="placeholder"></div>
@@ -36,7 +42,8 @@
 		top: 0;
 		width: 100%;
 		z-index: 20;
-		background-color: transparent;
+		background-color: rgba(4, 5, 6, 0.75);
+		backdrop-filter: blur(6px);
 
 		inner-column {
 			padding: 3px 0.5rem;
@@ -52,17 +59,28 @@
 		.logo {
 			width: 40px;
 			height: 40px;
-			line-height: 1.4;
+			line-height: 1.2;
 			text-align: center;
 			font-size: var(--size-xl);
 			position: relative;
+
 			svg {
 				position: absolute;
 				bottom: 0%;
-				top: calc(50% + 3px);
-				left: calc(50% + 20px);
+				top: 50%;
+				left: calc(50% + 10px);
 				transform: translate(-50%, -50%);
-				opacity: 0.7;
+				opacity: 0.5;
+			}
+
+			svg:not(.speaker) {
+				stroke-width: 3px;
+			}
+			.speaker {
+				left: calc(50% + 20px);
+			}
+			.speaker path:first-of-type {
+				display: none;
 			}
 		}
 

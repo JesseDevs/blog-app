@@ -21,6 +21,14 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
+
+		main {
+			min-height: 100vh;
+
+			section {
+				overflow-y: hidden;
+			}
+		}
 	}
 
 	div.space-holder {

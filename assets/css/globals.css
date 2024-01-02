@@ -27,8 +27,9 @@
 	--faded-text: rgb(165 165 165);
 	--light-fade: rgb(239, 239, 239);
 	--button-text: #000000;
-	--button-bg: #00cf35;
+	--button-bg: rgb(0, 207, 53);
 
+	--button-bg-rgb: 0 207 53;
 	--color-primary-hsl: 0, 0%, 5%;
 	--color-primary: #0d0d0d;
 	--color-primary-10: hsla(var(--color-primary-hsl), .1);
