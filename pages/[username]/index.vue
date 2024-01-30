@@ -43,20 +43,7 @@
 		loading.value = false;
 	}, 1000);
 
-	const posts = [
-		{
-			id: 1,
-			title: 'Post 1',
-			content:
-				'Content Preview- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.',
-		},
-		{
-			id: 2,
-			title: 'Post 2',
-			content:
-				'Content Preview- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in.',
-		},
-	];
+	const posts = ref([]);
 
 	const router = useRouter();
 	const client = useSupabaseClient();
@@ -101,11 +88,10 @@
 	const fetchPosts = async () => {
 		if (!userProfile.value) return;
 
-		const { data, error } = await supabase
+		const { data, error } = await client
 			.from('posts')
 			.select('*')
-			.eq('user_id', userProfile.value.id); // Assuming user_id is the column that stores the user's ID
-
+			.eq('user_id', userProfile.value.id);
 		if (error) {
 			console.error('Error fetching posts:', error);
 			return;
@@ -113,11 +99,29 @@
 
 		posts.value = data;
 	};
+
+	onMounted(async () => {
+		if (user.value) {
+			const { data, error } = await client
+				.from('profiles')
+				.select()
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				userProfile.value = data;
+				// Fetch posts after setting the userProfile
+				fetchPosts();
+			}
+		}
+	});
 </script>
 
 <style lang="scss" scoped>
 	section {
-		height: 100vh;
+		min-height: 100vh;
 
 		.loading-container {
 			display: grid;
