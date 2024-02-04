@@ -73,7 +73,6 @@
 			border-bottom: 1px solid rgb(46 46 46);
 			border-top: 1px solid rgb(46 46 46);
 			opacity: 0.4;
-			max-height: 600px;
 			overflow-y: hidden;
 		}
 

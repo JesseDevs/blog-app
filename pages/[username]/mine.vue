@@ -121,7 +121,7 @@ If the user id matches the id of the current user. Allow them to edit the profil
 				const { data, error } = await client
 					.from('posts')
 					.select('*')
-					.eq('belongs_to', userProfile.value.id)
+					.eq('user_id', userProfile.value.id)
 					.order('created_at', { ascending: false });
 
 				if (error) {

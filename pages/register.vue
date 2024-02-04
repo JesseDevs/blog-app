@@ -21,6 +21,7 @@
 					full_name: fullName,
 					username,
 					email,
+					likes: [],
 				},
 				emailRedirectTo: 'http://localhost:3000/',
 			},

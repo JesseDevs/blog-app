@@ -108,14 +108,12 @@
 		}
 	};
 
-	// https://naduzuobtmmhavkozjxf.supabase.co/storage/v1/object/public/post-images/44f449c0-6438-4b04-92c1-bb1c076b2b9f/kerer-2873
-
 	const addPost = async () => {
 		try {
 			const { path, filename } = await uploadImage(postData.value.image);
 			const { data, error } = await client.from('posts').insert([
 				{
-					user_id: user.value.id,
+					belongs_to: user.value.id,
 					header: postData.value.header,
 					content: postData.value.content,
 					date_created: new Date().toISOString().split('T')[0],

@@ -173,6 +173,7 @@
 
 	.palette-button {
 		padding: 8px 16px;
+		border-radius: 3px;
 		display: flex;
 		align-items: center;
 		gap: 8px;
