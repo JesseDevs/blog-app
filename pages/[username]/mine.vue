@@ -118,7 +118,7 @@ If the user id matches the id of the current user. Allow them to edit the profil
 	const fetchPosts = async () => {
 		try {
 			if (userProfile.value) {
-				const { data, error } = await client
+				const { data, error } = await supabase
 					.from('posts')
 					.select('*')
 					.eq('belongs_to', userProfile.value.id)
