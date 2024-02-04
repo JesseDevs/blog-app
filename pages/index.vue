@@ -5,7 +5,7 @@
 				<landing-block>
 					<picture>
 						<source srcset="images/tilt-1.jpeg" media="(min-width: 701px)" />
-						<img src="images/unsplash-1.jpg" alt="k" />
+						<img src="/images/unsplash-1.jpg" alt="k" />
 					</picture>
 					<title-block>
 						<h1 class="logo level-five-voice">
