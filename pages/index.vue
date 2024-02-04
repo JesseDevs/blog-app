@@ -4,7 +4,7 @@
 			<inner-column>
 				<landing-block>
 					<picture>
-						<source srcset="images/tilt-1.jpeg" media="(min-width: 701px)" />
+						<source srcset="/images/tilt-1.jpeg" media="(min-width: 701px)" />
 						<img src="/images/unsplash-1.jpg" alt="k" />
 					</picture>
 					<title-block>
