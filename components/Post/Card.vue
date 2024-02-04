@@ -29,11 +29,11 @@
 				</p>
 				<p class="reading-time faded">{{ readingTime(post.content) }}</p>
 			</card-details>
-			<button @click="likePost(post.id)" :class="{ liked: isPostLiked(post.id) }">
+			<!-- <button @click="likePost(post.id)" :class="{ liked: isPostLiked(post.id) }">
 				Like
 			</button>
 
-			<button @click="deletePost(post.id)">delete</button>
+			<button @click="deletePost(post.id)">delete</button> -->
 		</post-card>
 	</router-link>
 </template>
@@ -209,7 +209,7 @@
 
 		picture {
 			position: relative;
-
+			max-height: 125px;
 			border-radius: 5px;
 			img {
 				width: 125px;
