@@ -23,3 +23,11 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 -   pages
 -   services
 -   fix up nuxt.config
+
+## TO DO
+
+-   Add the ability to see other peoples post based on user name
+-   Add edit profile. Add a bio, birthday, and profile image. Change display name.
+-   Add an explore page or home that shows all post based on time
+-   Add detail routes for the post to see the whole thing.
+-   Add likes
