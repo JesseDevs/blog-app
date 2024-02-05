@@ -18,8 +18,9 @@
 							What goes around,<br />
 							comes around...
 						</p>
-						<a v-if="!user" href="/register" aria-label="Go to login page">
-							Log In
+
+						<a v-if="!user" href="/register" aria-label="Go to register page">
+							Sign Up
 						</a>
 						<NuxtLink
 							v-else

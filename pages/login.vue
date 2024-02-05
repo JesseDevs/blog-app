@@ -49,8 +49,17 @@
 
 				<p class="form-support small-voice">
 					Don't have an account?
-					<a href="/register">Sign Up</a>
+					<a class="custom-link" href="/register">Sign Up</a>
 				</p>
+				<!-- <p class="form-support small-voice">
+					<button
+						class="button-outline"
+						type="button"
+						@click.prevent="resetPassword"
+					>
+						Reset Password
+					</button>
+				</p> -->
 			</login-page>
 		</inner-column>
 	</section>
@@ -84,6 +93,28 @@
 		}
 	}
 
+	const resetPassword = async () => {
+		if (credentials.email) {
+			try {
+				const { error } = await client.auth.resetPasswordForEmail(
+					credentials.email,
+				);
+
+				if (error) {
+					console.error(error);
+					alert('Password reset failed. Please try again.');
+				} else {
+					alert('Password reset instructions sent to your email.');
+				}
+			} catch (error) {
+				console.error(error);
+				alert('An unexpected error occurred. Please try again.');
+			}
+		} else {
+			alert('Please enter your email before resetting the password.');
+		}
+	};
+
 	const showPassword = ref(false);
 	const togglePassword = () => {
 		if (credentials.password) {
@@ -110,9 +141,36 @@
 		p.form-support {
 			margin-bottom: 30px;
 
-			a {
+			.custom-link {
 				font-size: inherit;
+				position: relative;
+				display: inline-block;
 				text-decoration: underline;
+				transition: color 0.4s ease;
+				padding-left: 5px;
+				padding-right: 5px;
+
+				&:hover {
+					color: black;
+				}
+			}
+
+			.custom-link::before {
+				content: '';
+				position: absolute;
+				border-radius: 3px;
+				top: 0;
+				left: 0;
+				width: 0;
+				height: 100%;
+				background-color: var(--button-bg);
+				transition: width 0.3s ease;
+				// transition-delay: 0.1s;
+				z-index: -1;
+			}
+
+			.custom-link:hover::before {
+				width: 100%;
 			}
 		}
 

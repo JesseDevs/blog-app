@@ -1,14 +1,12 @@
 <template>
-	<router-link
-		v-if="userProfile && user"
-		:to="`${userProfile.username}/posts/${post.id}`"
-	>
+	<NuxtLink v-if="userProfile && user" :to="`${userProfile.username}/posts/${post.id}`">
 		<post-card>
 			<picture>
 				<img
 					:src="`https://naduzuobtmmhavkozjxf.supabase.co/storage/v1/object/public/post-images/${userProfile.id}/${post.image_url}?t=2024-01-30T08%3A07%3A46.058Z`"
 					alt=""
 					@error="handleImageError"
+					loading="lazy"
 				/>
 				<div class="vignette-overlay"></div>
 			</picture>
@@ -18,24 +16,24 @@
 				<p class="visible-content">{{ post.content }}</p>
 			</text-content>
 
-			<card-details class="small-voice">
-				<p class="faded">{{ formatTime(post.time_created) }}</p>
-				<p>
-					<Icon name="ph:dot-outline-fill" />
-				</p>
-				<p class="faded">{{ formattedDate(post.date_created) }}</p>
-				<p>
-					<Icon name="ph:dot-outline-fill" />
-				</p>
-				<p class="reading-time faded">{{ readingTime(post.content) }}</p>
-			</card-details>
 			<!-- <button @click="likePost(post.id)" :class="{ liked: isPostLiked(post.id) }">
 				Like
 			</button>
 
 			<button @click="deletePost(post.id)">delete</button> -->
 		</post-card>
-	</router-link>
+		<card-details class="small-voice">
+			<p class="faded">{{ formatTime(post.time_created) }}</p>
+			<p>
+				<Icon name="ph:dot-outline-fill" />
+			</p>
+			<p class="faded">{{ formattedDate(post.date_created) }}</p>
+			<p>
+				<Icon name="ph:dot-outline-fill" />
+			</p>
+			<p class="reading-time faded">{{ readingTime(post.content) }}</p>
+		</card-details>
+	</NuxtLink>
 </template>
 
 <script setup>
@@ -52,15 +50,19 @@
 	const userPosts = ref([]);
 
 	const fetchUserPosts = async () => {
-		const { data, error } = await client
-			.from('posts')
-			.select('*')
-			.eq('belongs_to', userProfile.id);
+		if (userProfile && userProfile.id) {
+			const { data, error } = await client
+				.from('posts')
+				.select('*')
+				.eq('belongs_to', userProfile.id);
 
-		if (error) {
-			console.error('Error fetching user posts:', error.message);
+			if (error) {
+				console.error('Error fetching user posts:', error.message);
+			} else {
+				userPosts.value = data || [];
+			}
 		} else {
-			userPosts.value = data || [];
+			console.error('userProfile or userProfile.id is undefined');
 		}
 	};
 
@@ -114,8 +116,6 @@
 				userProfile.value = data;
 			}
 		}
-
-		fetchUserPosts();
 	});
 
 	const isPostLiked = (postId) => {
@@ -195,6 +195,8 @@
 	}
 
 	post-card {
+		padding-top: 20px;
+		padding-bottom: 20px;
 		display: grid;
 		grid-template-columns: 125px 1fr;
 		column-gap: 10px;

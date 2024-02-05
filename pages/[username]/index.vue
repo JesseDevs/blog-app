@@ -46,7 +46,7 @@ Do the searchuser function to find the user. Save that somewhere. Get that user 
 const searchUser = async (searchedUsername) => {
   try {
     const { data, error } = await client
-      .from('users')
+      .from('profiles')
       .select('id')
       .eq('username', searchedUsername);
 

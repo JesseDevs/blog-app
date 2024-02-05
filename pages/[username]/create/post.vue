@@ -127,6 +127,8 @@
 				console.error('Error inserting data:', error);
 			} else {
 				console.log('Data inserted successfully:', data);
+
+				router.push({ name: '/' });
 			}
 		} catch (error) {
 			console.error('Error:', error.message);
