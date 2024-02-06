@@ -12,8 +12,8 @@
 			</picture>
 
 			<text-content>
-				<h3 class="level-one-voice">{{ post.header }}</h3>
-				<p class="visible-content">{{ post.content }}</p>
+				<h3 class="level-one-voice">{{ truncatedHeader }}</h3>
+				<p class="visible-content">{{ truncatedText }}</p>
 			</text-content>
 
 			<!-- <button @click="likePost(post.id)" :class="{ liked: isPostLiked(post.id) }">
@@ -38,10 +38,32 @@
 
 <script setup>
 	// Change like and unlike buttons to separate things for ease. at the moment, postId is not removed from users likes
-
 	import readingTime from '~/utils/readingTime';
 	const props = defineProps({
 		post: Object,
+	});
+
+	const truncatedHeader = computed(() => {
+		if (!props.post || !props.post.header) return '';
+		const text = props.post.content.trim();
+		const charLimit = 35;
+		if (text.length > charLimit) {
+			return text.slice(0, charLimit) + '...';
+		} else {
+			return text;
+		}
+	});
+
+	const truncatedText = computed(() => {
+		if (!props.post || !props.post.content) return '';
+		const words = props.post.content.trim().split(' ');
+		const wordsLimit = 10;
+		const truncated = words.slice(0, wordsLimit).join(' ');
+		if (words.length > wordsLimit) {
+			return truncated + '...';
+		} else {
+			return truncated;
+		}
 	});
 
 	const client = useSupabaseClient();
@@ -49,22 +71,22 @@
 	const userProfile = ref(null);
 	const userPosts = ref([]);
 
-	const fetchUserPosts = async () => {
-		if (userProfile && userProfile.id) {
-			const { data, error } = await client
-				.from('posts')
-				.select('*')
-				.eq('belongs_to', userProfile.id);
+	// const fetchUserPosts = async () => {
+	// 	if (userProfile && userProfile.id) {
+	// 		const { data, error } = await client
+	// 			.from('posts')
+	// 			.select('*')
+	// 			.eq('belongs_to', userProfile.id);
 
-			if (error) {
-				console.error('Error fetching user posts:', error.message);
-			} else {
-				userPosts.value = data || [];
-			}
-		} else {
-			console.error('userProfile or userProfile.id is undefined');
-		}
-	};
+	// 		if (error) {
+	// 			console.error('Error fetching user posts:', error.message);
+	// 		} else {
+	// 			userPosts.value = data || [];
+	// 		}
+	// 	} else {
+	// 		console.error('userProfile or userProfile.id is undefined');
+	// 	}
+	// };
 
 	const deletePost = async (postId) => {
 		const { data, error } = await client
@@ -198,7 +220,7 @@
 		padding-top: 20px;
 		padding-bottom: 20px;
 		display: grid;
-		grid-template-columns: 125px 1fr;
+		grid-template-columns: 75px 1fr;
 		column-gap: 10px;
 		row-gap: 10px;
 		width: 100%;
@@ -211,13 +233,12 @@
 
 		picture {
 			position: relative;
-			max-height: 125px;
 			border-radius: 5px;
+			max-height: 75px;
 			img {
-				width: 125px;
-				height: 125px;
 				object-fit: cover;
 				border-radius: 5px;
+				width: 75px;
 			}
 
 			.vignette-overlay {
@@ -237,6 +258,18 @@
 			}
 		}
 
+		@media (min-width: 500px) {
+			grid-template-columns: 125px 1fr;
+
+			picture {
+				max-height: 125px;
+				img {
+					width: 125px;
+					height: 125px;
+				}
+			}
+		}
+
 		text-content {
 			overflow: hidden;
 			position: relative;
@@ -245,7 +278,7 @@
 			gap: 10px;
 			p.visible-content {
 				max-height: 6em;
-				min-height: 4em;
+				min-height: 2em;
 			}
 
 			.blurred {

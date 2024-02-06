@@ -1,33 +1,41 @@
 <template>
-	<div>
+	<detail-page>
 		detail
-		{{ props.post }}
-	</div>
+		<h1>{{ post.header }}</h1>
+		<p>{{ post.content }}</p>
+	</detail-page>
 </template>
 
 <script setup>
-	const props = defineProps({
-		post: Object,
+	const client = useSupabaseClient();
+	const user = useSupabaseUser();
+	const userProfile = ref(null);
+	const route = useRoute();
+	const post = ref({});
+
+	onMounted(async () => {
+		const postId = route.params.postid;
+		try {
+			const { data, error } = await client
+				.from('posts')
+				.select('*')
+				.eq('id', postId)
+				.single();
+			if (error) {
+				throw error;
+			}
+			post.value = data;
+		} catch (error) {
+			console.error(error);
+		}
 	});
-
-	console.log(props);
-
-	// const post = ref(null);
-
-	// onMounted(async () => {
-	// 	// Fetch the post data based on the route parameter (id)
-	// 	const postId = $route.params.id;
-	// 	// Replace the following with your actual data fetching logic
-	// 	post.value = await fetchPostData(postId);
-	// });
-
-	// async function fetchPostData(postId) {
-	// 	// Implement your logic to fetch post data from your API or wherever it's stored
-	// 	// For example, you can use your Supabase client to fetch data
-	// 	// const { data, error } = await client.from('posts').select().eq('id', postId).single();
-	// 	// return data;
-	// 	return { id: postId, title: 'Fetched Post', content: 'Fetched Content' };
-	// }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+	detail-page {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		position: relative;
+	}
+</style>

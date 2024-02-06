@@ -96,7 +96,7 @@
 				.upload(`${user.value.id}/${filename}`, file);
 
 			if (data && data.path) {
-				console.log(data.path, filename);
+				// console.log(data.path, filename);
 				return { path: data.path, filename };
 			} else {
 				console.log(error);
