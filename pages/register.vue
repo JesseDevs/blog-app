@@ -19,7 +19,7 @@
 			options: {
 				data: {
 					full_name: fullName,
-					username,
+					username: username.toLocaleLowerCase(),
 					email,
 					likes: [],
 				},

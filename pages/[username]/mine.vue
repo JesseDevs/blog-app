@@ -46,7 +46,7 @@ Do the searchuser function to find the user. Save that somewhere. Get that user 
 const searchUser = async (searchedUsername) => {
   try {
     const { data, error } = await client
-      .from('users')
+      .from('profiles')
       .select('id')
       .eq('username', searchedUsername);
 
@@ -67,8 +67,6 @@ const searchUser = async (searchedUsername) => {
 If the user id matches the id of the current user. Allow them to edit the profile with the edit button.
 
 */
-
-	import { ref, onMounted } from 'vue';
 
 	const posts = ref([]);
 	const client = useSupabaseClient();

@@ -38,45 +38,15 @@
 	</section>
 </template>
 <script setup>
-	/*
-Get user id of the logged in user. Save that somewhere.
-
-Do the searchuser function to find the user. Save that somewhere. Get that user id to find posts.
-
-const searchUser = async (searchedUsername) => {
-  try {
-    const { data, error } = await client
-      .from('profiles')
-      .select('id')
-      .eq('username', searchedUsername);
-
-    if (error) {
-      console.error('Error searching user:', error.message);
-    } else if (data.length > 0) {
-      userProfile.value = data[0];
-      await fetchPosts();
-      isDataLoaded.value = true;
-    } else {
-      console.warn('User not found');
-    }
-  } catch (error) {
-    console.error('Error searching user:', error.message);
-  }
-};
-
-If the user id matches the id of the current user. Allow them to edit the profile with the edit button.
-
-*/
-
-	import { ref, onMounted } from 'vue';
-
 	const posts = ref([]);
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
+	const route = useRoute();
 
 	const isDataLoaded = ref(false);
 
 	const userProfile = ref(null);
+	const currentUser = ref(null);
 	const formattedDate = ref('');
 
 	const formatDate = () => {
@@ -101,8 +71,8 @@ If the user id matches the id of the current user. Allow them to edit the profil
 		try {
 			const { data, error } = await client
 				.from('profiles')
-				.select()
-				.eq('id', user.value.id)
+				.select('*')
+				.eq('username', route.params.username.toLocaleLowerCase())
 				.single();
 
 			if (error) {
@@ -115,32 +85,30 @@ If the user id matches the id of the current user. Allow them to edit the profil
 		}
 	};
 
-	const fetchPosts = async () => {
-		try {
-			if (userProfile.value) {
-				const { data, error } = await client
-					.from('posts')
-					.select('*')
-					.eq('belongs_to', userProfile.value.id)
-					.order('created_at', { ascending: false });
+	// const fetchPosts = async () => {
+	// 	try {
+	// 		if (userProfile.value) {
+	// 			const { data, error } = await client
+	// 				.from('posts')
+	// 				.select('*')
+	// 				.eq('belongs_to', userProfile.value.id)
+	// 				.order('created_at', { ascending: false });
 
-				if (error) {
-					console.error('Error fetching posts:', error);
-				} else {
-					posts.value = data;
-				}
-			}
-		} catch (error) {
-			console.error('Error fetching posts:', error);
-		}
-	};
+	// 			if (error) {
+	// 				console.error('Error fetching posts:', error.message);
+	// 			} else {
+	// 				posts.value = data;
+	// 			}
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('Error fetching posts:', error.message);
+	// 	}
+	// };
 
 	onMounted(async () => {
-		if (user.value) {
-			await fetchUserProfile();
-			fetchPosts();
-			isDataLoaded.value = true;
-		}
+		await fetchUserProfile();
+		// await fetchPosts();
+		isDataLoaded.value = true;
 	});
 </script>
 

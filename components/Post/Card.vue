@@ -3,6 +3,13 @@
 		<post-card>
 			<picture>
 				<img
+					v-if="!imageLoaded"
+					:src="fallbackImageUrl"
+					alt="Fallback Image"
+					loading="eager"
+				/>
+				<img
+					v-else
 					:src="`https://naduzuobtmmhavkozjxf.supabase.co/storage/v1/object/public/post-images/${userProfile.id}/${post.image_url}?t=2024-01-30T08%3A07%3A46.058Z`"
 					alt=""
 					@error="handleImageError"
@@ -12,7 +19,7 @@
 			</picture>
 
 			<text-content>
-				<h3 class="level-one-voice">{{ truncatedHeader }}</h3>
+				<h3 class="level-one-voice">{{ post.header }}</h3>
 				<p class="visible-content">{{ truncatedText }}</p>
 			</text-content>
 
@@ -43,6 +50,13 @@
 		post: Object,
 	});
 
+	const client = useSupabaseClient();
+	const user = useSupabaseUser();
+	const userProfile = ref(null);
+	const userPosts = ref([]);
+	const imageLoaded = ref(false);
+	const fallbackImageUrl = '/images/fallback-logo.jpg';
+
 	const truncatedHeader = computed(() => {
 		if (!props.post || !props.post.header) return '';
 		const text = props.post.content.trim();
@@ -65,11 +79,6 @@
 			return truncated;
 		}
 	});
-
-	const client = useSupabaseClient();
-	const user = useSupabaseUser();
-	const userProfile = ref(null);
-	const userPosts = ref([]);
 
 	// const fetchUserPosts = async () => {
 	// 	if (userProfile && userProfile.id) {
@@ -136,6 +145,7 @@
 				console.error('Error fetching user profile:', error.message);
 			} else {
 				userProfile.value = data;
+				imageLoaded.value = true;
 			}
 		}
 	});
@@ -220,7 +230,7 @@
 		padding-top: 20px;
 		padding-bottom: 20px;
 		display: grid;
-		grid-template-columns: 75px 1fr;
+		grid-template-columns: 50px 1fr;
 		column-gap: 10px;
 		row-gap: 10px;
 		width: 100%;
@@ -234,11 +244,13 @@
 		picture {
 			position: relative;
 			border-radius: 5px;
-			max-height: 75px;
+			max-height: 50px;
+
+			box-shadow: 0 0 0 1px rgb(46 46 46);
 			img {
 				object-fit: cover;
 				border-radius: 5px;
-				width: 75px;
+				width: 50px;
 			}
 
 			.vignette-overlay {
@@ -259,13 +271,13 @@
 		}
 
 		@media (min-width: 500px) {
-			grid-template-columns: 125px 1fr;
+			grid-template-columns: 100px 1fr;
 
 			picture {
-				max-height: 125px;
+				max-height: 100px;
 				img {
-					width: 125px;
-					height: 125px;
+					width: 100px;
+					height: 100px;
 				}
 			}
 		}
