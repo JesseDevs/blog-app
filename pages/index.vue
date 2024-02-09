@@ -34,6 +34,8 @@
 			</inner-column>
 		</section>
 		<SpaceFiller />
+
+		<ExploreCards />
 	</div>
 </template>
 
