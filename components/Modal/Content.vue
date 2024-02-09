@@ -3,6 +3,9 @@
 		<nav>
 			<div class="modal-top">
 				<div class="modal-BTNs">
+					<NuxtLink :to="`/`" @click="ui.closeMenu" aria-label="Go home">
+						Home
+					</NuxtLink>
 					<NuxtLink
 						v-if="!user"
 						to="/login"

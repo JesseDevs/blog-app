@@ -3,6 +3,7 @@
 		<profile-dashboard v-if="userProfile">
 			<inner-container>
 				<NuxtLink
+					v-if="currentUser.id === userProfile.id"
 					:to="`${userProfile.username}/edit/profile`"
 					aria-label="edit profile"
 					class="outline-button"
@@ -32,7 +33,7 @@
 
 		<ul v-if="userProfile && isDataLoaded" class="card-menu">
 			<li v-for="post in posts" :key="post.id">
-				<PostCard :post="post" />
+				<PostCard :post="post" :userProfile="userProfile" />
 			</li>
 		</ul>
 	</section>
@@ -67,6 +68,24 @@
 	};
 	formatDate();
 
+	const fetchCurrentUser = async () => {
+		try {
+			const { data, error } = await client
+				.from('profiles')
+				.select('*')
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				currentUser.value = data;
+			}
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+		}
+	};
+
 	const fetchUserProfile = async () => {
 		try {
 			const { data, error } = await client
@@ -85,29 +104,30 @@
 		}
 	};
 
-	// const fetchPosts = async () => {
-	// 	try {
-	// 		if (userProfile.value) {
-	// 			const { data, error } = await client
-	// 				.from('posts')
-	// 				.select('*')
-	// 				.eq('belongs_to', userProfile.value.id)
-	// 				.order('created_at', { ascending: false });
+	const fetchPosts = async () => {
+		try {
+			if (userProfile.value) {
+				const { data, error } = await client
+					.from('posts')
+					.select('*')
+					.eq('belongs_to', userProfile.value.id)
+					.order('created_at', { ascending: false });
 
-	// 			if (error) {
-	// 				console.error('Error fetching posts:', error.message);
-	// 			} else {
-	// 				posts.value = data;
-	// 			}
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('Error fetching posts:', error.message);
-	// 	}
-	// };
+				if (error) {
+					console.error('Error fetching posts:', error.message);
+				} else {
+					posts.value = data;
+				}
+			}
+		} catch (error) {
+			console.error('Error fetching posts:', error.message);
+		}
+	};
 
 	onMounted(async () => {
+		await fetchCurrentUser();
 		await fetchUserProfile();
-		// await fetchPosts();
+		await fetchPosts();
 		isDataLoaded.value = true;
 	});
 </script>
