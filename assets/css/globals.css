@@ -1,5 +1,7 @@
 @import 'reset.scss';
 @import 'typography.scss';
+@import 'cards.scss';
+
 
 /* Dark
 	--background: #D7CCC8;

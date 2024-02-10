@@ -69,7 +69,7 @@
 	});
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	ul {
 		li {
 			padding: 1.5rem;
