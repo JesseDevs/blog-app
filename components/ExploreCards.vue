@@ -69,11 +69,4 @@
 	});
 </script>
 
-<style lang="scss">
-	ul {
-		li {
-			padding: 1.5rem;
-			border-bottom: 1px solid var(--faded-text);
-		}
-	}
-</style>
+<style lang="scss"></style>

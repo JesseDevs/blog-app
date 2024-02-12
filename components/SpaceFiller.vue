@@ -3,17 +3,14 @@
 		<space-filler>
 			<Icon
 				name="streamline:interface-id-voice-1-identification-secure-id-soundwave-sound-voice-security"
-				size="50"
 				color="var(--button-bg)"
 			/>
 			<Icon
 				name="streamline:interface-id-voice-1-identification-secure-id-soundwave-sound-voice-security"
-				size="50"
 				color="var(--button-bg)"
 			/>
 			<Icon
 				name="streamline:interface-id-voice-1-identification-secure-id-soundwave-sound-voice-security"
-				size="50"
 				color="var(--button-bg)"
 			/>
 		</space-filler>
@@ -35,7 +32,15 @@
 	}
 	section {
 		background: rgba(46, 46, 46, 0.5);
-		backdrop-filter: blur(7px);
+		backdrop-filter: blur(4px);
+		overflow: hidden;
+		background: rgb(3, 4, 5);
+		// background: linear-gradient(
+		// 	0deg,
+		// 	rgba(3, 4, 5, 1) 0%,
+		// 	rgba(3, 4, 5, 0) 50%,
+		// 	rgba(3, 4, 5, 1) 100%
+		// );
 
 		space-filler {
 			display: flex;
@@ -45,8 +50,17 @@
 			height: 100px;
 			overflow-y: hidden;
 			filter: blur(7px);
+			opacity: 0.8;
 			gap: 15px;
 			position: relative;
+
+			background: rgb(3, 4, 5);
+			background: linear-gradient(
+				0deg,
+				rgba(3, 4, 5, 1) 0%,
+				rgba(3, 4, 5, 0) 50%,
+				rgba(3, 4, 5, 1) 100%
+			);
 			&::before {
 				content: '';
 				position: absolute;
@@ -73,7 +87,8 @@
 			svg {
 				height: auto;
 				width: 150px;
-				opacity: 0.4;
+				opacity: 0.6;
+				filter: blur(6px);
 			}
 		}
 	}
