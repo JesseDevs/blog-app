@@ -1,11 +1,20 @@
 <template>
-	<section class="login">
+	<section class="create-post">
 		<inner-column>
 			<create-block>
 				<form @submit.prevent="addPost()" autocomplete="off">
-					<div class="field add-picture">
-						<Icon name="iconoir:plus-square-dashed" size="50" />
-						<p>Add Your Thumbnail</p>
+					<div class="create-actions">
+						<back-button @click="$router.back()">
+							<Icon name="material-symbols:arrow-left-alt" size="30" />
+						</back-button>
+						<button class="button-filled" type="submit">Add Post</button>
+					</div>
+					<div @click="openFileInput" class="field add-picture">
+						<Icon
+							name="material-symbols:perm-media-outline-rounded"
+							size="40"
+						/>
+						<p>Add Thumbnail</p>
 
 						<img
 							v-if="postImage.preview"
@@ -14,10 +23,12 @@
 							style="width: 200px; height: 200px"
 						/>
 						<input
+							ref="fileInput"
 							type="file"
 							name="image"
 							id=""
 							accept="image/*"
+							style="display: none"
 							@change="onImageUpload"
 						/>
 					</div>
@@ -35,26 +46,24 @@
 						></textarea>
 					</div>
 
-					<div class="field">
-						<label for="postContent">Post Content:</label>
-						<textarea
-							v-model="postData.content"
-							id="postContent"
-							required
-						></textarea>
+					<div class="field text-content" @click="makeEditable">
+						<p
+							ref="textbox"
+							:class="{ 'editable-class': editable }"
+							:contenteditable="editable"
+						>
+							Example
+						</p>
 					</div>
-
-					<button class="button-filled" type="submit">Add Post</button>
 				</form>
-
-				{{ user.id }}
-				{{ postData }}
 			</create-block>
 		</inner-column>
 	</section>
 </template>
 
 <script setup>
+	//make placeholder text that deletes when p element is editable
+
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
@@ -62,12 +71,30 @@
 	const postImage = ref({
 		preview: null,
 	});
+	const fileInput = ref(null);
+	const textbox = ref(null);
 
 	const postData = ref({
 		header: '',
-		content: 'This is the content of the post.',
+		content: 'Exmaple',
 		image: null,
 	});
+
+	const editable = ref(false);
+	const makeEditable = () => {
+		editable.value = true;
+
+		textbox.value.contentEditable = true;
+		textbox.value.focus();
+	};
+	const makeNormal = () => {
+		editable.value = false;
+	};
+
+	const openFileInput = () => {
+		// trigger click event of file input
+		fileInput.value.click();
+	};
 
 	const generateUniqueFilename = (header) => {
 		const randomNumber = Math.floor(1000 + Math.random() * 9000);
@@ -154,38 +181,102 @@
 </script>
 
 <style lang="scss" scoped>
+	section.create-post {
+		inner-column {
+			padding-top: 1rem;
+		}
+
+		.editable-class {
+			border: 1px solid red;
+		}
+	}
+	back-button {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		border: var(--button-bg) 1px solid;
+		border-radius: 999px;
+		height: 50px;
+		width: 50px;
+		&:hover {
+			background-color: var(--button-bg);
+		}
+	}
 	create-block {
-		display: block;
+		display: flex;
+		align-items: center;
 		width: 100%;
-		position: relative;
+		gap: 40px;
+
+		form {
+			display: flex;
+			width: 100%;
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		textarea {
+			width: 100%;
+			font-size: inherit;
+			outline: none;
+			border: none;
+			background-color: transparent;
+			z-index: 0;
+			color: white;
+			resize: none;
+			height: 44px;
+			// border-bottom: 2px solid red;
+			&::placeholder {
+				color: rgba(255, 255, 255, 0.4);
+			}
+		}
 
 		div.field {
 			display: flex;
 			flex-direction: column;
 			width: 100%;
 			position: relative;
-			margin-bottom: 20px;
 			input {
 				width: 100%;
 			}
 		}
 
+		div.text-content {
+			min-height: 500px;
+			display: flex;
+			align-items: stretch;
+			p {
+				outline: none;
+				padding-left: 3px;
+				line-height: 2;
+				height: 100%;
+				flex: 1;
+			}
+		}
+
 		div.add-picture {
-			flex-direction: column;
+			cursor: pointer;
+			flex-direction: row;
 			align-items: center;
-			justify-content: flex-start;
+			padding-top: 30px;
 			gap: 10px;
 			color: rgba(255, 255, 255, 0.8);
 			p {
 				text-transform: uppercase;
 				letter-spacing: 0.02em;
+				font-weight: 600;
 			}
 		}
 
 		div.header {
 			position: relative;
 			border: none;
-			padding-bottom: 5px;
+
+			textarea {
+				font-weight: 700;
+			}
 
 			label {
 				font-weight: 700;
@@ -196,22 +287,6 @@
 				transform: translateY(-120%);
 				font-size: 0.8em;
 				color: #333;
-			}
-			textarea.text-title {
-				width: 100%;
-				font-size: inherit;
-				outline: none;
-				border: none;
-				background-color: transparent;
-				z-index: 0;
-				color: white;
-
-				resize: none;
-				height: 44px;
-				border-bottom: 2px solid red;
-				&::placeholder {
-					color: rgba(255, 255, 255, 0.4);
-				}
 			}
 
 			&::after {
@@ -224,6 +299,16 @@
 				width: var(--width-percentage);
 				background-color: white;
 				transition: width 0.3s;
+			}
+		}
+
+		div.create-actions {
+			display: flex;
+			width: 100%;
+			gap: 40px;
+
+			back-button {
+				flex-shrink: 0;
 			}
 		}
 	}

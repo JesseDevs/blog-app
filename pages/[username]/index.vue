@@ -158,15 +158,6 @@
 		}
 	}
 
-	.card-menu {
-		li {
-			transition: background-color 0.2s ease-in-out;
-			&:hover {
-				background-color: rgb(37, 36, 36);
-			}
-		}
-	}
-
 	.content-container {
 		overflow: hidden;
 		position: relative;
@@ -248,13 +239,6 @@
 		.username {
 			color: var(--faded-text);
 			// font-family: 'Roboto Slab', serif;
-		}
-	}
-
-	ul {
-		li {
-			padding: 1.5rem;
-			border-bottom: 1px solid var(--faded-text);
 		}
 	}
 </style>
