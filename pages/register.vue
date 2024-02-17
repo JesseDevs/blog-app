@@ -176,16 +176,18 @@
 				width: 100%;
 				padding: 8px 1rem;
 				font-size: var(--size-base);
-				background-color: var(--light-fade);
+				background-color: rgb(239 239 239 /0.8);
 				border: none;
 				outline: none;
+				border-radius: 5px;
 
 				&::placeholder {
-					color: rgb(101, 101, 101);
+					color: rgb(87, 84, 84);
 				}
 
 				&:focus {
 					outline: 1px solid rgb(128, 127, 127);
+					background-color: rgb(239 239 239);
 				}
 			}
 		}
