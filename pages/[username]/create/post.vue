@@ -1,6 +1,7 @@
 <template>
-	<section class="create-post">
+	<section class="create-post" @click="handleTextBoxContainerClick">
 		<inner-column>
+			<SuccessMessage :success="success" />
 			<create-block>
 				<form @submit.prevent="addPost()" autocomplete="off">
 					<div class="create-actions">
@@ -47,13 +48,15 @@
 					</div>
 
 					<div class="field text-content" @click="makeEditable">
+						<p :class="`placeholder ${thereIsContent ? 'disappear' : ''}`">
+							Write out blog post...
+						</p>
 						<p
 							ref="textbox"
 							:class="{ 'editable-class': editable }"
 							:contenteditable="editable"
-						>
-							Example
-						</p>
+							@input="updateContent"
+						></p>
 					</div>
 				</form>
 			</create-block>
@@ -67,16 +70,18 @@
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
+	const success = ref(false);
 
 	const postImage = ref({
 		preview: null,
 	});
 	const fileInput = ref(null);
 	const textbox = ref(null);
+	const thereIsContent = ref(false);
 
 	const postData = ref({
 		header: '',
-		content: 'Exmaple',
+		content: '',
 		image: null,
 	});
 
@@ -87,6 +92,12 @@
 		textbox.value.contentEditable = true;
 		textbox.value.focus();
 	};
+	function updateContent(event) {
+		postData.value.content = event.target.textContent;
+
+		thereIsContent.value = event.target.textContent.trim().length > 0;
+	}
+
 	const makeNormal = () => {
 		editable.value = false;
 	};
@@ -135,6 +146,12 @@
 		}
 	};
 
+	const handleTextBoxContainerClick = (event) => {
+		if (!event.target.closest('div.text-content')) {
+			makeNormal();
+		}
+	};
+
 	const addPost = async () => {
 		try {
 			const { path, filename } = await uploadImage(postData.value.image);
@@ -154,8 +171,9 @@
 				console.error('Error inserting data:', error);
 			} else {
 				console.log('Data inserted successfully:', data);
+				success.value = true;
 
-				router.push({ name: '/' });
+				// router.push('/');
 			}
 		} catch (error) {
 			console.error('Error:', error.message);
@@ -174,6 +192,14 @@
 		postImage.value.preview = null;
 	};
 
+	watchEffect(() => {
+		if (editable.value === true || postData.value.content.length > 0) {
+			thereIsContent.value = true;
+		} else {
+			thereIsContent.value = false;
+		}
+	});
+
 	onBeforeRouteLeave((to, from, next) => {
 		resetImagePreview();
 		next();
@@ -186,8 +212,14 @@
 			padding-top: 1rem;
 		}
 
-		.editable-class {
-			border: 1px solid red;
+		.placeholder {
+			position: absolute;
+			color: rgb(127, 126, 126);
+		}
+
+		.placeholder.disappear {
+			opacity: 0;
+			display: none;
 		}
 	}
 	back-button {
@@ -206,6 +238,7 @@
 	}
 	create-block {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		width: 100%;
 		gap: 40px;
@@ -229,7 +262,7 @@
 			height: 44px;
 			// border-bottom: 2px solid red;
 			&::placeholder {
-				color: rgba(255, 255, 255, 0.4);
+				color: rgb(127, 126, 126);
 			}
 		}
 
@@ -248,6 +281,8 @@
 			display: flex;
 			align-items: stretch;
 			p {
+				border-top: 1px solid var(--faded-text);
+				padding-top: 10px;
 				outline: none;
 				padding-left: 3px;
 				line-height: 2;
@@ -262,7 +297,7 @@
 			align-items: center;
 			padding-top: 30px;
 			gap: 10px;
-			color: rgba(255, 255, 255, 0.8);
+			color: rgb(127, 126, 126);
 			p {
 				text-transform: uppercase;
 				letter-spacing: 0.02em;
