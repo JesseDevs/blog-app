@@ -23,11 +23,11 @@
 	@keyframes slideIn {
 		from {
 			opacity: 0;
-			transform: translateX(-100%); // start from left
+			transform: translateX(-100%);
 		}
 		to {
 			opacity: 1;
-			transform: translateX(0); // end at original position
+			transform: translateX(0);
 		}
 	}
 	section {
@@ -69,20 +69,22 @@
 				bottom: 0;
 				width: 0;
 				background: rgba(var(--button-bg-rgb) / 0.3);
-				transition: width 0.5s ease-in-out, left 0.5s ease-in-out; // Smooth transition effect
-				z-index: -1; // Place it behind the icons
+				transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
+				z-index: -1;
 			}
 
 			&:hover::before {
 				width: 100%;
 				left: auto;
 				right: 0;
+				transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
 			}
 
 			&:not(:hover)::before {
 				width: 0;
 				left: 0;
 				right: auto;
+				transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
 			}
 			svg {
 				height: auto;
