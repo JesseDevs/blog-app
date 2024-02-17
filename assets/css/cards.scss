@@ -1,8 +1,14 @@
 .card-menu {
 	li {
-		padding: 1.5rem;
-		border-bottom: 1px solid var(--faded-text);
-		transition: background-color 0.2s ease-in-out;
+
+		a {
+			padding: 1.5rem;
+			display: block;
+			width: 100%;
+			border-bottom: 1px solid var(--faded-text);
+			transition: background-color 0.2s ease-in-out;
+			cursor: auto;
+		}
 
 		&:hover {
 			background-color: rgb(37, 36, 36);
@@ -11,8 +17,8 @@
 }
 
 post-card {
-	padding-top: 20px;
-	padding-bottom: 20px;
+
+	padding-top: 10px;
 	display: grid;
 	grid-template-columns: 50px 1fr;
 	column-gap: 8px;
@@ -72,11 +78,13 @@ post-card {
 		position: relative;
 		font-style: italic;
 		grid-column: 2/-1;
-		gap: 10px;
+		gap: 8px;
+
 
 		p.visible-content {
 			max-height: 6em;
 			min-height: 2em;
+			opacity: .7;
 		}
 
 		.blurred {
@@ -94,14 +102,14 @@ post-card {
 	}
 }
 
-card-details {
+card-footer {
 	grid-column: 1/-1;
 	display: flex;
 	align-self: flex-end;
 	width: 100%;
 	justify-content: flex-start;
 	gap: 2px;
-	padding-top: 2px;
+	padding-top: 20px;
 
 	p {
 		font-size: inherit;

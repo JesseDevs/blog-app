@@ -1,6 +1,19 @@
 <template>
-	<NuxtLink v-if="userProfile" :to="`${userProfile.username}/posts/${post.id}`">
+	<NuxtLink
+		class="card-link"
+		v-if="userProfile"
+		:to="`${userProfile.username}/posts/${post.id}`"
+	>
 		<post-card>
+			<card-header>
+				<button
+					v-if="currentUser?.id === userProfile?.id"
+					@click.prevent="deletePost(post.id)"
+					class="delete-btn"
+				>
+					<Icon name="iconamoon:trash" />
+				</button>
+			</card-header>
 			<picture>
 				<img
 					v-if="!imageLoaded"
@@ -22,24 +35,18 @@
 				<h3 class="level-one-voice">{{ post.header }}</h3>
 				<p class="visible-content">{{ truncatedText }}</p>
 			</text-content>
-
-			<!-- <button @click="likePost(post.id)" :class="{ liked: isPostLiked(post.id) }">
-				Like
-			</button>
-
-			<button @click="deletePost(post.id)">delete</button> -->
+			<card-footer class="small-voice">
+				<p class="faded">{{ formatTime(post.time_created) }}</p>
+				<p>
+					<Icon name="ph:dot-outline-fill" />
+				</p>
+				<p class="faded">{{ formattedDate(post.date_created) }}</p>
+				<p>
+					<Icon name="ph:dot-outline-fill" />
+				</p>
+				<p class="reading-time faded">{{ readingTime(post.content) }}</p>
+			</card-footer>
 		</post-card>
-		<card-details class="small-voice">
-			<p class="faded">{{ formatTime(post.time_created) }}</p>
-			<p>
-				<Icon name="ph:dot-outline-fill" />
-			</p>
-			<p class="faded">{{ formattedDate(post.date_created) }}</p>
-			<p>
-				<Icon name="ph:dot-outline-fill" />
-			</p>
-			<p class="reading-time faded">{{ readingTime(post.content) }}</p>
-		</card-details>
 	</NuxtLink>
 </template>
 
@@ -52,20 +59,30 @@
 
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
-	const userPosts = ref([]);
+	const route = useRoute();
+	const router = useRouter();
+	const currentUser = ref(null);
+
+	const fetchCurrentUser = async () => {
+		try {
+			const { data, error } = await client
+				.from('profiles')
+				.select('*')
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				currentUser.value = data;
+			}
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+		}
+	};
+
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
-
-	const truncatedHeader = computed(() => {
-		if (!props.post || !props.post.header) return '';
-		const text = props.post.content.trim();
-		const charLimit = 35;
-		if (text.length > charLimit) {
-			return text.slice(0, charLimit) + '...';
-		} else {
-			return text;
-		}
-	});
 
 	const truncatedText = computed(() => {
 		if (!props.post || !props.post.content) return '';
@@ -78,22 +95,6 @@
 			return truncated;
 		}
 	});
-
-	const deletePost = async (postId) => {
-		const { data, error } = await client
-			.from('posts')
-			.delete()
-			.eq('id', postId)
-			.single();
-
-		if (error) {
-			console.error('Error deleting post:', error.message);
-		} else {
-			console.log('Post deleted successfully:', data);
-			window.location.reload(true);
-			fetchUserPosts();
-		}
-	};
 
 	const handleImageError = (event) => {
 		event.target.src = '/images/fallback-logo.jpg';
@@ -114,10 +115,110 @@
 		const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 		return `${formattedHours}:${formattedMinutes} ${period}`;
 	};
+
+	const deletePost = async (postId) => {
+		const confirmed = confirm('Are you sure you want to delete this post?');
+
+		if (!confirmed) {
+			return;
+		}
+		try {
+			const { error } = await client.from('posts').delete().eq('id', postId);
+
+			if (error) {
+				console.error('Error deleting post:', error.message);
+			} else {
+				console.log('deleted post');
+				router.go();
+			}
+		} catch (error) {
+			console.error('Error deleting post:', error.message);
+		}
+	};
+
+	const handleButtonClick = () => {
+		// Your button click handler logic here
+		console.log('Button clicked');
+	};
+
+	onMounted(async () => {
+		await fetchCurrentUser();
+	});
 </script>
 
 <style lang="scss">
 	.liked {
 		background-color: red;
+	}
+
+	// .card-link {
+	// 	pointer-events: none;
+	// }
+
+	card-header {
+		display: flex;
+		width: 100%;
+		justify-content: flex-end;
+		grid-column: 1/-1;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		border-radius: 999px;
+		width: 25px;
+		height: 25px;
+	}
+
+	post-card {
+		text-content {
+			pointer-events: none;
+			padding-right: 40px;
+		}
+	}
+
+	.delete-btn {
+		display: flex;
+		grid-column: 1/-1;
+		appearance: none;
+		width: 100%;
+		height: 100%;
+		border: none;
+		outline: none;
+		color: white;
+		background-color: transparent;
+		cursor: pointer;
+		pointer-events: all;
+
+		align-items: center;
+		justify-content: center;
+		svg {
+			width: 23px;
+			height: 23px;
+			pointer-events: none;
+			transition: color 0.2s ease-in-out;
+			color: var(--faded-text);
+			path {
+				pointer-events: none;
+			}
+		}
+
+		&::after {
+			content: '';
+			padding: 8px;
+			width: 25px;
+			height: 25px;
+			border-radius: 999px;
+			background-color: red;
+			position: absolute;
+			opacity: 0;
+			transition: opacity 0.2s ease-in-out;
+		}
+		&:hover {
+			svg {
+				color: red;
+			}
+			&::after {
+				opacity: 0.2;
+			}
+		}
 	}
 </style>

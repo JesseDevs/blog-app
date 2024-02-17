@@ -13,13 +13,14 @@
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
+	const username = ref('');
 
-	const fetchUsernameById = async (userId) => {
+	const fetchUsernameById = async (id) => {
 		try {
 			const { data, error } = await client
 				.from('profiles')
 				.select('username')
-				.eq('id', userId)
+				.eq('id', id)
 				.single();
 
 			if (error) {
@@ -54,9 +55,9 @@
 		}
 	};
 
-	const getUserByUsername = async (userId) => {
+	const getUserByUsername = async (id) => {
 		try {
-			const username = await fetchUsernameById(userId);
+			const username = await fetchUsernameById(id);
 			return username;
 		} catch (error) {
 			console.error('Error fetching username:', error.message);

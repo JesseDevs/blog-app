@@ -22,7 +22,8 @@
 			<p class="visible-content">{{ truncatedText }}</p>
 		</text-content>
 	</post-card>
-	<card-details class="small-voice">
+	<create-by> {{ username }}</create-by>
+	<card-footer class="small-voice">
 		<p class="faded">{{ formatTime(post.time_created) }}</p>
 		<p>
 			<Icon name="ph:dot-outline-fill" />
@@ -32,7 +33,7 @@
 			<Icon name="ph:dot-outline-fill" />
 		</p>
 		<p class="reading-time faded">{{ readingTime(post.content) }}</p>
-	</card-details>
+	</card-footer>
 </template>
 
 <script setup>
@@ -46,6 +47,39 @@
 	const userPosts = ref([]);
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
+
+	const fetchUsernameById = async (id) => {
+		try {
+			const { data, error } = await client
+				.from('profiles')
+				.select('username')
+				.eq('id', id)
+				.single();
+
+			if (error) {
+				throw error;
+			}
+
+			if (data) {
+				return data.username;
+			}
+
+			return '';
+		} catch (error) {
+			console.error('Error fetching username:', error.message);
+			return '';
+		}
+	};
+
+	const getUserByUsername = async (id) => {
+		try {
+			const username = await fetchUsernameById(id);
+			return username;
+		} catch (error) {
+			console.error('Error fetching username:', error.message);
+			return '';
+		}
+	};
 
 	const truncatedHeader = computed(() => {
 		if (!props.post || !props.post.header) return '';
@@ -89,6 +123,14 @@
 		const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 		return `${formattedHours}:${formattedMinutes} ${period}`;
 	};
+
+	const username = ref('');
+
+	onMounted(async () => {
+		if (props.post && props.post.belongs_to) {
+			username.value = await getUserByUsername(props.post.belongs_to);
+		}
+	});
 </script>
 
 <style lang="scss"></style>
