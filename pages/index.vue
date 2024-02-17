@@ -73,7 +73,7 @@
 			z-index: -100;
 			left: 0;
 			top: 0;
-			border-bottom: 1px solid rgb(46 46 46);
+			// border-bottom: 1px solid rgb(46 46 46);
 			border-top: 1px solid rgb(46 46 46);
 			opacity: 0.4;
 			overflow-y: hidden;
@@ -83,6 +83,7 @@
 			border-radius: 3px;
 			height: 48px;
 			padding: 6px 15px;
+			margin: 0 20px;
 			font-weight: 600;
 			color: var(--button-text);
 			background-color: var(--button-bg);

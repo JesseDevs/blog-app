@@ -163,9 +163,9 @@
 		position: relative;
 
 		&.blurred {
-			filter: blur(5px); // Adjust the blur amount as needed
+			filter: blur(5px);
 			color: transparent;
-			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); // Add text shadow to make it visible
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 		}
 	}
 
