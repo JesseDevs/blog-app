@@ -10,7 +10,7 @@
 				</div>
 				<form @submit.prevent="signInWithEmail()">
 					<div class="field">
-						<label for="email">Email<span>*</span></label>
+						<label for="email">Email<span class="required"> *</span></label>
 						<input
 							id="email"
 							required
@@ -22,7 +22,9 @@
 						/>
 					</div>
 					<div class="field">
-						<label for="password">Password<span>*</span></label>
+						<label for="password"
+							>Password<span class="required"> *</span></label
+						>
 						<input
 							id="password"
 							required
@@ -171,40 +173,6 @@
 
 			.custom-link:hover::before {
 				width: 100%;
-			}
-		}
-
-		form {
-			display: flex;
-			flex-direction: column;
-			max-width: 400px;
-			justify-items: start;
-
-			.field {
-				display: flex;
-				margin-bottom: 15px;
-				flex-direction: column;
-				width: 100%;
-				gap: 5px;
-				position: relative;
-
-				input {
-					font-family: 'Roboto Slab', serif;
-					width: 100%;
-					padding: 8px 1rem;
-					font-size: var(--size-base);
-					background-color: var(--light-fade);
-					border: none;
-					outline: none;
-
-					&::placeholder {
-						color: rgb(101, 101, 101);
-					}
-
-					&:focus {
-						outline: 1px solid rgb(128, 127, 127);
-					}
-				}
 			}
 		}
 	}

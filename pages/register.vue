@@ -72,20 +72,24 @@
 					/>
 				</div>
 				<div class="field">
-					<label for="fullName">Full Name</label>
+					<label for="fullName"
+						>Full Name <span class="required">*</span></label
+					>
 					<input
 						type="text"
 						id="fullName"
+						required
 						placeholder="Full Name"
 						v-model="credentials.fullName"
 						aria-label="Full Name"
 					/>
 				</div>
 				<div class="field">
-					<label for="username">Username</label>
+					<label for="username">Username <span class="required">*</span></label>
 					<input
 						type="text"
 						id="username"
+						required
 						placeholder="Username"
 						v-model="credentials.username"
 						aria-label="Username"
@@ -150,55 +154,9 @@
 	}
 
 	form {
-		display: flex;
-		flex-direction: column;
-		max-width: 400px;
-		justify-items: start;
-
-		span.required {
-			color: red;
-		}
-
-		.field {
-			display: flex;
-			margin-bottom: 15px;
-			flex-direction: column;
-			width: 100%;
-			gap: 5px;
-			position: relative;
-
-			&:last-of-type {
-				margin-bottom: 8px;
-			}
-
-			input {
-				font-family: 'Roboto Slab', serif;
-				width: 100%;
-				padding: 8px 1rem;
-				font-size: var(--size-base);
-				background-color: rgb(239 239 239 /0.8);
-				border: none;
-				outline: none;
-				border-radius: 5px;
-
-				&::placeholder {
-					color: rgb(87, 84, 84);
-				}
-
-				&:focus {
-					outline: 1px solid rgb(128, 127, 127);
-					background-color: rgb(239 239 239);
-				}
-			}
-		}
-
-		.form-support {
-			margin-bottom: 30px;
-
-			a {
-				font-size: inherit;
-				text-decoration: underline;
-			}
+		a {
+			font-size: inherit;
+			text-decoration: underline;
 		}
 	}
 
