@@ -1,5 +1,5 @@
 <template>
-	<post-card>
+	<post-card class="home-card">
 		<picture>
 			<img
 				v-if="!imageLoaded"
@@ -18,22 +18,23 @@
 		</picture>
 
 		<text-content>
+			<a class="post-user" @click.stop :href="`/${username}`"> {{ username }}</a>
+
 			<h3 class="level-one-voice">{{ post.header }}</h3>
 			<p class="visible-content">{{ truncatedText }}</p>
 		</text-content>
+		<card-footer class="small-voice">
+			<p class="faded">{{ formatTime(post.time_created) }}</p>
+			<p>
+				<Icon name="ph:dot-outline-fill" />
+			</p>
+			<p class="faded">{{ formattedDate(post.date_created) }}</p>
+			<p>
+				<Icon name="ph:dot-outline-fill" />
+			</p>
+			<p class="reading-time faded">{{ readingTime(post.content) }}</p>
+		</card-footer>
 	</post-card>
-	<create-by> {{ username }}</create-by>
-	<card-footer class="small-voice">
-		<p class="faded">{{ formatTime(post.time_created) }}</p>
-		<p>
-			<Icon name="ph:dot-outline-fill" />
-		</p>
-		<p class="faded">{{ formattedDate(post.date_created) }}</p>
-		<p>
-			<Icon name="ph:dot-outline-fill" />
-		</p>
-		<p class="reading-time faded">{{ readingTime(post.content) }}</p>
-	</card-footer>
 </template>
 
 <script setup>
@@ -133,4 +134,45 @@
 	});
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+	.home-card {
+		text-content {
+			position: relative;
+			pointer-events: all;
+
+			.post-user {
+				font-weight: 500;
+				opacity: 0.7;
+				padding-left: 17px;
+				width: fit-content;
+				transition: opacity 0.2s ease-in-out;
+				position: relative;
+				&:after {
+					content: '';
+					opacity: 0.7;
+					height: 1.5px;
+					width: calc(100% - 15px);
+					position: absolute;
+					background-color: white;
+
+					opacity: 0;
+					transition: opacity 0.2s ease-in-out;
+					bottom: -2px;
+					right: 0;
+				}
+				&:before {
+					content: '@';
+					position: absolute;
+					left: 0;
+				}
+				&:hover {
+					opacity: 1;
+
+					&:after {
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
+</style>

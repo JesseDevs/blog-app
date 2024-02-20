@@ -1,7 +1,7 @@
 <template>
-	<ul v-if="posts" class="card-menu">
+	<ul v-if="posts" class="card-menu" id="explore-cards">
 		<li v-for="post in posts" :key="post.id">
-			<NuxtLink :to="`${getUserByUsername(post.belongs_to)}/posts/${post.id}`">
+			<NuxtLink :to="`${post.username}/posts/${post.id}`">
 				<PostHomeCard :post="post" />
 			</NuxtLink>
 		</li>
@@ -67,7 +67,15 @@
 
 	onMounted(async () => {
 		await fetchPosts();
+		for (const post of posts.value) {
+			const user = await getUserByUsername(post.belongs_to);
+			post.username = user; // Add username property to each post
+		}
 	});
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+	ul {
+		scroll-margin-top: 50px;
+	}
+</style>
