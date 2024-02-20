@@ -19,16 +19,24 @@
 							comes around...
 						</p>
 
-						<a v-if="!user" href="/register" aria-label="Go to register page">
+						<a
+							class="user-button"
+							v-if="!user"
+							href="/register"
+							aria-label="Go to register page"
+						>
 							Sign Up
 						</a>
 						<NuxtLink
+							class="user-button"
 							v-else
 							:to="`/${userProfile?.username}/Create/Post`"
 							aria-label="Go to login page"
 						>
 							Create an Echo
 						</NuxtLink>
+
+						<a class="custom-link" href="#explore-cards">Explore</a>
 					</text-content>
 				</landing-block>
 			</inner-column>
@@ -79,18 +87,49 @@
 			overflow-y: hidden;
 		}
 
-		a {
+		.custom-link {
+			font-size: inherit;
+			position: relative;
+			display: inline-block;
+			transition: color 0.4s ease;
+			padding: 8px 16px;
+			margin: 20px auto 0;
+			width: fit-content;
+			height: fit-content;
+
+			letter-spacing: 0.8px;
+			font-weight: 500;
+			text-decoration: underline;
+			text-transform: uppercase;
+
+			line-height: 1;
+			text-align: center;
+			font-weight: 300;
+
+			font-style: italic;
+
+			&:hover {
+				color: black;
+				text-decoration: none;
+			}
+		}
+
+		.custom-link::before {
+			content: '';
+			position: absolute;
 			border-radius: 3px;
-			height: 48px;
-			padding: 6px 15px;
-			margin: 0 20px;
-			font-weight: 600;
-			color: var(--button-text);
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 0%;
 			background-color: var(--button-bg);
-			justify-content: center;
-			align-items: center;
-			text-decoration: none;
-			display: flex;
+			transition: height 0.3s ease;
+			// transition-delay: 0.1s;
+			z-index: -1;
+		}
+
+		.custom-link:hover::before {
+			height: 100%;
 		}
 
 		text-content {

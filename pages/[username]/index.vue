@@ -3,7 +3,7 @@
 		<profile-dashboard v-if="userProfile">
 			<inner-container>
 				<NuxtLink
-					v-if="currentUser.id === userProfile.id"
+					v-if="currentUser?.id === userProfile.id"
 					:to="`${userProfile.username}/edit/profile`"
 					aria-label="edit profile"
 					class="outline-button"
@@ -36,6 +36,8 @@
 				<PostCard :post="post" :userProfile="userProfile" />
 			</li>
 		</ul>
+
+		<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 	</section>
 </template>
 <script setup>
@@ -70,16 +72,18 @@
 
 	const fetchCurrentUser = async () => {
 		try {
-			const { data, error } = await client
-				.from('profiles')
-				.select('*')
-				.eq('id', user.value.id)
-				.single();
+			if (user.value) {
+				const { data, error } = await client
+					.from('profiles')
+					.select('*')
+					.eq('id', user.value.id)
+					.single();
 
-			if (error) {
-				console.error('Error fetching user profile:', error.message);
-			} else {
-				currentUser.value = data;
+				if (error) {
+					console.error('Error fetching user profile:', error.message);
+				} else {
+					currentUser.value = data;
+				}
 			}
 		} catch (error) {
 			console.error('Error fetching user profile:', error.message);

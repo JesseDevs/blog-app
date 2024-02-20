@@ -10,11 +10,11 @@
 						@load="imageLoaded = true"
 						loading="lazy"
 					/>
-					<div class="vignette-overlay"></div>
 				</picture>
-
-				<h1>{{ post.header }}</h1>
-				<p>{{ post.content }}</p>
+				<text-content>
+					<h1 class="level-two-voice">{{ post.header }}</h1>
+					<p>{{ post.content }}</p>
+				</text-content>
 			</detail-page>
 		</inner-column>
 	</section>
@@ -27,7 +27,14 @@
 	const route = useRoute();
 	const post = ref({});
 
-	onMounted(async () => {
+	const imageLoaded = ref(false);
+	const fallbackImageUrl = '/images/fallback-logo.jpg';
+
+	const handleImageError = (event) => {
+		event.target.src = '/images/fallback-logo.jpg';
+	};
+
+	const fetchPostDetail = async () => {
 		const postId = route.params.postid;
 		try {
 			const { data, error } = await client
@@ -42,7 +49,9 @@
 		} catch (error) {
 			console.error(error);
 		}
-	});
+	};
+
+	onMounted(fetchPostDetail);
 </script>
 
 <style lang="scss" scoped>
@@ -52,11 +61,50 @@
 		width: 100%;
 		position: relative;
 
+		text-content {
+			display: flex;
+			flex-direction: column;
+
+			h1 {
+				font-weight: 700;
+				text-transform: uppercase;
+				word-break: break-word;
+				font-family: 'Roboto Slab', serif;
+				letter-spacing: 0.07em;
+				line-height: 1.1;
+			}
+		}
+
 		picture {
 			position: relative;
+			border-radius: 5px;
+			position: relative;
+			overflow: hidden;
+
+			&:before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: linear-gradient(
+					to bottom,
+					rgb(var(--background-rgb) / 0.4) 0%,
+					var(--background) 100%
+				);
+				opacity: 0.9;
+				transition: opacity 0.5s;
+			}
+
+			&:hover::before {
+				opacity: 0;
+			}
 
 			img {
 				object-fit: cover;
+				border-radius: 5px;
+				transition: opacity 0.5s;
 			}
 
 			.vignette-overlay {
