@@ -1,14 +1,17 @@
 .card-menu {
 	li {
 
-		a {
-			padding: 1.5rem;
-			display: block;
-			width: 100%;
-			border-bottom: 1px solid var(--faded-text);
-			transition: background-color 0.2s ease-in-out;
-			cursor: auto;
+		&:first-of-type {
+			border-top: 1px solid var(--faded-text);
 		}
+
+
+		padding: 1.5rem;
+		display: block;
+		width: 100%;
+		border-bottom: 1px solid var(--faded-text);
+		transition: background-color 0.2s ease-in-out;
+
 
 		&:hover {
 			background-color: rgb(37, 36, 36);
@@ -76,15 +79,15 @@ post-card {
 	text-content {
 		overflow: hidden;
 		position: relative;
-		font-style: italic;
+
 		grid-column: 2/-1;
 		gap: 8px;
 
 
 		p.visible-content {
 			max-height: 6em;
-			min-height: 2em;
 			opacity: .7;
+			font-style: italic;
 		}
 
 		.blurred {

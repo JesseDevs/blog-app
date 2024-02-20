@@ -1,50 +1,64 @@
-.button-filled {
-	border-radius: 3px;
-	height: 48px;
-	width: 100%;
-	padding: 6px 15px;
-	font-weight: 600;
-	color: var(--button-text);
-	background-color: var(--button-bg);
-	justify-content: center;
-	align-items: center;
-	text-decoration: none;
-	display: flex;
-	border: none;
-	outline: none;
-	cursor: pointer;
-}
-
-.outline-button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	width: 150px;
-	border: 2px solid var(--light-fade);
-	padding: 8px 16px;
-	border-radius: 999px;
-	font-weight: 500;
-	transition: background-color .2s ease-in-out;
-}
-
-text-content {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-}
-
-inner-column {
-	display: block;
-	position: relative;
-	max-width: 1150px;
-	margin: auto;
-	padding: 4rem 7rem;
-	z-index: 1;
-}
-
-@media (max-width: 768px) {
-	inner-column {
-		padding: 4rem 1.5rem;
+	.user-button {
+		border-radius: 3px;
+		height: 48px;
+		padding: 6px 15px;
+		margin: 0 20px;
+		font-weight: 600;
+		color: var(--button-text);
+		background-color: var(--button-bg);
+		justify-content: center;
+		align-items: center;
+		text-decoration: none;
+		display: flex;
 	}
-}
+
+	.button-filled {
+		border-radius: 3px;
+		height: 48px;
+		width: 100%;
+		padding: 6px 15px;
+		font-weight: 600;
+		color: var(--button-text);
+		background-color: var(--button-bg);
+		justify-content: center;
+		align-items: center;
+		text-decoration: none;
+		display: flex;
+		border: none;
+		outline: none;
+		cursor: pointer;
+	}
+
+	.outline-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		width: 150px;
+		border: 2px solid var(--light-fade);
+		padding: 8px 16px;
+		border-radius: 999px;
+		font-weight: 500;
+		transition: background-color .2s ease-in-out;
+	}
+
+	text-content {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	inner-column {
+		display: block;
+		position: relative;
+		max-width: 1150px;
+		margin: auto;
+		padding: 4rem 7rem;
+		z-index: 1;
+	}
+
+	@media (max-width: 768px) {
+		inner-column {
+			padding: 4rem 1.5rem;
+		}
+	}
