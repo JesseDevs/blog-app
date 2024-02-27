@@ -3,10 +3,14 @@
 		<a class="small-voice" href="/settings/about"> About</a>
 		<a class="small-voice" href="/settings/terms">Terms of Service</a>
 		<a class="small-voice" href="/settings/privacy"> Privacy</a>
-		<a class="small-voice" target="_blank" href="https://github.com/JesseDevs">
+		<a class="small-voice" target="_blank" href="https://jessedevs.net/">
 			JesseDevs</a
 		>
-		<a class="small-voice" target="_blank" href="https://jessedevs.net/">
+		<a
+			class="small-voice"
+			target="_blank"
+			href="https://www.instagram.com/jessedude2/"
+		>
 			Who is Jesse?</a
 		>
 	</div>

@@ -189,7 +189,7 @@
 		transition: background-color 0.2s ease;
 
 		&:hover {
-			background-color: rgba(var(--white-on-dark), 0.07);
+			background-color: rgba(var(--white-on-dark), 0.09);
 		}
 	}
 </style>

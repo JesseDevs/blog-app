@@ -33,7 +33,7 @@
 
 			<text-content>
 				<h3 class="level-one-voice">{{ post.header }}</h3>
-				<p class="visible-content">{{ truncatedText }}</p>
+				<p v-html="post.content" class="visible-content"></p>
 			</text-content>
 			<card-footer class="small-voice">
 				<p class="faded">{{ formatTime(post.time_created) }}</p>

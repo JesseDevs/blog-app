@@ -21,7 +21,7 @@
 			<a class="post-user" @click.stop :href="`/${username}`"> {{ username }}</a>
 
 			<h3 class="level-one-voice">{{ post.header }}</h3>
-			<p class="visible-content">{{ truncatedText }}</p>
+			<p v-html="post.content" class="visible-content"></p>
 		</text-content>
 		<card-footer class="small-voice">
 			<p class="faded">{{ formatTime(post.time_created) }}</p>
@@ -81,29 +81,6 @@
 			return '';
 		}
 	};
-
-	const truncatedHeader = computed(() => {
-		if (!props.post || !props.post.header) return '';
-		const text = props.post.content.trim();
-		const charLimit = 35;
-		if (text.length > charLimit) {
-			return text.slice(0, charLimit) + '...';
-		} else {
-			return text;
-		}
-	});
-
-	const truncatedText = computed(() => {
-		if (!props.post || !props.post.content) return '';
-		const words = props.post.content.trim().split(' ');
-		const wordsLimit = 10;
-		const truncated = words.slice(0, wordsLimit).join(' ');
-		if (words.length > wordsLimit) {
-			return truncated + '...';
-		} else {
-			return truncated;
-		}
-	});
 
 	const handleImageError = (event) => {
 		event.target.src = '/images/fallback-logo.jpg';
