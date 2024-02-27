@@ -12,6 +12,7 @@
 						<span></span>
 						<span></span>
 					</div>
+					<div class="box-overlay"></div>
 				</button>
 
 				<NuxtLink to="/" class="logo" @click="ui.closeMenu">
@@ -99,6 +100,7 @@
 			padding: 0;
 			width: 40px;
 			height: 40px;
+			position: relative;
 
 			div.mbykw {
 				opacity: 0.65;
@@ -116,6 +118,26 @@
 				}
 				span:nth-child(3) {
 					transform: translateY(6px);
+				}
+			}
+
+			div.box-overlay {
+				position: absolute;
+				width: 85%;
+				height: 85%;
+				background-color: white;
+				top: 51%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				z-index: -1;
+				opacity: 0;
+				transition: opacity 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
+				border-radius: 5px;
+			}
+
+			&:hover {
+				div.box-overlay {
+					opacity: 0.2;
 				}
 			}
 
