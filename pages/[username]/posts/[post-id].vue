@@ -13,7 +13,7 @@
 				</picture>
 				<text-content>
 					<h1 class="level-two-voice">{{ post.header }}</h1>
-					<p>{{ post.content }}</p>
+					<div class="detail-post-content" v-html="post.content"></div>
 				</text-content>
 			</detail-page>
 		</inner-column>
@@ -64,6 +64,7 @@
 		text-content {
 			display: flex;
 			flex-direction: column;
+			padding-top: 30px;
 
 			h1 {
 				font-weight: 700;
@@ -72,6 +73,11 @@
 				font-family: 'Roboto Slab', serif;
 				letter-spacing: 0.07em;
 				line-height: 1.1;
+				border-bottom: 1px solid gray;
+			}
+
+			.detail-post-content {
+				padding-top: 30px;
 			}
 		}
 
@@ -103,7 +109,7 @@
 
 			img {
 				object-fit: cover;
-				border-radius: 5px;
+				border-radius: 6px;
 				transition: opacity 0.5s;
 			}
 

@@ -47,60 +47,45 @@
 						></textarea>
 					</div>
 
-					<div class="field text-content" @click="makeEditable">
-						<p :class="`placeholder ${thereIsContent ? 'disappear' : ''}`">
-							Write out blog post...
-						</p>
-						<p
-							ref="textbox"
-							:class="{ 'editable-class': editable }"
-							:contenteditable="editable"
-							@input="updateContent"
-						></p>
+					<div class="field text-content">
+						<ClientOnly>
+							<QuillEditor v-model:content="postData.content" />
+						</ClientOnly>
 					</div>
 				</form>
 			</create-block>
+			<div v-if="loading" class="loading-container">
+				<div>
+					<text-content>
+						<p class="level-two-voice">
+							Submitting,<br />
+							your post...
+						</p>
+					</text-content>
+					<Icon name="line-md:loading-twotone-loop" size="100" />
+				</div>
+			</div>
 		</inner-column>
 	</section>
 </template>
 
 <script setup>
-	//make placeholder text that deletes when p element is editable
-
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
 	const success = ref(false);
+	const loading = ref(false);
 
 	const postImage = ref({
 		preview: null,
 	});
 	const fileInput = ref(null);
-	const textbox = ref(null);
-	const thereIsContent = ref(false);
 
 	const postData = ref({
 		header: '',
 		content: '',
 		image: null,
 	});
-
-	const editable = ref(false);
-	const makeEditable = () => {
-		editable.value = true;
-
-		textbox.value.contentEditable = true;
-		textbox.value.focus();
-	};
-	function updateContent(event) {
-		postData.value.content = event.target.textContent;
-
-		thereIsContent.value = event.target.textContent.trim().length > 0;
-	}
-
-	const makeNormal = () => {
-		editable.value = false;
-	};
 
 	const openFileInput = () => {
 		// trigger click event of file input
@@ -146,14 +131,10 @@
 		}
 	};
 
-	const handleTextBoxContainerClick = (event) => {
-		if (!event.target.closest('div.text-content')) {
-			makeNormal();
-		}
-	};
-
 	const addPost = async () => {
 		try {
+			loading.value = true;
+
 			const { path, filename } = await uploadImage(postData.value.image);
 			const { data, error } = await client.from('posts').insert([
 				{
@@ -172,11 +153,17 @@
 			} else {
 				console.log('Data inserted successfully:', data);
 				success.value = true;
+				setTimeout(() => {
+					// Hide spinner
+					loading.value = false;
 
-				// router.push('/');
+					// Navigate to profile
+					router.push('/');
+				}, 1250);
 			}
 		} catch (error) {
 			console.error('Error:', error.message);
+			loading.value = false;
 		}
 	};
 
@@ -192,14 +179,6 @@
 		postImage.value.preview = null;
 	};
 
-	watchEffect(() => {
-		if (editable.value === true || postData.value.content.length > 0) {
-			thereIsContent.value = true;
-		} else {
-			thereIsContent.value = false;
-		}
-	});
-
 	onBeforeRouteLeave((to, from, next) => {
 		resetImagePreview();
 		next();
@@ -207,6 +186,37 @@
 </script>
 
 <style lang="scss" scoped>
+	.loading-container {
+		background-color: black;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+
+		height: 100%;
+		div {
+			display: grid;
+			padding-top: 70px;
+			place-items: center;
+			min-height: 40vh;
+			margin-bottom: 20vh;
+		}
+		text-content {
+			padding-top: 100px;
+			padding-bottom: 100px;
+			max-width: 360px;
+			margin: 0 auto;
+			p {
+				line-height: 1;
+				text-align: center;
+				font-weight: 200;
+				letter-spacing: 0.05em;
+				font-style: italic;
+				padding-bottom: 1rem;
+			}
+		}
+	}
 	section.create-post {
 		inner-column {
 			padding-top: 1rem;
@@ -248,6 +258,10 @@
 			width: 100%;
 			flex-direction: column;
 			gap: 20px;
+
+			.button-filled {
+				margin-top: 0;
+			}
 		}
 
 		textarea {
@@ -259,7 +273,7 @@
 			z-index: 0;
 			color: white;
 			resize: none;
-			height: 44px;
+			height: 47px;
 			// border-bottom: 2px solid red;
 			&::placeholder {
 				color: rgb(127, 126, 126);

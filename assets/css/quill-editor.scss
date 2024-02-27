@@ -1,0 +1,148 @@
+.ql-editor {
+	min-height: 200px;
+
+	p {
+		font-weight: 100;
+		font-size: 16px;
+	}
+}
+
+.ql-toolbar.ql-snow {
+	border-color: var(--button-bg) !important;
+}
+
+.ql-container.ql-snow {
+	border-color: var(--button-bg) !important;
+}
+
+.ql-editor.ql-blank::before {
+	color: rgb(127 126 126) !important;
+	font-size: var(--size-base);
+}
+
+.ql-snow {
+	.ql-fill {
+
+		fill: rgb(127 126 126) !important;
+	}
+
+	.ql-stroke {
+		stroke: rgb(127 126 126) !important;
+
+	}
+}
+
+.ql-snow.ql-toolbar button,
+.ql-snow .ql-toolbar button,
+.ql-snow .ql-picker {
+
+	height: 35px !important;
+	width: 35px !important;
+
+}
+
+.ql-formats,
+.ql-toolbar {
+	display: flex !important;
+	flex-wrap: wrap;
+	column-gap: 1px;
+
+}
+
+.ql-toolbar {
+	column-gap: 17px;
+	row-gap: 5px;
+}
+
+.ql-snow.ql-toolbar {
+
+	button,
+	.ql-picker {
+		border-radius: 5px;
+		transition: background-color .2s ease-in-out;
+	}
+
+	.ql-picker:hover,
+	button:hover {
+		background-color: rgba(255, 255, 255, 0.129);
+
+		.ql-fill {
+			fill: var(--button-bg) !important;
+		}
+
+		.ql-stroke {
+			stroke: var(--button-bg) !important;
+
+		}
+	}
+}
+
+.ql-toolbar .ql-active {
+	background-color: rgba(255, 255, 255, 0.129) !important;
+
+	.ql-fill {
+		fill: var(--button-bg) !important;
+	}
+
+	.ql-stroke {
+		stroke: var(--button-bg) !important;
+
+	}
+}
+
+.ql-align-right {
+	text-align: right;
+}
+
+.ql-indent-1 {
+	margin-left: 2rem;
+}
+
+.ql-indent-2 {
+	margin-left: 5rem;
+}
+
+.ql-indent-3 {
+	margin-left: 8rem;
+}
+
+.ql-indent-4 {
+	margin-left: 10rem;
+}
+
+.ql-indent-5 {
+	margin-left: 13rem;
+}
+
+.detail-post-content {
+	* {
+		line-height: 1.7;
+	}
+
+	ol {
+		list-style: upper-roman;
+		padding-left: 15px;
+		margin-left: 15px;
+	}
+
+	ul {
+		list-style-type: disc;
+		padding-left: 15px;
+		margin-left: 15px;
+	}
+
+	p a {
+		text-decoration: underline;
+		color: var(--button-bg);
+	}
+
+	blockquote {
+		border-left: 4px solid white;
+		padding: 5px;
+		margin: 5px 0;
+		border-radius: 2px;
+
+		background-color: rgb(81, 79, 79);
+	}
+
+}
