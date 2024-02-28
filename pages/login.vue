@@ -46,7 +46,7 @@
 							/>
 						</button>
 					</div>
-					<button class="button-filled" type="submit">Submit</button>
+					<button class="button-filled submit-btn" type="submit">Submit</button>
 				</form>
 
 				<p class="form-support small-voice">
