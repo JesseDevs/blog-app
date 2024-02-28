@@ -83,8 +83,12 @@
 			top: 0;
 			// border-bottom: 1px solid rgb(46 46 46);
 			border-top: 1px solid rgb(46 46 46);
-			opacity: 0.4;
 			overflow-y: hidden;
+			background-color: var(--background);
+			opacity: 0.8;
+			img {
+				opacity: 0.8;
+			}
 		}
 
 		.custom-link {
