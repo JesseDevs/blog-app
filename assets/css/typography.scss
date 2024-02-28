@@ -1,12 +1,12 @@
 :root {
-	--size-xs: clamp(9.24px, 0.26vw + 9.22px, 12.16px);
-	--size-sm: clamp(12.4px, 0.32vw + 11.52px, 16.2px);
-	--size-base: clamp(15px, 0.4vw + 14.4px, 18px);
-	--size-md: clamp(19px, 0.5vw + 18px, 22.75px);
-	--size-lg: clamp(24px, 0.63vw + 22.5px, 28.69px);
-	--size-xl: clamp(30.25px, 0.78vw + 28.13px, 36.11px);
-	--size-xxl: clamp(38.06px, 0.98vw + 35.16px, 45.39px);
-	--size-xxxl: clamp(47.83px, 1.22vw + 43.95px, 56.98px);
+	--size-xs: clamp(10.24px, 0.26vw + 9.22px, 12.16px);
+	--size-sm: clamp(13.4px, 0.32vw + 11.52px, 16.2px);
+	--size-base: clamp(16px, 0.4vw + 14.4px, 18px);
+	--size-md: clamp(20px, 0.5vw + 18px, 22.75px);
+	--size-lg: clamp(25px, 0.63vw + 22.5px, 28.69px);
+	--size-xl: clamp(31.25px, 0.78vw + 28.13px, 36.11px);
+	--size-xxl: clamp(39.06px, 0.98vw + 35.16px, 45.39px);
+	--size-xxxl: clamp(48.83px, 1.22vw + 43.95px, 56.98px);
 }
 
 .logo {
