@@ -5,21 +5,9 @@
 @import 'quill-editor.scss';
 
 
-/* Dark
-	--background: #D7CCC8;
-	--background-light: #EFEBE9;
-	--background-dark: #BCAAA4;
-
-	--text: rgb(25 25 25);
-
-	--white: #f4f0f0;
-	--black-rgb: 25 25 25;
-	*/
-
-
 :root {
-	--background: rgb(4 5 6);
-	--background-rgb: 4 5 6;
+	--background: rgb(10, 12, 12);
+	--background-rgb: 10 12 12;
 	--background-light: #EFEBE9;
 	--background-dark: #BCAAA4;
 

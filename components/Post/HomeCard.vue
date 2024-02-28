@@ -1,5 +1,10 @@
 <template>
 	<post-card class="home-card">
+		<card-header>
+			<button @click.prevent="copyLink" class="share-btn">
+				<Icon name="material-symbols:ios-share-rounded" />
+			</button>
+		</card-header>
 		<picture>
 			<img
 				v-if="!imageLoaded"
@@ -82,6 +87,17 @@
 		}
 	};
 
+	const copyLink = () => {
+		const url = `${window.location.origin}/${username.value}/posts/${props.post.id}`;
+		navigator.clipboard.writeText(url);
+		notifyUser('Link copied to clipboard');
+	};
+
+	const notifyUser = (message) => {
+		// Use your preferred notification method here (e.g., toast, alert)
+		alert(message);
+	};
+
 	const handleImageError = (event) => {
 		event.target.src = '/images/fallback-logo.jpg';
 	};
@@ -148,6 +164,62 @@
 					&:after {
 						opacity: 1;
 					}
+				}
+			}
+		}
+		card-header {
+			max-width: 45px;
+		}
+		.delete-btn,
+		.share-btn {
+			display: flex;
+			grid-column: 1/-1;
+			appearance: none;
+			width: 100%;
+			height: 100%;
+			border: none;
+			outline: none;
+			color: white;
+			background-color: transparent;
+			cursor: pointer;
+			pointer-events: all;
+
+			align-items: center;
+			justify-content: center;
+			svg {
+				width: 23px;
+				height: 23px;
+				pointer-events: none;
+				transition: color 0.2s ease-in-out;
+				color: var(--faded-text);
+				path {
+					pointer-events: none;
+				}
+			}
+
+			&::after {
+				content: '';
+				padding: 8px;
+				width: 25px;
+				height: 25px;
+				border-radius: 999px;
+				background-color: red;
+				position: absolute;
+				opacity: 0;
+				transition: opacity 0.2s ease-in-out;
+			}
+		}
+
+		.share-btn {
+			&::after {
+				background-color: green;
+			}
+			&:hover {
+				svg {
+					color: green;
+				}
+				&::after {
+					opacity: 0.2;
 				}
 			}
 		}

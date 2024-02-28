@@ -13,6 +13,10 @@
 				>
 					<Icon name="iconamoon:trash" />
 				</button>
+
+				<button @click.prevent="copyLink" class="share-btn">
+					<Icon name="material-symbols:ios-share-rounded" />
+				</button>
 			</card-header>
 			<picture>
 				<img
@@ -63,6 +67,17 @@
 	const router = useRouter();
 	const currentUser = ref(null);
 
+	const copyLink = () => {
+		const url = `${window.location.origin}/${props.userProfile.username}/posts/${props.post.id}`;
+		navigator.clipboard.writeText(url);
+		notifyUser('Link copied to clipboard');
+	};
+
+	const notifyUser = (message) => {
+		// Use your preferred notification method here (e.g., toast, alert)
+		alert(message);
+	};
+
 	const fetchCurrentUser = async () => {
 		try {
 			const { data, error } = await client
@@ -83,18 +98,6 @@
 
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
-
-	const truncatedText = computed(() => {
-		if (!props.post || !props.post.content) return '';
-		const words = props.post.content.trim().split(' ');
-		const wordsLimit = 10;
-		const truncated = words.slice(0, wordsLimit).join(' ');
-		if (words.length > wordsLimit) {
-			return truncated + '...';
-		} else {
-			return truncated;
-		}
-	});
 
 	const handleImageError = (event) => {
 		event.target.src = '/images/fallback-logo.jpg';
@@ -155,19 +158,6 @@
 	// 	pointer-events: none;
 	// }
 
-	card-header {
-		display: flex;
-		width: 100%;
-		justify-content: flex-end;
-		grid-column: 1/-1;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		border-radius: 999px;
-		width: 25px;
-		height: 25px;
-	}
-
 	post-card {
 		text-content {
 			pointer-events: none;
@@ -175,7 +165,8 @@
 		}
 	}
 
-	.delete-btn {
+	.delete-btn,
+	.share-btn {
 		display: flex;
 		grid-column: 1/-1;
 		appearance: none;
@@ -215,6 +206,20 @@
 		&:hover {
 			svg {
 				color: red;
+			}
+			&::after {
+				opacity: 0.2;
+			}
+		}
+	}
+
+	.share-btn {
+		&::after {
+			background-color: green;
+		}
+		&:hover {
+			svg {
+				color: green;
 			}
 			&::after {
 				opacity: 0.2;
