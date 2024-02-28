@@ -11,7 +11,7 @@
 		['blockquote', 'link'],
 
 		[{ list: 'ordered' }, { list: 'bullet' }],
-		[{ indent: '-1' }, { indent: '+1' }, { direction: 'rtl' }], // outdent/indent
+		[{ indent: '-1' }, { indent: '+1' }], // outdent/indent
 
 		[{ align: [] }],
 		[], // text direction

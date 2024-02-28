@@ -10,19 +10,13 @@
 						</back-button>
 						<button class="button-filled" type="submit">Add Post</button>
 					</div>
+
 					<div @click="openFileInput" class="field add-picture">
 						<Icon
 							name="material-symbols:perm-media-outline-rounded"
 							size="40"
 						/>
 						<p>Add Thumbnail</p>
-
-						<img
-							v-if="postImage.preview"
-							:src="postImage.preview"
-							alt="image-upload-preview"
-							style="width: 200px; height: 200px"
-						/>
 						<input
 							ref="fileInput"
 							type="file"
@@ -33,6 +27,15 @@
 							@change="onImageUpload"
 						/>
 					</div>
+
+					<picture v-if="postImage.preview" class="image-upload-preview">
+						<img
+							:src="postImage.preview"
+							alt="image-upload-preview"
+							style="width: 200px; height: 200px"
+						/>
+						<button @click.prevent="removeImageData">X</button>
+					</picture>
 
 					<div class="field header level-three-voice">
 						<textarea
@@ -53,18 +56,10 @@
 						</ClientOnly>
 					</div>
 				</form>
+
+				{{ postData }}
 			</create-block>
-			<div v-if="loading" class="loading-container">
-				<div>
-					<text-content>
-						<p class="level-two-voice">
-							Submitting,<br />
-							your post...
-						</p>
-					</text-content>
-					<Icon name="line-md:loading-twotone-loop" size="100" />
-				</div>
-			</div>
+			<LoadingContainer v-if="loading" :text="loadingText" />
 		</inner-column>
 	</section>
 </template>
@@ -75,6 +70,7 @@
 	const user = useSupabaseUser();
 	const success = ref(false);
 	const loading = ref(false);
+	const loadingText = ref(`Submitting,<br /> your post...`);
 
 	const postImage = ref({
 		preview: null,
@@ -179,6 +175,11 @@
 		postImage.value.preview = null;
 	};
 
+	const removeImageData = () => {
+		postImage.value.preview = null;
+		postData.value.image = null;
+	};
+
 	onBeforeRouteLeave((to, from, next) => {
 		resetImagePreview();
 		next();
@@ -186,37 +187,6 @@
 </script>
 
 <style lang="scss" scoped>
-	.loading-container {
-		background-color: black;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		right: 0;
-		left: 0;
-
-		height: 100%;
-		div {
-			display: grid;
-			padding-top: 70px;
-			place-items: center;
-			min-height: 40vh;
-			margin-bottom: 20vh;
-		}
-		text-content {
-			padding-top: 100px;
-			padding-bottom: 100px;
-			max-width: 360px;
-			margin: 0 auto;
-			p {
-				line-height: 1;
-				text-align: center;
-				font-weight: 200;
-				letter-spacing: 0.05em;
-				font-style: italic;
-				padding-bottom: 1rem;
-			}
-		}
-	}
 	section.create-post {
 		inner-column {
 			padding-top: 1rem;
@@ -258,6 +228,7 @@
 			width: 100%;
 			flex-direction: column;
 			gap: 20px;
+			min-height: 80vh;
 
 			.button-filled {
 				margin-top: 0;
@@ -291,7 +262,6 @@
 		}
 
 		div.text-content {
-			min-height: 500px;
 			display: flex;
 			align-items: stretch;
 			p {
