@@ -12,6 +12,7 @@ export default defineNuxtConfig({
 		'@nuxt/image-edge',
 		'@nuxtjs/supabase',
 		'@nuxtjs/google-fonts',
+		'@nuxtjs/color-mode',
 	],
 	googleFonts: {
 		preload: true,
@@ -35,6 +36,16 @@ export default defineNuxtConfig({
 				},
 			},
 		},
+	},
+	colorMode: {
+		preference: 'system',
+		fallback: 'dark',
+		hid: 'nuxt-color-mode-script',
+		globalName: '__NUXT_COLOR_MODE__',
+		componentName: 'ColorScheme',
+		classPrefix: '',
+		classSuffix: '-mode',
+		storageKey: 'nuxt-color-mode',
 	},
 	supabase: {
 		url: process.env.SUPABASE_URL,

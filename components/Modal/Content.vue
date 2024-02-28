@@ -38,7 +38,7 @@
 				<div class="modal-BTNs">
 					<button
 						class="palette-button"
-						@click="ui.toggleMainMenu"
+						@click="changePalette"
 						aria-label="change palette"
 					>
 						<Icon
@@ -72,6 +72,10 @@
 	const router = useRouter();
 	const user = useSupabaseUser();
 
+	const colorMode = useColorMode();
+	const colorModes = ['dark', 'light', 'vampire'];
+	const colorModeIndex = ref(0);
+
 	const userProfile = ref(null);
 	onMounted(async () => {
 		if (user.value) {
@@ -104,6 +108,12 @@
 		} catch (error) {
 			console.error('Error signing out user:', error.message);
 		}
+	};
+
+	const changePalette = () => {
+		colorModeIndex.value = (colorModeIndex.value + 1) % colorModes.length;
+		colorMode.value = colorModes[colorModeIndex.value];
+		ui.toggleMainMenu();
 	};
 </script>
 

@@ -13,6 +13,14 @@
 				name="streamline:interface-id-voice-1-identification-secure-id-soundwave-sound-voice-security"
 				color="var(--button-bg)"
 			/>
+			<Icon
+				name="streamline:interface-id-voice-1-identification-secure-id-soundwave-sound-voice-security"
+				color="var(--button-bg)"
+			/>
+			<Icon
+				name="streamline:interface-id-voice-1-identification-secure-id-soundwave-sound-voice-security"
+				color="var(--button-bg)"
+			/>
 		</space-filler>
 	</section>
 </template>
@@ -34,32 +42,27 @@
 		background: rgba(46, 46, 46, 0.5);
 		backdrop-filter: blur(4px);
 		overflow: hidden;
-		background: rgb(3, 4, 5);
-		// background: linear-gradient(
-		// 	0deg,
-		// 	rgba(3, 4, 5, 1) 0%,
-		// 	rgba(3, 4, 5, 0) 50%,
-		// 	rgba(3, 4, 5, 1) 100%
-		// );
-
+		background: var(--background);
 		space-filler {
 			display: flex;
+
 			align-items: center;
 			justify-content: center;
 			width: 100%;
-			height: 100px;
+			height: 130px;
 			overflow-y: hidden;
+			overflow-x: visible;
 			filter: blur(7px);
 			opacity: 0.8;
-			gap: 15px;
+			gap: 18px;
 			position: relative;
 
-			background: rgb(3, 4, 5);
+			background: var(--background);
 			background: linear-gradient(
 				0deg,
-				rgba(3, 4, 5, 1) 0%,
-				rgba(3, 4, 5, 0) 50%,
-				rgba(3, 4, 5, 1) 100%
+				rgb(var(--background-rgb)) 0%,
+				rgb(var(--background-rgb)) 50%,
+				rgb(var(--background-rgb)) 100%
 			);
 			&::before {
 				content: '';
@@ -87,10 +90,16 @@
 				transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
 			}
 			svg {
+				flex-shrink: 0;
 				height: auto;
 				width: 150px;
 				opacity: 0.6;
 				filter: blur(6px);
+
+				&:nth-of-type(3),
+				&:nth-of-type(5) {
+					transform: scaleX(-1);
+				}
 			}
 		}
 	}
