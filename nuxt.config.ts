@@ -4,6 +4,17 @@ export default defineNuxtConfig({
 
 	app: {
 		pageTransition: { name: 'layout', mode: 'out-in' },
+		head: {
+			title: 'ECHO',
+
+			meta: [
+				{ charset: 'utf-8' },
+				{
+					name: 'viewport',
+					content: 'width=device-width, initial-scale=1, maximum-scale=1',
+				},
+			],
+		},
 	},
 	modules: [
 		'nuxt-icon',
