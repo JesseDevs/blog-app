@@ -95,7 +95,7 @@
 			const { data, error } = await client
 				.from('profiles')
 				.select('*')
-				.eq('username', route.params.username.toLocaleLowerCase())
+				.eq('username', route.params.username)
 				.single();
 
 			if (error) {
