@@ -1,7 +1,12 @@
 <template>
 	<section class="detail">
 		<inner-column>
-			<detail-page>
+			<LoadingContainer v-if="!isDataLoaded" :text="loadingText" />
+
+			<detail-page
+				v-if="userProfile"
+				:class="{ gone: !isDataLoaded, loaded: isDataLoaded }"
+			>
 				<picture>
 					<img
 						:src="`https://naduzuobtmmhavkozjxf.supabase.co/storage/v1/object/public/post-images/${post.belongs_to}/${post.image_url}?t=2024-01-30T08%3A07%3A46.058Z`"
@@ -11,8 +16,28 @@
 						loading="lazy"
 					/>
 				</picture>
+				<h1 class="level-two-voice">{{ post.header }}</h1>
+				<post-header>
+					<div class="user-content">
+						<p>{{ userProfile.username }}</p>
+
+						<p class="faded">{{ formattedDate(post.date_created) }}</p>
+					</div>
+					<div class="btn-actions">
+						<button
+							v-if="currentUser?.id === userProfile?.id"
+							@click.prevent="deletePost(post.id)"
+							class="delete-btn"
+						>
+							<Icon name="material-symbols:delete-outline-rounded" />
+						</button>
+
+						<button @click.prevent="copyLink" class="share-btn">
+							<Icon name="material-symbols:ios-share-rounded" />
+						</button>
+					</div>
+				</post-header>
 				<text-content>
-					<h1 class="level-two-voice">{{ post.header }}</h1>
 					<div class="detail-post-content" v-html="post.content"></div>
 				</text-content>
 			</detail-page>
@@ -24,14 +49,72 @@
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const userProfile = ref(null);
+	const currentUser = ref(null);
 	const route = useRoute();
+	const router = useRouter();
 	const post = ref({});
+	const isDataLoaded = ref(false);
+	const loadingText = ref('Loading...');
 
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
 
 	const handleImageError = (event) => {
 		event.target.src = '/images/fallback-logo.jpg';
+	};
+
+	const formattedDate = (dateString) => {
+		const options = { month: 'short', day: 'numeric', year: 'numeric' };
+		const date = new Date(dateString);
+		return date.toLocaleDateString(undefined, options);
+	};
+
+	const copyLink = () => {
+		const url = `${window.location.origin}/${userProfile.value.username}/posts/${post.value.id}`;
+		navigator.clipboard.writeText(url);
+		notifyUser('Link copied to clipboard');
+	};
+
+	const notifyUser = (message) => {
+		alert(message);
+	};
+
+	const deletePost = async (postId) => {
+		const confirmed = confirm('Are you sure you want to delete this post?');
+
+		if (!confirmed) {
+			return;
+		}
+		try {
+			const { error } = await client.from('posts').delete().eq('id', postId);
+
+			if (error) {
+				console.error('Error deleting post:', error.message);
+			} else {
+				console.log('deleted post');
+				router.push('/');
+			}
+		} catch (error) {
+			console.error('Error deleting post:', error.message);
+		}
+	};
+
+	const fetchCurrentUser = async () => {
+		try {
+			const { data, error } = await client
+				.from('profiles')
+				.select('*')
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				currentUser.value = data;
+			}
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+		}
 	};
 
 	const fetchPostDetail = async () => {
@@ -51,30 +134,88 @@
 		}
 	};
 
-	onMounted(fetchPostDetail);
+	const fetchUserProfile = async () => {
+		try {
+			const { data, error } = await client
+				.from('profiles')
+				.select('*')
+				.eq('id', post.value.belongs_to)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				userProfile.value = data;
+			}
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+		}
+	};
+
+	onMounted(async () => {
+		await fetchPostDetail();
+		await fetchCurrentUser();
+		await fetchUserProfile();
+
+		setTimeout(() => {
+			isDataLoaded.value = true;
+		}, 800);
+	});
 </script>
 
 <style lang="scss" scoped>
+	.loaded {
+		opacity: 1;
+		transition: opacity 0.5s;
+	}
+
+	.gone {
+		opacity: 0;
+	}
 	detail-page {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 		position: relative;
 
+		h1 {
+			font-weight: 700;
+			text-transform: uppercase;
+			word-break: break-word;
+			font-family: 'Roboto Slab', serif;
+			letter-spacing: 0.07em;
+			line-height: 1.1;
+			padding-top: 30px;
+		}
+
+		post-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			position: relative;
+			width: 100%;
+			border-bottom: 1px solid gray;
+			padding-top: 10px;
+			padding-bottom: 5px;
+
+			.user-content {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+
+				p {
+					font-size: var(--size-sm);
+				}
+			}
+
+			p.faded {
+				color: var(--faded-text);
+			}
+		}
+
 		text-content {
 			display: flex;
 			flex-direction: column;
-			padding-top: 30px;
-
-			h1 {
-				font-weight: 700;
-				text-transform: uppercase;
-				word-break: break-word;
-				font-family: 'Roboto Slab', serif;
-				letter-spacing: 0.07em;
-				line-height: 1.1;
-				border-bottom: 1px solid gray;
-			}
 
 			.detail-post-content {
 				padding-top: 30px;
@@ -126,6 +267,74 @@
 					rgba(0, 0, 0, 0.6) 90%
 				);
 				pointer-events: none;
+			}
+		}
+	}
+
+	.btn-actions {
+		display: flex;
+		gap: 15px;
+	}
+
+	.delete-btn,
+	.share-btn {
+		display: flex;
+
+		appearance: none;
+		width: 100%;
+		height: 100%;
+		border: none;
+		outline: none;
+		color: white;
+		background-color: transparent;
+		cursor: pointer;
+		pointer-events: all;
+
+		align-items: center;
+		justify-content: center;
+		svg {
+			width: 23px;
+			height: 23px;
+			pointer-events: none;
+			transition: color 0.2s ease-in-out, transform 0.3s ease;
+			color: var(--faded-text);
+			path {
+				pointer-events: none;
+			}
+		}
+
+		&::after {
+			content: '';
+			padding: 8px;
+			width: 25px;
+			height: 25px;
+			border-radius: 999px;
+			background-color: red;
+			position: absolute;
+			opacity: 0;
+			transition: opacity 0.2s ease-in-out;
+		}
+		&:hover {
+			svg {
+				color: red;
+				transform: scale(1.1);
+			}
+			&::after {
+				opacity: 0.2;
+			}
+		}
+	}
+
+	.share-btn {
+		&::after {
+			background-color: green;
+		}
+		&:hover {
+			svg {
+				color: green;
+			}
+			&::after {
+				opacity: 0.2;
 			}
 		}
 	}
