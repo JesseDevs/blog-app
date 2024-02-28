@@ -19,7 +19,7 @@
 			options: {
 				data: {
 					full_name: fullName,
-					username: username.toLocaleLowerCase(),
+					username: username,
 					email,
 					likes: [],
 				},
@@ -120,7 +120,7 @@
 					and
 					<a class="small-voice" href="/settings/privacy">Privacy Policy</a>
 				</p>
-				<button class="button-filled" type="submit">Submit</button>
+				<button class="button-filled submit-btn" type="submit">Submit</button>
 			</form>
 			<div class="error" v-if="credentials.errorMessage">
 				<p>{{ credentials.errorMessage }}</p>
