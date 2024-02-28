@@ -27,4 +27,16 @@
 	});
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+	.ql-toolbar .ql-active {
+		background-color: rgba(255, 255, 255, 0.129) !important;
+
+		.ql-fill {
+			fill: var(--button-bg) !important;
+		}
+
+		.ql-stroke {
+			stroke: var(--button-bg) !important;
+		}
+	}
+</style>
