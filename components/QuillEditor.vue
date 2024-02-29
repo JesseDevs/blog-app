@@ -11,7 +11,7 @@
 		['blockquote', 'link'],
 
 		[{ list: 'ordered' }, { list: 'bullet' }],
-		[{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+		// [{ indent: '-1' }, { indent: '+1' }],
 
 		[{ align: [] }],
 		[], // text direction
@@ -28,15 +28,15 @@
 </script>
 
 <style lang="scss">
-	.ql-toolbar .ql-active {
-		background-color: rgba(255, 255, 255, 0.129) !important;
+	// .ql-toolbar .ql-active {
+	// 	background-color: rgba(255, 255, 255, 0.129) !important;
 
-		.ql-fill {
-			fill: var(--button-bg) !important;
-		}
+	// 	.ql-fill {
+	// 		fill: var(--button-bg) !important;
+	// 	}
 
-		.ql-stroke {
-			stroke: var(--button-bg) !important;
-		}
-	}
+	// 	.ql-stroke {
+	// 		stroke: var(--button-bg) !important;
+	// 	}
+	// }
 </style>

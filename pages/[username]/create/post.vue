@@ -50,9 +50,12 @@
 						></textarea>
 					</div>
 
-					<div class="field text-content">
+					<div class="field text-content editor-container">
 						<ClientOnly>
-							<QuillEditor v-model:content="postData.content" />
+							<QuillEditor
+								theme="snow"
+								v-model:content="postData.content"
+							/>
 						</ClientOnly>
 					</div>
 				</form>
