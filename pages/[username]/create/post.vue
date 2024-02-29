@@ -11,7 +11,11 @@
 						<button class="button-filled" type="submit">Add Post</button>
 					</div>
 
-					<div @click="openFileInput" class="field add-picture">
+					<div
+						@click="openFileInput"
+						class="field add-picture"
+						:class="{ hidden: postImage.preview }"
+					>
 						<Icon
 							name="material-symbols:perm-media-outline-rounded"
 							size="40"
@@ -29,12 +33,10 @@
 					</div>
 
 					<picture v-if="postImage.preview" class="image-upload-preview">
-						<img
-							:src="postImage.preview"
-							alt="image-upload-preview"
-							style="width: 200px; height: 200px"
-						/>
-						<button @click.prevent="removeImageData">X</button>
+						<img :src="postImage.preview" alt="image-upload-preview" />
+						<button @click.prevent="removeImageData">
+							<Icon name="ic:round-close" size="25" />
+						</button>
 					</picture>
 
 					<div class="field header level-three-voice">
@@ -59,8 +61,6 @@
 						</ClientOnly>
 					</div>
 				</form>
-
-				{{ postData }}
 			</create-block>
 			<LoadingContainer v-if="loading" :text="loadingText" />
 		</inner-column>
@@ -190,6 +190,14 @@
 </script>
 
 <style lang="scss" scoped>
+	.hidden {
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+		height: 0;
+		padding: 0;
+		margin: 0;
+	}
 	section.create-post {
 		inner-column {
 			padding-top: 1rem;
@@ -250,7 +258,7 @@
 			height: 47px;
 			// border-bottom: 2px solid red;
 			&::placeholder {
-				color: rgb(127, 126, 126);
+				color: rgb(174, 173, 173);
 			}
 		}
 
@@ -284,7 +292,7 @@
 			align-items: center;
 			padding-top: 30px;
 			gap: 10px;
-			color: rgb(127, 126, 126);
+			color: rgb(174, 173, 173);
 			p {
 				text-transform: uppercase;
 				letter-spacing: 0.02em;
@@ -332,6 +340,40 @@
 			back-button {
 				flex-shrink: 0;
 			}
+		}
+	}
+
+	.image-upload-preview {
+		border-radius: 5px;
+		position: relative;
+		overflow: hidden;
+		display: block;
+		width: 100%;
+		height: 300px;
+		margin: 0 auto;
+
+		button {
+			appearance: none;
+			border: none;
+			outline: none;
+			background-color: var(--button-bg);
+			cursor: pointer;
+			position: absolute;
+			top: 2px;
+			right: 2px;
+			border-radius: 5px;
+
+			svg {
+				color: white;
+			}
+		}
+
+		img {
+			object-fit: contain;
+			height: 100%;
+			width: 100%;
+			border-radius: 6px;
+			transition: opacity 0.5s;
 		}
 	}
 </style>
