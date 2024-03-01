@@ -146,7 +146,7 @@
 					height: 1.5px;
 					width: calc(100% - 15px);
 					position: absolute;
-					background-color: white;
+					background-color: var(--white);
 
 					opacity: 0;
 					transition: opacity 0.2s ease-in-out;
@@ -179,7 +179,7 @@
 			height: 100%;
 			border: none;
 			outline: none;
-			color: white;
+			color: var(--white);
 			background-color: transparent;
 			cursor: pointer;
 			pointer-events: all;

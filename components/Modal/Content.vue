@@ -71,27 +71,13 @@
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
+	const selectedTheme = ref('dark'); // Default theme
 
 	const colorMode = useColorMode();
-	const colorModes = ['dark', 'light', 'vampire'];
+	const colorModes = ['dark', 'light', 'vampire', 'canary', 'low-contrast'];
 	const colorModeIndex = ref(0);
 
 	const userProfile = ref(null);
-	onMounted(async () => {
-		if (user.value) {
-			const { data, error } = await client
-				.from('profiles')
-				.select()
-				.eq('id', user.value.id)
-				.single();
-
-			if (error) {
-				console.error('Error fetching user profile:', error.message);
-			} else {
-				userProfile.value = data;
-			}
-		}
-	});
 
 	const signOutUser = async () => {
 		try {
@@ -110,11 +96,39 @@
 		}
 	};
 
+	const setSelectedTheme = (theme) => {
+		if (theme !== selectedTheme.value && colorModes.includes(theme)) {
+			selectedTheme.value = theme;
+			document.documentElement.setAttribute('data-theme', theme);
+			localStorage.setItem('nuxt-color-mode', theme);
+		}
+	};
+
 	const changePalette = () => {
 		colorModeIndex.value = (colorModeIndex.value + 1) % colorModes.length;
 		colorMode.value = colorModes[colorModeIndex.value];
-		ui.toggleMainMenu();
+		setSelectedTheme(colorModes[colorModeIndex.value]);
 	};
+
+	onMounted(async () => {
+		const savedTheme = localStorage.getItem('nuxt-color-mode');
+		if (savedTheme && colorModes.includes(savedTheme)) {
+			selectedTheme.value = savedTheme;
+		}
+		if (user.value) {
+			const { data, error } = await client
+				.from('profiles')
+				.select()
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				userProfile.value = data;
+			}
+		}
+	});
 </script>
 
 <style lang="scss" scoped>

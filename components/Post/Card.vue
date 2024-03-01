@@ -174,7 +174,7 @@
 		height: 100%;
 		border: none;
 		outline: none;
-		color: white;
+		color: var(--white);
 		background-color: transparent;
 		cursor: pointer;
 		pointer-events: all;

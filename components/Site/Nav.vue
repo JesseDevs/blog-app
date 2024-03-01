@@ -16,13 +16,13 @@
 				</button>
 
 				<NuxtLink to="/" class="logo" @click="ui.closeMenu">
-					E
-					<Icon name="arcticons:waves" size="30" color="white" />
+					<span>E</span>
+					<Icon name="arcticons:waves" size="30" color="var(--white)" />
 					<Icon
 						class="speaker"
 						name="solar:volume-loud-line-duotone"
 						size="30"
-						color="white"
+						color="var(--white)"
 					/>
 				</NuxtLink>
 
@@ -66,6 +66,7 @@
 			position: relative;
 
 			svg {
+				z-index: -1;
 				position: absolute;
 				bottom: 0%;
 				top: 50%;
