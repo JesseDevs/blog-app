@@ -1,0 +1,52 @@
+.dark-mode {
+	--background: rgb(10, 12, 12);
+	--background-rgb: 10 12 12;
+
+	--text: rgb(246, 245, 245);
+	--text-faded: rgb(165 165 165);
+	--text-rgb: 246 245 245;
+
+	--white: rgb(255 255 255);
+	--white-rgb: 255 255 255;
+	--black-rgb: 2 2 2;
+	--dark-hover: rgb(27, 26, 26);
+
+	--button-text: white;
+	--button-bg: rgb(39, 174, 96);
+	--button-bg-hover: rgb(30, 132, 73);
+	--button-box: rgb(39, 174, 96, .15);
+	--button-box-hover: rgba(39, 174, 96, .2);
+	--button-bg-rgb: 39 174 96;
+
+	--input-bg: rgb(193 193 193);
+	--input-focus: rgb(239 239 239);
+	--input-placeholder: rgb(87, 84, 84);
+	--text-placeholder: rgb(174, 173, 173);
+
+
+	--outline-color: rgb(128, 127, 127);
+	--outline-color-rgb: 128 127 127;
+	--sm-outline: 1px solid var(--outline-color);
+	--box-shadow: rgb(46 46 46);
+
+	--dash-hover: rgb(37, 36, 36);
+
+	--success-green: #155724;
+	--success-border: #c3e6cb;
+	--required-red: rgb(232, 17, 17);
+	--thin: 1px;
+
+
+	--color-primary-hsl: 145, 63%, 42%;
+	--color-primary: hsl(145, 63%, 42%);
+	--color-primary-10: hsla(var(--color-primary-hsl), .1);
+	--color-primary-20: hsla(var(--color-primary-hsl), .2);
+	--color-primary-30: hsla(var(--color-primary-hsl), .3);
+	--color-primary-40: hsla(var(--color-primary-hsl), .4);
+	--color-primary-50: hsla(var(--color-primary-hsl), .5);
+	--color-primary-60: hsla(var(--color-primary-hsl), .6);
+	--color-primary-70: hsla(var(--color-primary-hsl), .7);
+	--color-primary-80: hsla(var(--color-primary-hsl), .8);
+	--color-primary-90: hsla(var(--color-primary-hsl), .9);
+
+}

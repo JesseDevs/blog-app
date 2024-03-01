@@ -7,8 +7,8 @@
 	.ql-formats {
 		display: flex !important;
 		flex-direction: column;
-		column-gap: 1px;
-		row-gap: 1px;
+		column-gap: var(--thin);
+		row-gap: var(--thin);
 	}
 
 	.ql-container {
@@ -17,7 +17,7 @@
 	}
 
 	.ql-editor {
-		border-top: 1px solid var(--button-bg);
+		border-top: var(--thin) solid var(--button-bg);
 		min-height: 417px;
 
 		p {
@@ -58,7 +58,7 @@
 }
 
 .ql-editor.ql-blank::before {
-	color: rgb(174, 173, 173) !important;
+	color: var(--text-faded) !important;
 	font-size: var(--size-base);
 }
 
@@ -71,17 +71,17 @@
 	}
 
 	.ql-fill {
-		fill: rgb(174, 173, 173) !important;
+		fill: var(--text-faded) !important;
 	}
 
 	.ql-stroke {
-		stroke: rgb(174, 173, 173) !important;
+		stroke: var(--text-faded) !important;
 
 	}
 }
 
 .ql-toolbar.ql-snow .ql-formats .ql-active {
-	background-color: rgb(43 43 43);
+	background-color: var(--box-shadow);
 
 	.ql-fill {
 		fill: var(--button-bg) !important;
@@ -91,26 +91,6 @@
 		stroke: var(--button-bg) !important;
 	}
 }
-
-
-
-// .ql-snow.ql-toolbar {
-
-
-// 	.ql-picker:hover,
-// 	button:hover {
-// 		background-color: rgba(255, 255, 255, 0.129);
-
-// 		.ql-fill {
-// 			fill: var(--button-bg) !important;
-// 		}
-
-// 		.ql-stroke {
-// 			stroke: var(--button-bg) !important;
-
-// 		}
-// 	}
-// }
 
 
 .detail-post-content {
@@ -136,12 +116,12 @@
 	}
 
 	blockquote {
-		border-left: 4px solid white;
+		border-left: 4px solid var(--white);
 		padding: 5px;
 		margin: 5px 0;
 		border-radius: 2px;
 
-		background-color: rgb(81, 79, 79);
+		background-color: var(--input-placeholder);
 	}
 
 }

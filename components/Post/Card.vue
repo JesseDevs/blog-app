@@ -151,7 +151,7 @@
 
 <style lang="scss">
 	.liked {
-		background-color: red;
+		background-color: var(--required-red);
 	}
 
 	// .card-link {
@@ -186,7 +186,7 @@
 			height: 23px;
 			pointer-events: none;
 			transition: color 0.2s ease-in-out;
-			color: var(--faded-text);
+			color: var(--text-faded);
 			path {
 				pointer-events: none;
 			}
@@ -198,14 +198,14 @@
 			width: 25px;
 			height: 25px;
 			border-radius: 999px;
-			background-color: red;
+			background-color: var(--required-red);
 			position: absolute;
 			opacity: 0;
 			transition: opacity 0.2s ease-in-out;
 		}
 		&:hover {
 			svg {
-				color: red;
+				color: var(--required-red);
 			}
 			&::after {
 				opacity: 0.2;

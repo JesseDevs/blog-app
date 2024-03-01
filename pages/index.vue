@@ -81,8 +81,7 @@
 			z-index: -100;
 			left: 0;
 			top: 0;
-			// border-bottom: 1px solid rgb(46 46 46);
-			border-top: 1px solid rgb(46 46 46);
+			border-top: var(--thin) solid var(--box-shadow);
 			overflow-y: hidden;
 			background-color: var(--background);
 			opacity: 0.8;
@@ -169,7 +168,7 @@
 
 				left: 50%;
 				transform: translate(-50%, -50%);
-				color: var(--faded-text);
+				color: var(--text-faded);
 			}
 			h1 {
 				text-transform: initial;

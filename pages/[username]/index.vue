@@ -152,7 +152,7 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
-		color: var(--faded-text);
+		color: var(--text-faded);
 		padding-top: 10px;
 
 		p {
@@ -165,12 +165,6 @@
 	.content-container {
 		overflow: hidden;
 		position: relative;
-
-		&.blurred {
-			filter: blur(5px);
-			color: transparent;
-			text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-		}
 	}
 
 	dashboard-menu {
@@ -180,7 +174,7 @@
 
 		nav {
 			display: flex;
-			border-bottom: 1px solid var(--faded-text);
+			border-bottom: var(--thin) solid var(--text-faded);
 
 			div {
 				padding: 0px 1.5rem;
@@ -188,7 +182,7 @@
 				transition: background-color 0.2s ease-in-out;
 
 				&:hover {
-					background-color: rgb(37, 36, 36);
+					background-color: var(--dash-hover);
 				}
 
 				p {
@@ -231,7 +225,7 @@
 			margin-bottom: 1rem;
 
 			&:hover {
-				background-color: rgb(37, 36, 36);
+				background-color: var(--dash-hover);
 			}
 		}
 
@@ -241,7 +235,7 @@
 		}
 
 		.username {
-			color: var(--faded-text);
+			color: var(--text-faded);
 			// font-family: 'Roboto Slab', serif;
 		}
 	}

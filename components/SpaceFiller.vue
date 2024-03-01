@@ -39,7 +39,7 @@
 		}
 	}
 	section {
-		background: rgba(46, 46, 46, 0.5);
+		background: rgb(var(--black-rgb) / 0.5);
 		backdrop-filter: blur(4px);
 		overflow: hidden;
 		background: var(--background);

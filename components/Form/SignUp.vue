@@ -80,10 +80,10 @@
 	}
 
 	.success {
-		color: green;
+		color: var(--success-green);
 	}
 
 	.error {
-		color: red;
+		color: var(--required-red);
 	}
 </style>

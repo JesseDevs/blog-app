@@ -191,7 +191,7 @@
 				height: 23px;
 				pointer-events: none;
 				transition: color 0.2s ease-in-out;
-				color: var(--faded-text);
+				color: var(--text-faded);
 				path {
 					pointer-events: none;
 				}

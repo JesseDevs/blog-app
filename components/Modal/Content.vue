@@ -44,7 +44,7 @@
 						<Icon
 							name="material-symbols:palette"
 							size="21"
-							color="rgba(var(--white-on-dark), 0.65)"
+							color="rgb(var(--white-rgb) / 0.65)"
 						/>
 
 						<p>Change palette</p>
@@ -128,7 +128,7 @@
 		height: 100%;
 
 		overflow: hidden;
-		border-right: 1px solid rgba(255, 255, 255, 0.137);
+		border-right: var(--thin) solid rgb(var(--outline-color-rgb) / 0.5);
 
 		transition: left 0.2s ease;
 		position: absolute;
@@ -167,20 +167,35 @@
 			font-weight: 600;
 			color: var(--button-text);
 			background-color: var(--button-bg);
+			box-shadow: var(--button-box) 0 4px 9px;
 			justify-content: center;
 			align-items: center;
 			text-decoration: none;
 			display: flex;
+			text-transform: capitalize;
+
+			transition: background-color 0.3s ease-in-out;
+			&:hover {
+				background-color: var(--button-bg-hover);
+				box-shadow: var(--button-box-hover) 0 6px 12px;
+			}
 		}
 
 		.button-filled {
 			color: var(--button-text);
 			background-color: var(--button-bg);
+			box-shadow: var(--button-box) 0 4px 9px;
 
 			width: 100%;
 			appearance: none;
 			border: none;
 			outline: none;
+
+			transition: background-color 0.3s ease-in-out;
+			&:hover {
+				background-color: var(--button-bg-hover);
+				box-shadow: var(--button-box-hover) 0 6px 12px;
+			}
 		}
 	}
 
@@ -194,12 +209,12 @@
 		background-color: transparent;
 		border: none;
 		outline: none;
-		color: rgba(var(--white-on-dark), 0.65);
+		color: rgba(var(--white-rgb) / 0.65);
 		cursor: pointer;
 		transition: background-color 0.2s ease;
 
 		&:hover {
-			background-color: rgba(var(--white-on-dark), 0.09);
+			background-color: rgba(var(--white-rgb) / 0.09);
 		}
 	}
 </style>

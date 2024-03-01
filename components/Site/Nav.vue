@@ -43,7 +43,7 @@
 		top: 0;
 		width: 100%;
 		z-index: 20;
-		background-color: rgba(4, 5, 6, 0.75);
+		background-color: rgb(var(--background-rgb) / 0.75);
 		backdrop-filter: blur(6px);
 
 		inner-column {
@@ -62,7 +62,7 @@
 			height: 40px;
 			line-height: 1.2;
 			text-align: center;
-			font-size: var(--size-xl);
+			font-size: 28px;
 			position: relative;
 
 			svg {
@@ -145,7 +145,7 @@
 				background: white;
 				transform-origin: 50% center;
 				opacity: 1;
-				border-radius: 1px;
+				border-radius: var(--thin);
 				width: 50%;
 				height: 2px;
 				transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;

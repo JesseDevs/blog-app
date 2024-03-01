@@ -11,8 +11,8 @@
 <style lang="scss" scoped>
 	.success-message {
 		background-color: #dff0d8;
-		border: 1px solid #c3e6cb;
-		color: #155724;
+		border: var(--thin) solid var(--success-border);
+		color: var(--success-green);
 		padding: 10px;
 		margin-bottom: 10px;
 	}

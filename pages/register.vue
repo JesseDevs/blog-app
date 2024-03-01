@@ -109,7 +109,7 @@
 					<button class="showBTN" @click.prevent="togglePassword">
 						<Icon
 							:name="`${showPassword ? 'mi:eye' : 'mi:eye-off'}`"
-							color="rgb(128, 127, 127)"
+							color="var(--outline-color)"
 							size="28"
 						/>
 					</button>
@@ -179,10 +179,10 @@
 	}
 
 	.success {
-		color: green;
+		color: var(--success-green);
 	}
 
 	.error {
-		color: red;
+		color: var(--required-red);
 	}
 </style>

@@ -41,7 +41,7 @@
 						>
 							<Icon
 								:name="`${showPassword ? 'mi:eye' : 'mi:eye-off'}`"
-								color="rgb(128, 127, 127)"
+								color="var(--outline-color)"
 								size="28"
 							/>
 						</button>

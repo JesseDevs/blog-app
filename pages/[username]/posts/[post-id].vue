@@ -194,7 +194,7 @@
 			justify-content: space-between;
 			position: relative;
 			width: 100%;
-			border-bottom: 1px solid gray;
+			border-bottom: var(--thin) solid gray;
 			padding-top: 10px;
 			padding-bottom: 5px;
 
@@ -209,7 +209,7 @@
 			}
 
 			p.faded {
-				color: var(--faded-text);
+				color: var(--text-faded);
 			}
 		}
 
@@ -260,11 +260,11 @@
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background: rgb(255, 255, 255);
+				background: var(--white);
 				background: radial-gradient(
 					circle,
-					rgba(255, 255, 255, 0) 0%,
-					rgba(0, 0, 0, 0.6) 90%
+					rgb(var(--white-rgb) / 0) 0%,
+					rgba(var(--black-rgb) / 0.6) 90%
 				);
 				pointer-events: none;
 			}
@@ -297,7 +297,7 @@
 			height: 23px;
 			pointer-events: none;
 			transition: color 0.2s ease-in-out, transform 0.3s ease;
-			color: var(--faded-text);
+			color: var(--text-faded);
 			path {
 				pointer-events: none;
 			}
@@ -309,14 +309,14 @@
 			width: 25px;
 			height: 25px;
 			border-radius: 999px;
-			background-color: red;
+			background-color: var(--required-red);
 			position: absolute;
 			opacity: 0;
 			transition: opacity 0.2s ease-in-out;
 		}
 		&:hover {
 			svg {
-				color: red;
+				color: var(--required-red);
 				transform: scale(1.1);
 			}
 			&::after {
