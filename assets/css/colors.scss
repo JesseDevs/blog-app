@@ -1,3 +1,4 @@
+:root,
 .dark-mode {
 	--background: rgb(10, 12, 12);
 	--background-rgb: 10 12 12;
@@ -49,4 +50,54 @@
 	--color-primary-80: hsla(var(--color-primary-hsl), .8);
 	--color-primary-90: hsla(var(--color-primary-hsl), .9);
 
+	--color-secondary-hsl: 0, 0%, 96%;
+	--color-secondary: #f5f5f5;
+	--color-secondary-10: hsla(var(--color-secondary-hsl), .1);
+	--color-secondary-20: hsla(var(--color-secondary-hsl), .2);
+	--color-secondary-30: hsla(var(--color-secondary-hsl), .3);
+	--color-secondary-40: hsla(var(--color-secondary-hsl), .4);
+	--color-secondary-50: hsla(var(--color-secondary-hsl), .5);
+	--color-secondary-60: hsla(var(--color-secondary-hsl), .6);
+	--color-secondary-70: hsla(var(--color-secondary-hsl), .7);
+	--color-secondary-80: hsla(var(--color-secondary-hsl), .8);
+	--color-secondary-90: hsla(var(--color-secondary-hsl), .9);
+
+
+	--color-black-hsl: 0, 0%, 5%;
+	--color-black: #0d0d0d;
+	--color-black-10: hsla(var(--color-black-hsl), .1);
+	--color-black-20: hsla(var(--color-black-hsl), .2);
+	--color-black-30: hsla(var(--color-black-hsl), .3);
+	--color-black-40: hsla(var(--color-black-hsl), .4);
+	--color-black-50: hsla(var(--color-black-hsl), .5);
+	--color-black-60: hsla(var(--color-black-hsl), .6);
+	--color-black-70: hsla(var(--color-black-hsl), .7);
+	--color-black-80: hsla(var(--color-black-hsl), .8);
+	--color-black-90: hsla(var(--color-black-hsl), .9);
+}
+
+.light-mode {
+	--background: rgb(247 247 247);
+	--background-rgb: 247 247 247;
+}
+
+.vampire-mode {
+	//font change? cool idea
+	--background: rgb(0 0 0);
+	--background-rgb: 0 0 0;
+
+	--button-bg: rgb(235 88 62);
+}
+
+.canary-mode {
+	--background: rgb(255 255 234);
+	--background-rgb: 255 255 234;
+}
+
+.low-contrast-mode {
+	--background: rgb(29, 39, 52);
+	--background-rgb: 29 39 52;
+
+	--text: rgb(162 164 166);
+	--button-bg: rgb(101, 156, 200);
 }

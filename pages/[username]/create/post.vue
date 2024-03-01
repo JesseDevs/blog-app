@@ -253,7 +253,7 @@
 			border: none;
 			background-color: transparent;
 			z-index: 0;
-			color: white;
+			color: var(--white);
 			resize: none;
 			height: 47px;
 
@@ -322,7 +322,7 @@
 				height: 2px;
 				width: 20px;
 				width: var(--width-percentage);
-				background-color: white;
+				background-color: var(--white);
 				transition: width 0.3s;
 			}
 		}
@@ -359,7 +359,7 @@
 			border-radius: 5px;
 
 			svg {
-				color: white;
+				color: var(--white);
 			}
 		}
 

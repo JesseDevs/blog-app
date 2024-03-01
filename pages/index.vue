@@ -112,7 +112,7 @@
 			font-style: italic;
 
 			&:hover {
-				color: black;
+				color: var(--white);
 				text-decoration: none;
 			}
 		}
