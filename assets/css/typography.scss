@@ -1,12 +1,20 @@
 :root {
-	--size-xs: clamp(10.24px, 0.26vw + 9.22px, 12.16px);
-	--size-sm: clamp(13.4px, 0.32vw + 11.52px, 16.2px);
-	--size-base: clamp(16px, 0.4vw + 14.4px, 18px);
-	--size-md: clamp(20px, 0.5vw + 18px, 22.75px);
-	--size-lg: clamp(25px, 0.63vw + 22.5px, 28.69px);
-	--size-xl: clamp(31.25px, 0.78vw + 28.13px, 36.11px);
-	--size-xxl: clamp(39.06px, 0.98vw + 35.16px, 45.39px);
-	--size-xxxl: clamp(48.83px, 1.22vw + 43.95px, 56.98px);
+	// --size-xs: clamp(10.24px, 0.26vw + 9.22px, 12.16px);
+	// --size-sm: clamp(13.4px, 0.32vw + 11.52px, 16.2px);
+	// --size-base: clamp(16px, 0.4vw + 14.4px, 18px);
+	// --size-md: clamp(20px, 0.5vw + 18px, 22.75px);
+	// --size-lg: clamp(25px, 0.63vw + 22.5px, 28.69px);
+	// --size-xl: clamp(31.25px, 0.78vw + 28.13px, 36.11px);
+	// --size-xxl: clamp(39.06px, 0.98vw + 35.16px, 45.39px);
+	// --size-xxxl: clamp(48.83px, 1.22vw + 43.95px, 56.98px);
+	--size-xs: clamp(10.24px, -0.19vw + 10.84px, 8.44px);
+	--size-sm: clamp(12.8px, -0.01vw + 12.84px, 12.67px);
+	--size-base: clamp(16px, 0.31vw + 15px, 19px);
+	--size-md: clamp(20px, 0.89vw + 17.17px, 28.5px);
+	--size-lg: clamp(25px, 1.85vw + 19.08px, 42.75px);
+	--size-xl: clamp(31.25px, 3.42vw + 20.29px, 64.13px);
+	--size-xxl: clamp(39.06px, 5.95vw + 20.02px, 96.19px);
+	--size-xxxl: clamp(48.83px, 9.94vw + 17.01px, 144.28px);
 }
 
 .logo {

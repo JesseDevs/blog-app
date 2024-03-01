@@ -5,11 +5,11 @@
 				<landing-block>
 					<picture>
 						<source srcset="/tilt-1.jpeg" media="(min-width: 701px)" />
-						<img src="/images/unsplash-1.jpg" alt="k" />
+						<img src="/images/unsplash-1.jpg" alt="Home wave image" />
 					</picture>
 					<title-block>
 						<h1 class="logo level-five-voice">
-							<span>The Blog Site</span>
+							<span class="level-one-voice">The Blog Site</span>
 							ECHO
 						</h1>
 					</title-block>
@@ -166,7 +166,7 @@
 				font-weight: 200;
 				position: absolute;
 				top: -12px;
-				font-size: initial;
+
 				left: 50%;
 				transform: translate(-50%, -50%);
 				color: var(--faded-text);
