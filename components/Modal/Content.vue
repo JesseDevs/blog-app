@@ -38,7 +38,7 @@
 				<div class="modal-BTNs">
 					<button
 						class="palette-button"
-						@click="changePalette"
+						@click="th.changePalette"
 						aria-label="change palette"
 					>
 						<Icon
@@ -66,16 +66,17 @@
 
 <script setup>
 	import { useInterfaceService } from '~/services/InterfaceService';
+	import { useThemeService } from '~/services/ThemeService';
 	const ui = useInterfaceService();
+	const th = useThemeService();
 
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
-	const selectedTheme = ref('dark'); // Default theme
 
-	const colorMode = useColorMode();
-	const colorModes = ['dark', 'light', 'vampire', 'canary', 'low-contrast'];
-	const colorModeIndex = ref(0);
+	const colorMode = useColorMode({
+		initialValue: 'dark',
+	});
 
 	const userProfile = ref(null);
 
@@ -96,25 +97,7 @@
 		}
 	};
 
-	const setSelectedTheme = (theme) => {
-		if (theme !== selectedTheme.value && colorModes.includes(theme)) {
-			selectedTheme.value = theme;
-			document.documentElement.setAttribute('data-theme', theme);
-			localStorage.setItem('nuxt-color-mode', theme);
-		}
-	};
-
-	const changePalette = () => {
-		colorModeIndex.value = (colorModeIndex.value + 1) % colorModes.length;
-		colorMode.value = colorModes[colorModeIndex.value];
-		setSelectedTheme(colorModes[colorModeIndex.value]);
-	};
-
 	onMounted(async () => {
-		const savedTheme = localStorage.getItem('nuxt-color-mode');
-		if (savedTheme && colorModes.includes(savedTheme)) {
-			selectedTheme.value = savedTheme;
-		}
 		if (user.value) {
 			const { data, error } = await client
 				.from('profiles')

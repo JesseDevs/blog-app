@@ -65,7 +65,7 @@ export default defineNuxtConfig({
 	},
 	components: true,
 	imports: {
-		dirs: ['./stores'],
+		dirs: ['./services'],
 	},
 	devtools: { enabled: false },
 });
