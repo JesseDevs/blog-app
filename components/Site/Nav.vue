@@ -12,17 +12,15 @@
 						<span></span>
 						<span></span>
 					</div>
-					<div class="box-overlay"></div>
 				</button>
 
 				<NuxtLink to="/" class="logo" @click="ui.closeMenu">
 					<span>E</span>
-					<Icon name="arcticons:waves" size="30" color="var(--white)" />
+					<Icon name="arcticons:waves" size="30" />
 					<Icon
 						class="speaker"
 						name="solar:volume-loud-line-duotone"
 						size="30"
-						color="var(--white)"
 					/>
 				</NuxtLink>
 
@@ -73,6 +71,7 @@
 				left: calc(50% + 10px);
 				transform: translate(-50%, -50%);
 				opacity: 0.5;
+				stroke: var(--white);
 			}
 
 			svg:not(.speaker) {
@@ -122,28 +121,8 @@
 				}
 			}
 
-			div.box-overlay {
-				position: absolute;
-				width: 85%;
-				height: 85%;
-				background-color: white;
-				top: 51%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				z-index: -1;
-				opacity: 0;
-				transition: opacity 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s;
-				border-radius: 5px;
-			}
-
-			&:hover {
-				div.box-overlay {
-					opacity: 0.2;
-				}
-			}
-
 			span {
-				background: white;
+				background-color: var(--white);
 				transform-origin: 50% center;
 				opacity: 1;
 				border-radius: var(--thin);

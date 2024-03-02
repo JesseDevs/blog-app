@@ -9,21 +9,21 @@
 
 	--white: rgb(255 255 255);
 	--white-rgb: 255 255 255;
+	--black: rgb(2 2 2);
 	--black-rgb: 2 2 2;
 	--dark-hover: rgb(27, 26, 26);
 
 	--button-text: white;
 	--button-bg: rgb(39, 174, 96);
 	--button-bg-hover: rgb(30, 132, 73);
-	--button-box: rgb(39, 174, 96, .15);
-	--button-box-hover: rgba(39, 174, 96, .2);
+	--button-box: rgb(39, 174, 96, .22);
+	--button-box-hover: rgba(39, 174, 96, .3);
 	--button-bg-rgb: 39 174 96;
 
 	--input-bg: rgb(193 193 193);
 	--input-focus: rgb(239 239 239);
 	--input-placeholder: rgb(87, 84, 84);
 	--text-placeholder: rgb(174, 173, 173);
-
 
 	--outline-color: rgb(128, 127, 127);
 	--outline-color-rgb: 128 127 127;
@@ -79,25 +79,165 @@
 .light-mode {
 	--background: rgb(247 247 247);
 	--background-rgb: 247 247 247;
+
+	--text: rgb(10 12 12);
+	--text-faded: rgb(125, 125, 125) !important;
+	--text-rgb: 10 12 12;
+
+	--dark-hover: rgb(230, 229, 229);
+	--dash-hover: rgb(219, 217, 217);
+
+	--box-shadow: rgb(214 213 213);
+
+
+	.logo svg {
+		stroke: var(--black) !important;
+		opacity: .3;
+	}
+
+	.mbykw span {
+		background-color: var(--black) !important;
+	}
+
+	glass-container {
+		background-color: var(--color-black-40);
+	}
+
+	detail-page picture {
+		&:before {
+			background-image: linear-gradient(to bottom, rgb(var(--text-rgb) / 0.2) 0%, var(--text-faded) 100%) !important;
+		}
+	}
+
+	.palette-button,
+	.palette-button svg {
+		color: rgb(var(--black-rgb) / 0.65) !important;
+	}
+
+	landing-block picture img {
+		filter: invert(1);
+	}
+
+
+	.card-menu li {
+		border-bottom: var(--thin) solid var(--input-bg);
+	}
+
+	.card-menu li:first-of-type {
+		border-top: var(--thin) solid var(--input-bg);
+	}
+
+	create-block textarea {
+		color: var(--black) !important;
+	}
 }
 
 .vampire-mode {
-	//font change? cool idea
 	--background: rgb(0 0 0);
 	--background-rgb: 0 0 0;
 
 	--button-bg: rgb(235 88 62);
+	--button-bg-rgb: 235 88 62;
+
+	--button-bg-hover: rgb(191, 65, 43);
+	--button-box: rgb(235 88 62/ .22);
+	--button-box-hover: rgba(235 88 62 /.3);
+
+	body {
+		* {
+			font-family: 'Roboto Slab', serif;
+		}
+	}
+
+	.logo,
+	title-block h1 span,
+	text-content h3,
+	text-module .slab,
+	detail-page h1 {
+		font-family: 'DM Sans', sans-serif !important;
+	}
 }
 
 .canary-mode {
-	--background: rgb(255 255 234);
+	--background: #ffffea;
 	--background-rgb: 255 255 234;
+
+	--text: rgb(10 12 12);
+	--text-faded: rgb(125, 125, 125) !important;
+	--text-rgb: 10 12 12;
+
+	--button-text: black;
+	--button-bg: rgb(211 211 249);
+	--button-bg-hover: rgb(198, 198, 238);
+	--button-box: rgb(211 211 249 /.22);
+	--button-box-hover: rgba(211 211 249 /.3);
+	--button-bg-rgb: 211 211 249;
+
+	--dark-hover: #eeeecb;
+	--dash-hover: rgb(237, 235, 235);
+
+	--box-shadow: rgb(244, 205, 255);
+
+	.logo svg {
+		stroke: var(--black) !important;
+		opacity: .3;
+	}
+
+	.mbykw span {
+		background-color: var(--black) !important;
+	}
+
+	glass-container {
+		background-color: var(--color-black-40);
+	}
+
+	detail-page picture {
+		&:before {
+			background-image: linear-gradient(to bottom, rgb(var(--text-rgb) / 0.2) 0%, var(--text-faded) 100%) !important;
+		}
+	}
+
+	.palette-button,
+	.palette-button svg {
+		color: rgb(var(--black-rgb) / 0.65) !important;
+	}
+
+	landing-block picture img {
+		filter: invert(1);
+		opacity: .4 !important;
+	}
+
+
+	.card-menu li {
+		border-bottom: var(--thin) solid var(--input-bg);
+	}
+
+	.card-menu li:first-of-type {
+		border-top: var(--thin) solid var(--input-bg);
+	}
+
+	create-block textarea {
+		color: var(--black) !important;
+	}
 }
 
 .low-contrast-mode {
 	--background: rgb(29, 39, 52);
 	--background-rgb: 29 39 52;
+	--dark-hover: rgb(15, 32, 53);
 
-	--text: rgb(162 164 166);
-	--button-bg: rgb(101, 156, 200);
+	--button-bg: rgb(97, 135, 166);
+	--button-bg-hover: rgb(42, 96, 139);
+	--button-box: rgb(109 151 185 /.22);
+	--button-box-hover: rgb(109 151 185 /.3);
+	--button-bg-rgb: 109 151 185;
+
+	--dash-hover: rgb(53, 64, 74);
+
+	.logo svg {
+		stroke: var(--white);
+	}
+
+	--text-faded: rgb(162 164 166) !important;
+
 }
