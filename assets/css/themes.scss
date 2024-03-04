@@ -130,6 +130,16 @@
 	create-block textarea {
 		color: var(--black) !important;
 	}
+
+	section space-filler {
+		filter: none !important;
+		opacity: .9;
+
+		svg {
+			filter: blur(7px) !important;
+			opacity: .9 !important;
+		}
+	}
 }
 
 .vampire-mode {
@@ -156,9 +166,17 @@
 	detail-page h1 {
 		font-family: 'DM Sans', sans-serif !important;
 	}
+
+	.modal-footer a {
+		padding: 0px 9px !important;
+	}
 }
 
 .canary-mode {
+	body {
+		font-family: "Montserrat", sans-serif !important;
+	}
+
 	--background: #ffffea;
 	--background-rgb: 255 255 234;
 
@@ -166,9 +184,9 @@
 	--text-faded: rgb(125, 125, 125) !important;
 	--text-rgb: 10 12 12;
 
-	--button-text: black;
-	--button-bg: rgb(211 211 249);
-	--button-bg-hover: rgb(198, 198, 238);
+
+	--button-bg: #b71c1c;
+	--button-bg-hover: #951919;
 	--button-box: rgb(211 211 249 /.22);
 	--button-box-hover: rgba(211 211 249 /.3);
 	--button-bg-rgb: 211 211 249;
@@ -176,7 +194,11 @@
 	--dark-hover: #eeeecb;
 	--dash-hover: rgb(237, 235, 235);
 
-	--box-shadow: rgb(244, 205, 255);
+	--box-shadow: rgb(186, 186, 186);
+
+	.home-card text-content .post-user:after {
+		background-color: var(--black);
+	}
 
 	.logo svg {
 		stroke: var(--black) !important;
@@ -219,7 +241,24 @@
 	create-block textarea {
 		color: var(--black) !important;
 	}
+
+	section space-filler {
+		filter: none !important;
+		opacity: .9;
+
+		&:before {
+			background: var(--button-bg-hover) !important;
+			opacity: .8;
+		}
+
+		svg {
+			color: var(--button-bg-hover) !important;
+			filter: blur(5px) !important;
+			opacity: .9 !important;
+		}
+	}
 }
+
 
 .low-contrast-mode {
 	--background: rgb(29, 39, 52);
@@ -240,4 +279,94 @@
 
 	--text-faded: rgb(162 164 166) !important;
 
+}
+
+.sepia-mode {
+	--background: rgb(187 63 63);
+	--background-rgb: 187 63 63;
+	--dark-hover: rgb(15 32 53);
+
+
+	--button-bg: rgb(50 52 78);
+	--button-bg-hover: rgb(24 23 44);
+	--button-box: rgb(50 52 78 /.22);
+	--button-box-hover: rgb(50 52 78 /.3);
+	--button-bg-rgb: 50 52 78;
+
+	--dash-hover: rgb(53, 64, 74);
+	--dark-hover: rgb(148, 37, 37);
+
+	.logo svg {
+		stroke: var(--white);
+	}
+
+	--text-faded: rgba(252, 252, 252, 0.751) !important;
+
+	section space-filler {
+		filter: none !important;
+		opacity: .9;
+
+		&:before {
+			background: var(--button-bg-hover) !important;
+			opacity: .8;
+		}
+
+		svg {
+			color: var(--button-bg-hover) !important;
+			filter: blur(5px) !important;
+			opacity: .9 !important;
+		}
+	}
+}
+
+.venomized-mode {
+
+
+	--background: rgb(81 62 85);
+	--background-rgb: 81 62 85;
+
+	--dark-hover: rgb(15 32 53);
+
+
+	--button-bg: rgb(117 73 71);
+	--button-bg-hover: rgb(24 23 44);
+	--button-box: rgb(50 52 78 /.22);
+	--button-box-hover: rgb(50 52 78 /.3);
+	--button-bg-rgb: 50 52 78;
+
+	--dash-hover: rgb(53, 64, 74);
+
+	.logo svg {
+		stroke: var(--white);
+	}
+
+	--text-faded: rgba(252, 252, 252, 0.751) !important;
+}
+
+.ice-mode {
+	--text: rgb(10, 12, 12);
+	--background: rgb(165 238 253);
+	--background-rgb: 165 238 253;
+
+	--dark-hover: rgb(15 32 53);
+
+
+	--button-bg: rgb(236 111 170);
+	--button-bg-hover: rgb(24 23 44);
+	--button-box: rgb(50 52 78 /.22);
+	--button-box-hover: rgb(50 52 78 /.3);
+	--button-bg-rgb: 50 52 78;
+
+	--dash-hover: rgb(53, 64, 74);
+
+	.logo svg {
+		stroke: var(--white);
+	}
+
+	--text-faded: rgba(252, 252, 252, 0.751) !important;
+
+	landing-block picture img {
+		filter: invert(1);
+		opacity: .4 !important;
+	}
 }

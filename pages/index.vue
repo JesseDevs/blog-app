@@ -86,7 +86,7 @@
 			background-color: var(--background);
 			opacity: 0.8;
 			img {
-				opacity: 0.8;
+				opacity: 0.5;
 			}
 		}
 
@@ -96,7 +96,7 @@
 			display: inline-block;
 			transition: color 0.4s ease;
 			padding: 8px 16px;
-			margin: 20px auto 0;
+			margin: 1rem auto 0;
 			width: fit-content;
 			height: fit-content;
 
@@ -177,5 +177,9 @@
 				text-align: center;
 			}
 		}
+	}
+
+	body {
+		background: #1c1c1c;
 	}
 </style>

@@ -48,6 +48,10 @@
 						/>
 
 						<p>Change palette</p>
+						<p>{{ th.selectedTheme }}</p>
+						<p class="index-display">
+							({{ th.themeNumber }}/{{ th.colorModes.length }})
+						</p>
 					</button>
 					<button
 						v-if="user"
@@ -212,6 +216,15 @@
 
 		&:hover {
 			background-color: rgba(var(--white-rgb) / 0.09);
+		}
+	}
+
+	p.index-display {
+		text-transform: capitalize;
+		margin-left: auto;
+		position: relative;
+		span {
+			position: absolute;
 		}
 	}
 </style>

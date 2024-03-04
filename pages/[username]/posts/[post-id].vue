@@ -12,14 +12,23 @@
 						:src="`https://naduzuobtmmhavkozjxf.supabase.co/storage/v1/object/public/post-images/${post.belongs_to}/${post.image_url}?t=2024-01-30T08%3A07%3A46.058Z`"
 						alt=""
 						@error="handleImageError"
-						@load="imageLoaded = true"
+						@load="checkImageSize"
 						loading="lazy"
+						:style="{ objectFit: imageSize }"
 					/>
 				</picture>
 				<h1 class="level-two-voice">{{ post.header }}</h1>
 				<post-header>
 					<div class="user-content">
-						<p>{{ userProfile.username }}</p>
+						<p>
+							<a
+								class="post-user"
+								@click.stop
+								:href="`/${userProfile.username}`"
+							>
+								{{ userProfile.username }}</a
+							>
+						</p>
 
 						<p class="faded">{{ formattedDate(post.date_created) }}</p>
 					</div>
@@ -56,8 +65,20 @@
 	const isDataLoaded = ref(false);
 	const loadingText = ref('Loading...');
 
+	const imageSize = ref('cover');
+
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
+
+	const checkImageSize = (event) => {
+		const img = event.target;
+		console.log(img.naturalHeight);
+		if (img.naturalHeight > 400) {
+			console.log('contain');
+			imageSize.value = 'contain';
+		}
+		imageLoaded.value = true;
+	};
 
 	const handleImageError = (event) => {
 		event.target.src = '/images/fallback-logo.jpg';
@@ -205,6 +226,39 @@
 
 				p {
 					font-size: var(--size-sm);
+					a {
+						font-size: inherit;
+						padding-left: 15px;
+						width: fit-content;
+						transition: opacity 0.2s ease-in-out;
+						position: relative;
+						&:after {
+							content: '';
+							opacity: 0.7;
+							height: 1.5px;
+							width: calc(100% - 15px);
+							position: absolute;
+							background-color: var(--white);
+
+							opacity: 0;
+							transition: opacity 0.2s ease-in-out;
+							bottom: -1px;
+							right: 0;
+						}
+						&:before {
+							content: '@';
+							position: absolute;
+							left: 0;
+							top: -3px;
+						}
+						&:hover {
+							opacity: 1;
+
+							&:after {
+								opacity: 1;
+							}
+						}
+					}
 				}
 			}
 
@@ -226,7 +280,12 @@
 			position: relative;
 			border-radius: 5px;
 			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			overflow: hidden;
+			max-width: 400px;
+			max-height: 400px;
 
 			&:before {
 				content: '';
@@ -235,10 +294,12 @@
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background-image: linear-gradient(
-					to bottom,
-					rgb(var(--background-rgb) / 0.4) 0%,
-					var(--background) 100%
+
+				background: var(--black);
+				background: radial-gradient(
+					circle,
+					rgb(var(--white-rgb) / 0) 0%,
+					rgba(var(--black-rgb) / 0.6) 90%
 				);
 				opacity: 0.9;
 				transition: opacity 0.5s;
@@ -249,24 +310,8 @@
 			}
 
 			img {
-				object-fit: cover;
 				border-radius: 6px;
 				transition: opacity 0.5s;
-			}
-
-			.vignette-overlay {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: var(--white);
-				background: radial-gradient(
-					circle,
-					rgb(var(--white-rgb) / 0) 0%,
-					rgba(var(--black-rgb) / 0.6) 90%
-				);
-				pointer-events: none;
 			}
 		}
 	}

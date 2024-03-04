@@ -136,7 +136,7 @@
 			.post-user {
 				font-weight: 500;
 				opacity: 0.7;
-				padding-left: 17px;
+				padding-left: 18px;
 				width: fit-content;
 				transition: opacity 0.2s ease-in-out;
 				position: relative;
@@ -150,13 +150,14 @@
 
 					opacity: 0;
 					transition: opacity 0.2s ease-in-out;
-					bottom: -2px;
+					bottom: 0px;
 					right: 0;
 				}
 				&:before {
 					content: '@';
 					position: absolute;
 					left: 0;
+					top: -1px;
 				}
 				&:hover {
 					opacity: 1;

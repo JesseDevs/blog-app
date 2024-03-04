@@ -52,7 +52,7 @@
 			height: 130px;
 			overflow-y: hidden;
 			overflow-x: visible;
-			filter: blur(7px);
+			filter: blur(1px);
 			opacity: 0.8;
 			gap: 18px;
 			position: relative;
@@ -94,7 +94,7 @@
 				height: auto;
 				width: 150px;
 				opacity: 0.6;
-				filter: blur(6px);
+				filter: blur(9px);
 
 				&:nth-of-type(3),
 				&:nth-of-type(5) {

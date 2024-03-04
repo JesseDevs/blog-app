@@ -6,7 +6,17 @@ export const useThemeService = defineStore('theme', () => {
 	});
 	const selectedTheme = ref(null);
 
-	const colorModes = ['dark', 'light', 'vampire', 'canary', 'low-contrast'];
+	const colorModes = [
+		'dark',
+		'light',
+		'vampire',
+		'canary',
+		'low-contrast',
+		'ice',
+		'glitch',
+		'venomized',
+		'sepia',
+	];
 	const colorModeIndex = ref(0);
 
 	const themeNumber = computed(() => colorModeIndex.value + 1);
@@ -26,7 +36,6 @@ export const useThemeService = defineStore('theme', () => {
 
 	onMounted(() => {
 		const savedTheme = localStorage.getItem('nuxt-color-mode');
-		console.log(savedTheme);
 		if (savedTheme && colorModes.includes(savedTheme)) {
 			selectedTheme.value = savedTheme;
 		}
