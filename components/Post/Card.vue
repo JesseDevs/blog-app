@@ -5,19 +5,27 @@
 		:to="`${userProfile.username}/posts/${post.id}`"
 	>
 		<post-card>
-			<card-header>
+			<card-btns :class="{ active: showModal }">
 				<button
+					@click.prevent="toggleBtnsModal"
 					v-if="currentUser?.id === userProfile?.id"
-					@click.prevent="deletePost(post.id)"
-					class="delete-btn"
+					class="show-btns"
 				>
-					<Icon name="iconamoon:trash" />
+					<Icon name="mdi:dots-horizontal" size="25px" />
 				</button>
+			</card-btns>
+			<transition name="fade">
+				<card-btns-shown v-if="showModal">
+					<button @click.prevent="deletePost(post.id)" class="delete-btn">
+						<span class="small-voice">DELETE</span>
+					</button>
 
-				<button @click.prevent="copyLink" class="share-btn">
-					<Icon name="material-symbols:ios-share-rounded" />
-				</button>
-			</card-header>
+					<button @click.prevent="copyLink" class="share-btn">
+						<span class="small-voice">SHARE</span>
+					</button>
+				</card-btns-shown>
+			</transition>
+
 			<picture>
 				<img
 					v-if="!imageLoaded"
@@ -61,6 +69,8 @@
 		userProfile: Object,
 	});
 
+	const showModal = ref(false);
+
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
@@ -76,6 +86,10 @@
 	const notifyUser = (message) => {
 		// Use your preferred notification method here (e.g., toast, alert)
 		alert(message);
+	};
+
+	const toggleBtnsModal = () => {
+		showModal.value = !showModal.value;
 	};
 
 	const fetchCurrentUser = async () => {
@@ -140,7 +154,6 @@
 	};
 
 	const handleButtonClick = () => {
-		// Your button click handler logic here
 		console.log('Button clicked');
 	};
 
@@ -150,80 +163,25 @@
 </script>
 
 <style lang="scss">
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.2s;
+	}
+	.fade-enter,
+	.fade-leave-to {
+		transition: opacity 0.2s;
+		opacity: 0;
+		filter: blur(1px);
+	}
+
 	.liked {
 		background-color: var(--required-red);
 	}
-
-	// .card-link {
-	// 	pointer-events: none;
-	// }
 
 	post-card {
 		text-content {
 			pointer-events: none;
 			padding-right: 40px;
-		}
-	}
-
-	.delete-btn,
-	.share-btn {
-		display: flex;
-		grid-column: 1/-1;
-		appearance: none;
-		width: 100%;
-		height: 100%;
-		border: none;
-		outline: none;
-		color: var(--white);
-		background-color: transparent;
-		cursor: pointer;
-		pointer-events: all;
-
-		align-items: center;
-		justify-content: center;
-		svg {
-			width: 23px;
-			height: 23px;
-			pointer-events: none;
-			transition: color 0.2s ease-in-out;
-			color: var(--text-faded);
-			path {
-				pointer-events: none;
-			}
-		}
-
-		&::after {
-			content: '';
-			padding: 8px;
-			width: 25px;
-			height: 25px;
-			border-radius: 999px;
-			background-color: var(--required-red);
-			position: absolute;
-			opacity: 0;
-			transition: opacity 0.2s ease-in-out;
-		}
-		&:hover {
-			svg {
-				color: var(--required-red);
-			}
-			&::after {
-				opacity: 0.2;
-			}
-		}
-	}
-
-	.share-btn {
-		&::after {
-			background-color: green;
-		}
-		&:hover {
-			svg {
-				color: green;
-			}
-			&::after {
-				opacity: 0.2;
-			}
 		}
 	}
 </style>

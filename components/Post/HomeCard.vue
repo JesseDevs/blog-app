@@ -1,10 +1,17 @@
 <template>
 	<post-card class="home-card">
-		<card-header>
-			<button @click.prevent="copyLink" class="share-btn">
-				<Icon name="material-symbols:ios-share-rounded" />
+		<card-btns :class="{ active: showModal }">
+			<button @click.prevent="toggleBtnsModal" class="show-btns">
+				<Icon name="mdi:dots-horizontal" size="25px" />
 			</button>
-		</card-header>
+		</card-btns>
+		<transition name="fade">
+			<card-btns-shown v-if="showModal">
+				<button @click.prevent="copyLink" class="share-btn">
+					<span class="small-voice">SHARE</span>
+				</button>
+			</card-btns-shown>
+		</transition>
 		<picture>
 			<img
 				v-if="!imageLoaded"
@@ -48,11 +55,17 @@
 		post: Object,
 	});
 
+	const showModal = ref(false);
+
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const userPosts = ref([]);
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
+
+	const toggleBtnsModal = () => {
+		showModal.value = !showModal.value;
+	};
 
 	const fetchUsernameById = async (id) => {
 		try {
@@ -165,62 +178,6 @@
 					&:after {
 						opacity: 1;
 					}
-				}
-			}
-		}
-		card-header {
-			max-width: 45px;
-		}
-		.delete-btn,
-		.share-btn {
-			display: flex;
-			grid-column: 1/-1;
-			appearance: none;
-			width: 100%;
-			height: 100%;
-			border: none;
-			outline: none;
-			color: var(--white);
-			background-color: transparent;
-			cursor: pointer;
-			pointer-events: all;
-
-			align-items: center;
-			justify-content: center;
-			svg {
-				width: 23px;
-				height: 23px;
-				pointer-events: none;
-				transition: color 0.2s ease-in-out;
-				color: var(--text-faded);
-				path {
-					pointer-events: none;
-				}
-			}
-
-			&::after {
-				content: '';
-				padding: 8px;
-				width: 25px;
-				height: 25px;
-				border-radius: 999px;
-				background-color: red;
-				position: absolute;
-				opacity: 0;
-				transition: opacity 0.2s ease-in-out;
-			}
-		}
-
-		.share-btn {
-			&::after {
-				background-color: green;
-			}
-			&:hover {
-				svg {
-					color: green;
-				}
-				&::after {
-					opacity: 0.2;
 				}
 			}
 		}
