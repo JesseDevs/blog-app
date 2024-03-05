@@ -21,6 +21,7 @@
 				name="streamline:interface-id-voice-1-identification-secure-id-soundwave-sound-voice-security"
 				color="var(--button-bg)"
 			/>
+			<!-- <Icon name="svg-spinners:bars-scale-middle" color="var(--button-bg)" /> -->
 		</space-filler>
 	</section>
 </template>
