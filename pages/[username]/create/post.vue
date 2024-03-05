@@ -4,13 +4,6 @@
 			<SuccessMessage :success="success" />
 			<create-block>
 				<form @submit.prevent="addPost()" autocomplete="off">
-					<div class="create-actions">
-						<back-button @click="$router.back()">
-							<Icon name="material-symbols:arrow-left-alt" size="30" />
-						</back-button>
-						<button class="button-filled" type="submit">Add Post</button>
-					</div>
-
 					<div
 						@click="openFileInput"
 						class="field add-picture"
@@ -60,6 +53,8 @@
 							/>
 						</ClientOnly>
 					</div>
+
+					<button class="button-filled" type="submit">Add Post</button>
 				</form>
 			</create-block>
 			<LoadingContainer v-if="loading" :text="loadingText" />
@@ -296,7 +291,7 @@
 			p {
 				text-transform: uppercase;
 				letter-spacing: 0.02em;
-				font-weight: 600;
+				font-weight: 800;
 			}
 		}
 

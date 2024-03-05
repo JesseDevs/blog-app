@@ -47,7 +47,13 @@
 							color="rgb(var(--white-rgb) / 0.65)"
 						/>
 
-						<p>Change palette</p>
+						<p
+							class="glitch"
+							data-text="Change Palette"
+							v-if="th.selectedTheme == 'glitch'"
+						></p>
+
+						<p v-else>Change Palette</p>
 						<p>{{ th.selectedTheme }}</p>
 						<p class="index-display">
 							({{ th.themeNumber }}/{{ th.colorModes.length }})
@@ -213,6 +219,9 @@
 		color: rgba(var(--white-rgb) / 0.65);
 		cursor: pointer;
 		transition: background-color 0.2s ease;
+		p {
+			pointer-events: none;
+		}
 
 		&:hover {
 			background-color: rgba(var(--white-rgb) / 0.09);

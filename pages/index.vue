@@ -41,7 +41,7 @@
 				</landing-block>
 			</inner-column>
 		</section>
-		<SpaceFiller />
+		<WrapFiller />
 
 		<ExploreCards />
 	</div>

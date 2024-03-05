@@ -140,6 +140,31 @@
 			opacity: .9 !important;
 		}
 	}
+
+	card-btns .show-btns {
+		color: var(--black);
+	}
+
+	card-btns.active {
+		.show-btns {
+
+			svg {
+				color: var(--white);
+			}
+		}
+	}
+
+	card-btns-shown {
+		button {
+			&:hover {
+				background-color: var(--button-bg);
+			}
+		}
+	}
+
+	.home-card text-content .post-user:after {
+		background-color: var(--black);
+	}
 }
 
 .vampire-mode {
@@ -257,6 +282,32 @@
 			opacity: .9 !important;
 		}
 	}
+
+	.modal-footer a {
+		padding: 0px 8px !important;
+	}
+
+	card-btns .show-btns {
+		color: var(--black);
+	}
+
+
+	card-btns.active {
+		.show-btns {
+
+			svg {
+				color: var(--white);
+			}
+		}
+	}
+
+	card-btns-shown {
+		button {
+			&:hover {
+				background-color: var(--button-bg);
+			}
+		}
+	}
 }
 
 
@@ -343,30 +394,67 @@
 	--text-faded: rgba(252, 252, 252, 0.751) !important;
 }
 
-.ice-mode {
-	--text: rgb(10, 12, 12);
-	--background: rgb(165 238 253);
-	--background-rgb: 165 238 253;
+.glitch-mode {
 
-	--dark-hover: rgb(15 32 53);
+	--button-inverse: rgb(216, 81, 159);
 
-
-	--button-bg: rgb(236 111 170);
-	--button-bg-hover: rgb(24 23 44);
-	--button-box: rgb(50 52 78 /.22);
-	--button-box-hover: rgb(50 52 78 /.3);
-	--button-bg-rgb: 50 52 78;
-
-	--dash-hover: rgb(53, 64, 74);
-
-	.logo svg {
-		stroke: var(--white);
+	.palette-button svg {
+		flex-shrink: 0;
 	}
 
-	--text-faded: rgba(252, 252, 252, 0.751) !important;
+	.glitch {
+		color: white;
 
-	landing-block picture img {
-		filter: invert(1);
-		opacity: .4 !important;
+		position: relative;
+		width: 400px;
+		margin: 0 auto;
+		pointer-events: none;
+	}
+
+	@keyframes noise-anim {
+		$steps: 20;
+
+		@for $i from 0 through $steps {
+			#{percentage($i*(1/$steps))} {
+				clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+			}
+		}
+	}
+
+	.glitch:after {
+		content: attr(data-text);
+		position: absolute;
+		left: 2px;
+		text-shadow: -1px 0 var(--button-inverse);
+		top: 0;
+
+
+		overflow: hidden;
+		clip: rect(0, 900px, 0, 0);
+		animation: noise-anim 2s infinite linear alternate-reverse;
+		pointer-events: none;
+	}
+
+	@keyframes noise-anim-2 {
+		$steps: 20;
+
+		@for $i from 0 through $steps {
+			#{percentage($i*(1/$steps))} {
+				clip: rect(random(10)+px, 9999px, random(100)+px, 0);
+			}
+		}
+	}
+
+	.glitch:before {
+		content: attr(data-text);
+		position: absolute;
+		left: -2px;
+		text-shadow: 1px 0 var(--button-bg);
+		top: -12px;
+
+		overflow: hidden;
+		clip: rect(0, 800px, 0, 0);
+		animation: noise-anim-2 3s infinite linear alternate-reverse;
+		pointer-events: none;
 	}
 }

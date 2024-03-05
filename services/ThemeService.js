@@ -12,7 +12,6 @@ export const useThemeService = defineStore('theme', () => {
 		'vampire',
 		'canary',
 		'low-contrast',
-		'ice',
 		'glitch',
 		'venomized',
 		'sepia',

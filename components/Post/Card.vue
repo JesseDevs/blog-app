@@ -3,17 +3,9 @@
 		class="card-link"
 		v-if="userProfile"
 		:to="`${userProfile.username}/posts/${post.id}`"
+		@click="handleOutsideCardBtnsShown"
 	>
 		<post-card>
-			<card-btns :class="{ active: showModal }">
-				<button
-					@click.prevent="toggleBtnsModal"
-					v-if="currentUser?.id === userProfile?.id"
-					class="show-btns"
-				>
-					<Icon name="mdi:dots-horizontal" size="25px" />
-				</button>
-			</card-btns>
 			<transition name="fade">
 				<card-btns-shown v-if="showModal">
 					<button @click.prevent="deletePost(post.id)" class="delete-btn">
@@ -25,6 +17,15 @@
 					</button>
 				</card-btns-shown>
 			</transition>
+			<card-btns :class="{ active: showModal }">
+				<button
+					@click.prevent="toggleBtnsModal"
+					v-if="currentUser?.id === userProfile?.id"
+					class="show-btns"
+				>
+					<Icon name="mdi:dots-horizontal" size="25px" />
+				</button>
+			</card-btns>
 
 			<picture>
 				<img
@@ -70,6 +71,15 @@
 	});
 
 	const showModal = ref(false);
+
+	const handleOutsideCardBtnsShown = (event) => {
+		console.log(event.target.closest);
+		if (showModal == true) {
+			if (!event.target.closest('.card-btns-shown')) {
+				showModal.value = false;
+			}
+		}
+	};
 
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
@@ -153,10 +163,6 @@
 		}
 	};
 
-	const handleButtonClick = () => {
-		console.log('Button clicked');
-	};
-
 	onMounted(async () => {
 		await fetchCurrentUser();
 	});
@@ -181,7 +187,7 @@
 	post-card {
 		text-content {
 			pointer-events: none;
-			padding-right: 40px;
+			padding-right: 20px;
 		}
 	}
 </style>

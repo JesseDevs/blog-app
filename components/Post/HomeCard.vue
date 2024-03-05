@@ -1,10 +1,5 @@
 <template>
 	<post-card class="home-card">
-		<card-btns :class="{ active: showModal }">
-			<button @click.prevent="toggleBtnsModal" class="show-btns">
-				<Icon name="mdi:dots-horizontal" size="25px" />
-			</button>
-		</card-btns>
 		<transition name="fade">
 			<card-btns-shown v-if="showModal">
 				<button @click.prevent="copyLink" class="share-btn">
@@ -12,6 +7,12 @@
 				</button>
 			</card-btns-shown>
 		</transition>
+		<card-btns :class="{ active: showModal }">
+			<button @click.prevent="toggleBtnsModal" class="show-btns">
+				<Icon name="mdi:dots-horizontal" size="25px" />
+			</button>
+		</card-btns>
+
 		<picture>
 			<img
 				v-if="!imageLoaded"
