@@ -50,6 +50,7 @@
 		overflow: hidden;
 		background: var(--background);
 		height: 300px;
+		position: relative;
 		// &:hover {
 		// 	ul li {
 		// 		animation-play-state: paused;
