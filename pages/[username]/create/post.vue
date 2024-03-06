@@ -1,7 +1,6 @@
 <template>
 	<section class="create-post" @click="handleTextBoxContainerClick">
 		<inner-column>
-			<SuccessMessage :success="success" />
 			<create-block>
 				<form @submit.prevent="addPost()" autocomplete="off">
 					<div
@@ -63,6 +62,10 @@
 </template>
 
 <script setup>
+	definePageMeta({
+		middleware: 'auth',
+	});
+
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
@@ -148,10 +151,8 @@
 				console.log('Data inserted successfully:', data);
 				success.value = true;
 				setTimeout(() => {
-					// Hide spinner
 					loading.value = false;
 
-					// Navigate to profile
 					router.push('/');
 				}, 1250);
 			}
