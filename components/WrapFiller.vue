@@ -97,7 +97,7 @@
 		z-index: -1;
 		margin-top: -15px;
 		margin-left: 5px;
-		animation: spin 2s 0.2s infinite;
+		animation: spin 4s 0.2s infinite;
 	}
 
 	ul li:nth-child(2) {
@@ -107,7 +107,7 @@
 		z-index: -2;
 		margin-top: -30px;
 		margin-left: 10px;
-		animation: spin 2s 0.4s infinite;
+		animation: spin 4s 0.4s infinite;
 	}
 
 	ul li:nth-child(3) {
@@ -117,7 +117,7 @@
 		z-index: -3;
 		margin-top: -45px;
 		margin-left: 15px;
-		animation: spin 2s 0.6s infinite;
+		animation: spin 4s 0.6s infinite;
 	}
 
 	ul li:nth-child(4) {
@@ -127,7 +127,7 @@
 		z-index: -4;
 		margin-top: -60px;
 		margin-left: 20px;
-		animation: spin 2s 0.8s infinite;
+		animation: spin 4s 0.8s infinite;
 	}
 
 	ul li:nth-child(5) {
@@ -137,7 +137,7 @@
 		z-index: -5;
 		margin-top: -75px;
 		margin-left: 25px;
-		animation: spin 2s 1s infinite;
+		animation: spin 4s 1s infinite;
 	}
 
 	ul li:nth-child(6) {
@@ -147,7 +147,7 @@
 		z-index: -6;
 		margin-top: -90px;
 		margin-left: 30px;
-		animation: spin 2s 1.2s infinite;
+		animation: spin 4s 1.2s infinite;
 	}
 
 	ul li:nth-child(7) {
@@ -157,7 +157,7 @@
 		z-index: -7;
 		margin-top: -105px;
 		margin-left: 35px;
-		animation: spin 2s 1.4s infinite;
+		animation: spin 4s 1.4s infinite;
 	}
 
 	ul li:nth-child(8) {
@@ -167,7 +167,7 @@
 		z-index: -8;
 		margin-top: -120px;
 		margin-left: 40px;
-		animation: spin 2s 1.6s infinite;
+		animation: spin 4s 1.6s infinite;
 	}
 
 	ul li:nth-child(9) {
@@ -177,7 +177,7 @@
 		z-index: -9;
 		margin-top: -135px;
 		margin-left: 45px;
-		animation: spin 2s 1.8s infinite;
+		animation: spin 4s 1.8s infinite;
 	}
 
 	ul li:nth-child(10) {
@@ -187,7 +187,7 @@
 		z-index: -10;
 		margin-top: -150px;
 		margin-left: 50px;
-		animation: spin 2s 2s infinite;
+		animation: spin 4s infinite;
 	}
 
 	ul li:nth-child(11) {
@@ -197,7 +197,7 @@
 		z-index: -11;
 		margin-top: -165px;
 		margin-left: 55px;
-		animation: spin 2s 2.2s infinite;
+		animation: spin 4s 2.2s infinite;
 	}
 
 	ul li:nth-child(12) {
@@ -207,7 +207,7 @@
 		z-index: -12;
 		margin-top: -180px;
 		margin-left: 60px;
-		animation: spin 2s 2.4s infinite;
+		animation: spin 4s 2.4s infinite;
 	}
 
 	@keyframes spin {

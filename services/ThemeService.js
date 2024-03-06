@@ -5,6 +5,7 @@ export const useThemeService = defineStore('theme', () => {
 		initialValue: 'dark',
 	});
 	const selectedTheme = ref(null);
+	const themeShowcase = ref(false);
 
 	const colorModes = [
 		'dark',
@@ -28,6 +29,7 @@ export const useThemeService = defineStore('theme', () => {
 	};
 
 	const changePalette = () => {
+		themeShowcase.value = true;
 		colorModeIndex.value = (colorModeIndex.value + 1) % colorModes.length;
 		colorMode.preference = colorModes[colorModeIndex.value];
 		setSelectedTheme(colorModes[colorModeIndex.value]);
@@ -48,5 +50,6 @@ export const useThemeService = defineStore('theme', () => {
 		setSelectedTheme,
 		changePalette,
 		themeNumber,
+		themeShowcase,
 	};
 });

@@ -1,60 +1,6 @@
-<script setup>
-	const credentials = reactive({
-		fullName: '',
-		username: '',
-		email: '',
-		password: '',
-		successMessage: '',
-		errorMessage: '',
-	});
-
-	const client = useSupabaseClient();
-	const router = useRouter();
-	const user = useSupabaseUser();
-	async function register() {
-		const { fullName, username, email, password } = credentials;
-		const { error } = await client.auth.signUp({
-			email,
-			password,
-			options: {
-				data: {
-					full_name: fullName,
-					username: username,
-					email,
-					likes: [],
-				},
-				emailRedirectTo: 'http://localhost:3000/',
-			},
-		});
-
-		if (error) {
-			if (error.message.includes('unique constraint')) {
-				credentials.errorMessage = 'Email or username already exists.';
-			} else {
-				credentials.errorMessage = 'Registration failed. Please try again.';
-			}
-			console.error(error);
-			return;
-		}
-		isModalOpen.value = true;
-	}
-
-	const isModalOpen = ref(false);
-	const closeModal = () => {
-		isModalOpen.value = false;
-	};
-
-	const showPassword = ref(false);
-	const togglePassword = () => {
-		if (credentials.password) {
-			showPassword.value = !showPassword.value;
-		}
-	};
-</script>
-
 <template>
 	<GeneralContainer class="register">
-		<signup-page>
+		<signup-page v-if="!isDataLoading">
 			<div>
 				<h2 class="level-three-voice">Sign Up</h2>
 				<p class="sub-head">Get started with an account</p>
@@ -125,6 +71,11 @@
 			<div class="error" v-if="credentials.errorMessage">
 				<p>{{ credentials.errorMessage }}</p>
 			</div>
+
+			<p class="form-support small-voice">
+				Already have an account?
+				<a class="custom-link" href="/login">Login</a>
+			</p>
 			<glass-container
 				v-if="credentials.successMessage && isModalOpen"
 				:class="{ success: isModalOpen }"
@@ -134,8 +85,66 @@
 				<p>{{ credentials.successMessage }}</p>
 			</glass-container>
 		</signup-page>
+
+		<LoadingContainer v-else :text="loadingText" />
 	</GeneralContainer>
 </template>
+<script setup>
+	const credentials = reactive({
+		fullName: '',
+		username: '',
+		email: '',
+		password: '',
+		successMessage: '',
+		errorMessage: '',
+	});
+
+	const client = useSupabaseClient();
+	const router = useRouter();
+	const user = useSupabaseUser();
+	const isDataLoading = ref(false);
+	const loadingText = ref(`Creating your account...`);
+	async function register() {
+		isDataLoading.value = true;
+		const { fullName, username, email, password } = credentials;
+		const { error } = await client.auth.signUp({
+			email,
+			password,
+			options: {
+				data: {
+					full_name: fullName,
+					username: username,
+					email,
+					likes: [],
+				},
+				emailRedirectTo: 'http://localhost:3000/',
+			},
+		});
+
+		router.push('/confirmation');
+		if (error) {
+			if (error.message.includes('unique constraint')) {
+				credentials.errorMessage = 'Email or username already exists.';
+			} else {
+				credentials.errorMessage = 'Registration failed. Please try again.';
+			}
+			console.error(error);
+			return;
+		}
+	}
+
+	const isModalOpen = ref(false);
+	const closeModal = () => {
+		isModalOpen.value = false;
+	};
+
+	const showPassword = ref(false);
+	const togglePassword = () => {
+		if (credentials.password) {
+			showPassword.value = !showPassword.value;
+		}
+	};
+</script>
 
 <style lang="scss" scoped>
 	section {
@@ -170,6 +179,40 @@
 		border: none;
 		outline: none;
 		cursor: pointer;
+	}
+
+	p.form-support {
+		.custom-link {
+			font-size: inherit;
+			position: relative;
+			display: inline-block;
+			text-decoration: underline;
+			transition: color 0.4s ease;
+			padding-left: 5px;
+			padding-right: 5px;
+
+			&:hover {
+				color: black;
+			}
+		}
+
+		.custom-link::before {
+			content: '';
+			position: absolute;
+			border-radius: 3px;
+			top: 0;
+			left: 0;
+			width: 0;
+			height: 100%;
+			background-color: var(--button-bg);
+			transition: width 0.3s ease;
+			// transition-delay: 0.1s;
+			z-index: -1;
+		}
+
+		.custom-link:hover::before {
+			width: 100%;
+		}
 	}
 
 	glass-container.success {

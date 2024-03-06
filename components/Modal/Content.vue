@@ -36,6 +36,16 @@
 			</div>
 			<div class="modal-bottom">
 				<div class="modal-BTNs">
+					<p v-if="th.themeShowcase" class="show-theme">
+						Current Theme:
+						<span
+							class="glitch"
+							data-text="  Glitch"
+							v-if="th.selectedTheme == 'glitch'"
+						>
+						</span>
+						<span v-else>{{ th.selectedTheme }}</span>
+					</p>
 					<button
 						class="palette-button"
 						@click="th.changePalette"
@@ -54,7 +64,6 @@
 						></p>
 
 						<p v-else>Change Palette</p>
-						<p>{{ th.selectedTheme }}</p>
 						<p class="index-display">
 							({{ th.themeNumber }}/{{ th.colorModes.length }})
 						</p>
@@ -234,6 +243,13 @@
 		position: relative;
 		span {
 			position: absolute;
+		}
+	}
+
+	p.show-theme {
+		padding: 0px 1rem;
+		span {
+			text-transform: capitalize;
 		}
 	}
 </style>

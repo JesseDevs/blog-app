@@ -22,10 +22,10 @@
 						<a
 							class="user-button"
 							v-if="!user"
-							href="/register"
+							href="/login"
 							aria-label="Go to register page"
 						>
-							Sign Up
+							Login
 						</a>
 						<NuxtLink
 							class="user-button"

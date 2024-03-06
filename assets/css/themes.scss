@@ -89,69 +89,20 @@
 
 	--box-shadow: rgb(214 213 213);
 
+	--white: black;
+	--white-rgb: 0 0 0;
 
 	.logo svg {
-		stroke: var(--black) !important;
-		opacity: .3;
-	}
 
-	.mbykw span {
-		background-color: var(--black) !important;
+		opacity: .3;
 	}
 
 	glass-container {
 		background-color: var(--color-black-40);
 	}
 
-	detail-page picture {
-		&:before {
-			background-image: linear-gradient(to bottom, rgb(var(--text-rgb) / 0.2) 0%, var(--text-faded) 100%) !important;
-		}
-	}
-
-	.palette-button,
-	.palette-button svg {
-		color: rgb(var(--black-rgb) / 0.65) !important;
-	}
-
 	landing-block picture img {
 		filter: invert(1);
-	}
-
-
-	.card-menu li {
-		border-bottom: var(--thin) solid var(--input-bg);
-	}
-
-	.card-menu li:first-of-type {
-		border-top: var(--thin) solid var(--input-bg);
-	}
-
-	create-block textarea {
-		color: var(--black) !important;
-	}
-
-	section space-filler {
-		filter: none !important;
-		opacity: .9;
-
-		svg {
-			filter: blur(7px) !important;
-			opacity: .9 !important;
-		}
-	}
-
-	card-btns .show-btns {
-		color: var(--black);
-	}
-
-	card-btns.active {
-		.show-btns {
-
-			svg {
-				color: var(--white);
-			}
-		}
 	}
 
 	card-btns-shown {
@@ -162,9 +113,7 @@
 		}
 	}
 
-	.home-card text-content .post-user:after {
-		background-color: var(--black);
-	}
+
 }
 
 .vampire-mode {
@@ -217,36 +166,19 @@
 	--button-bg-rgb: 211 211 249;
 
 	--dark-hover: #eeeecb;
-	--dash-hover: rgb(237, 235, 235);
+	--dash-hover: #e5e5cb;
 
 	--box-shadow: rgb(186, 186, 186);
 
-	.home-card text-content .post-user:after {
-		background-color: var(--black);
-	}
+	--white: black;
+	--white-rgb: 0 0 0;
 
-	.logo svg {
-		stroke: var(--black) !important;
-		opacity: .3;
-	}
-
-	.mbykw span {
-		background-color: var(--black) !important;
-	}
-
-	glass-container {
-		background-color: var(--color-black-40);
-	}
+	--black: white;
 
 	detail-page picture {
 		&:before {
 			background-image: linear-gradient(to bottom, rgb(var(--text-rgb) / 0.2) 0%, var(--text-faded) 100%) !important;
 		}
-	}
-
-	.palette-button,
-	.palette-button svg {
-		color: rgb(var(--black-rgb) / 0.65) !important;
 	}
 
 	landing-block picture img {
@@ -255,50 +187,8 @@
 	}
 
 
-	.card-menu li {
-		border-bottom: var(--thin) solid var(--input-bg);
-	}
-
-	.card-menu li:first-of-type {
-		border-top: var(--thin) solid var(--input-bg);
-	}
-
-	create-block textarea {
-		color: var(--black) !important;
-	}
-
-	section space-filler {
-		filter: none !important;
-		opacity: .9;
-
-		&:before {
-			background: var(--button-bg-hover) !important;
-			opacity: .8;
-		}
-
-		svg {
-			color: var(--button-bg-hover) !important;
-			filter: blur(5px) !important;
-			opacity: .9 !important;
-		}
-	}
-
 	.modal-footer a {
 		padding: 0px 8px !important;
-	}
-
-	card-btns .show-btns {
-		color: var(--black);
-	}
-
-
-	card-btns.active {
-		.show-btns {
-
-			svg {
-				color: var(--white);
-			}
-		}
 	}
 
 	card-btns-shown {
@@ -352,22 +242,6 @@
 	}
 
 	--text-faded: rgba(252, 252, 252, 0.751) !important;
-
-	section space-filler {
-		filter: none !important;
-		opacity: .9;
-
-		&:before {
-			background: var(--button-bg-hover) !important;
-			opacity: .8;
-		}
-
-		svg {
-			color: var(--button-bg-hover) !important;
-			filter: blur(5px) !important;
-			opacity: .9 !important;
-		}
-	}
 }
 
 .venomized-mode {
@@ -395,8 +269,49 @@
 }
 
 .glitch-mode {
+	--background: rgb(33, 154, 83);
+	--background-rgb: 39 174 96;
+
+	--text-faded: rgb(25, 25, 25);
+
+	--white: rgb(255 255 255);
+	--white-rgb: 255 255 255;
+	--black: rgb(2 2 2);
+	--black-rgb: 2 2 2;
+	--dark-hover: rgb(18, 107, 55);
+
+	--button-text: white;
+	--button-bg: rgb(10 12 12);
+	--button-bg-hover: rgb(30, 20, 35);
+	--button-box: rgb(10 12 12 / .22);
+	--button-box-hover: rgb(10 12 12 /.3);
+	--button-bg-rgb: 39 174 96;
 
 	--button-inverse: rgb(216, 81, 159);
+
+	landing-block picture img {
+
+		opacity: .3 !important;
+	}
+
+	post-header {
+		color: black;
+
+		a {
+			&:after {
+				background-color: var(--black) !important;
+			}
+		}
+	}
+
+	card-footer {
+		p {
+			svg {
+
+				color: var(--black);
+			}
+		}
+	}
 
 	.palette-button svg {
 		flex-shrink: 0;

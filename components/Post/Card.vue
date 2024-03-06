@@ -90,6 +90,7 @@
 	const copyLink = () => {
 		const url = `${window.location.origin}/${props.userProfile.username}/posts/${props.post.id}`;
 		navigator.clipboard.writeText(url);
+		showModal.value = false;
 		notifyUser('Link copied to clipboard');
 	};
 
@@ -145,6 +146,7 @@
 
 	const deletePost = async (postId) => {
 		const confirmed = confirm('Are you sure you want to delete this post?');
+		showModal.value = false;
 
 		if (!confirmed) {
 			return;

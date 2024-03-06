@@ -215,7 +215,7 @@
 			justify-content: space-between;
 			position: relative;
 			width: 100%;
-			border-bottom: var(--thin) solid gray;
+			border-bottom: var(--thin) solid var(--text-faded);
 			padding-top: 10px;
 			padding-bottom: 5px;
 

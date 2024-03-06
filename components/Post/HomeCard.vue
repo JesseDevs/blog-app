@@ -104,6 +104,7 @@
 	const copyLink = () => {
 		const url = `${window.location.origin}/${username.value}/posts/${props.post.id}`;
 		navigator.clipboard.writeText(url);
+		showModal.value = false;
 		notifyUser('Link copied to clipboard');
 	};
 
