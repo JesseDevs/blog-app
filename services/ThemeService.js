@@ -15,7 +15,6 @@ export const useThemeService = defineStore('theme', () => {
 		'low-contrast',
 		'glitch',
 		'venomized',
-		'sepia',
 	];
 	const colorModeIndex = ref(0);
 
