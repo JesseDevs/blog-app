@@ -326,6 +326,22 @@
 		pointer-events: none;
 	}
 
+	p.show-theme {
+
+		.glitch {
+			height: 20px !important;
+
+			&:before {
+				left: 5px !important;
+				top: 0;
+			}
+
+			&:after {
+				animation: noise-anim 2s infinite linear reverse;
+			}
+		}
+	}
+
 	@keyframes noise-anim {
 		$steps: 20;
 

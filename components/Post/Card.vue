@@ -171,17 +171,6 @@
 </script>
 
 <style lang="scss">
-	.fade-enter-active,
-	.fade-leave-active {
-		transition: opacity 0.2s;
-	}
-	.fade-enter,
-	.fade-leave-to {
-		transition: opacity 0.2s;
-		opacity: 0;
-		filter: blur(1px);
-	}
-
 	.liked {
 		background-color: var(--required-red);
 	}
