@@ -14,6 +14,9 @@
 				</h2>
 				<p class="username">@{{ userProfile.username }}</p>
 				<details-box>
+					<p v-if="userProfile.bio">
+						{{ userProfile.bio }}
+					</p>
 					<p>
 						<Icon name="clarity:calendar-line" /> Joined
 						{{ formattedDate }}
@@ -154,6 +157,7 @@
 		width: 100%;
 		color: var(--text-faded);
 		padding-top: 10px;
+		max-width: 250px;
 
 		p {
 			display: flex;

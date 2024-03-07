@@ -12,7 +12,7 @@
 						@click="ui.closeMenu"
 						aria-label="Go to login page"
 					>
-						Log in
+						Login
 					</NuxtLink>
 
 					<NuxtLink

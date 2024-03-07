@@ -76,14 +76,6 @@
 				Already have an account?
 				<a class="custom-link" href="/login">Login</a>
 			</p>
-			<glass-container
-				v-if="credentials.successMessage && isModalOpen"
-				:class="{ success: isModalOpen }"
-			>
-				<h3 class="level-two-voice">Confirmation</h3>
-				<button @click="closeModal">Close</button>
-				<p>{{ credentials.successMessage }}</p>
-			</glass-container>
 		</signup-page>
 
 		<LoadingContainer v-else :text="loadingText" />
@@ -97,6 +89,10 @@
 		password: '',
 		successMessage: '',
 		errorMessage: '',
+	});
+
+	definePageMeta({
+		middleware: 'confirmed-auth',
 	});
 
 	const client = useSupabaseClient();
