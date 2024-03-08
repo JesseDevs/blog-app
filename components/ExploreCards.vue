@@ -1,9 +1,7 @@
 <template>
 	<ul v-if="posts" class="card-menu" id="explore-cards">
 		<li v-for="post in posts" :key="post.id">
-			<NuxtLink :to="`${post.username}/posts/${post.id}`">
-				<PostHomeCard :post="post" />
-			</NuxtLink>
+			<PostHomeCard :post="post" />
 		</li>
 	</ul>
 </template>
