@@ -142,14 +142,19 @@
 		}
 	}
 
+	const redirectUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://theblog-echo.vercel.app/update-password'
+			: `${process.env.BASE_URL}/reset/update-password`;
+
 	const resetPassword = async () => {
 		if (credentials.email) {
 			try {
 				const { error } = await client.auth.resetPasswordForEmail(
 					credentials.email,
-					{
-						redirectTo: 'https://localhost:3000/update-password',
-					},
+					// {
+					// 	redirectTo: redirectUrl,
+					// },
 				);
 
 				if (error) {
@@ -268,7 +273,7 @@
 		left: 0;
 		width: 100%;
 		height: 50%;
-		min-height: 410px;
+		min-height: 415px;
 		background-color: var(--background);
 		box-shadow: 0px 2px 2px rgb(var(--button-bg-rgb) / 0.2);
 		transition: transform 0.3s ease-out;

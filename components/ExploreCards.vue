@@ -76,6 +76,6 @@
 
 <style lang="scss" scoped>
 	ul {
-		scroll-margin-top: 50px;
+		scroll-margin-top: 45px;
 	}
 </style>
