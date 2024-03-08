@@ -45,19 +45,19 @@ post-card {
 
 	picture {
 		position: relative;
-		border-radius: 5px;
+		border-radius: var(--border-card);
 		max-height: 50px;
 
 		box-shadow: 0 0 0var(--thin) var(--box-shadow);
 
 		img {
 			object-fit: cover;
-			border-radius: 5px;
+			border-radius: var(--border-card);
 			width: 50px;
 		}
 
 		.vignette-overlay {
-			border-radius: 5px;
+			border-radius: var(--border-card);
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -121,7 +121,7 @@ post-card {
 				border-left: 4px solid var(--white);
 				padding: 5px;
 				margin: 5px 0;
-				border-radius: 2px;
+				border-radius: var(--border-adjust);
 
 				background-color: var(--input-placeholder);
 			}
@@ -177,7 +177,7 @@ card-btns {
 			padding: 6px;
 			width: 1.7rem;
 			height: 1.7rem;
-			border-radius: 50%;
+			border-radius: var(--border-circle);
 			background-color: var(--text-faded);
 			position: absolute;
 			opacity: 0;
@@ -221,12 +221,12 @@ card-btns-shown {
 	height: auto;
 	max-height: calc(100% - 22px);
 	// inset: 0px auto auto 0px;
-	border-radius: 3px;
+	border-radius: var(--border-adjust);
 	box-shadow: 0 0 8px rgb(var(--button-bg-rgb) / 0.5);
 
 	button {
 		cursor: pointer;
-		border-radius: 3px;
+		border-radius: var(--border-adjust);
 		font-weight: 700;
 		border: none;
 		margin: 0;
@@ -238,6 +238,21 @@ card-btns-shown {
 
 		&:hover {
 			background-color: var(--button-bg-hover);
+		}
+	}
+
+	p {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		pointer-events: all;
+		text-align: center;
+		padding: 5px 0px;
+
+		span {
+			display: block;
+			min-width: 25px;
+			pointer-events: all;
 		}
 	}
 }

@@ -35,7 +35,16 @@
 	--success-green: #155724;
 	--success-border: #c3e6cb;
 	--required-red: rgb(232, 17, 17);
+	--liked-red: rgba(219, 15, 15, 0.447);
+
 	--thin: 1px;
+	--line: 3px;
+	--thick: 5px;
+
+	--border-adjust: 3px;
+	--border-card: 5px;
+	--border-max: 999px;
+	--border-circle: 50%;
 
 
 	--color-primary-hsl: 145, 63%, 42%;
@@ -346,7 +355,7 @@
 		$steps: 20;
 
 		@for $i from 0 through $steps {
-			#{percentage($i*(1/$steps))} {
+			#{percentage($i*(calc(1 / $steps)))} {
 				clip: rect(random(100)+px, 9999px, random(100)+px, 0);
 			}
 		}
@@ -370,7 +379,7 @@
 		$steps: 20;
 
 		@for $i from 0 through $steps {
-			#{percentage($i*(1/$steps))} {
+			#{percentage($i*(calc(1 / $steps)))} {
 				clip: rect(random(10)+px, 9999px, random(100)+px, 0);
 			}
 		}
