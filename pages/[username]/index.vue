@@ -26,8 +26,18 @@
 
 			<dashboard-menu>
 				<nav>
-					<div>
+					<div
+						@click="selectedTab = 'posts'"
+						:class="{ active: selectedTab === 'posts' }"
+					>
 						<p>Posts</p>
+						<span></span>
+					</div>
+					<div
+						@click="selectedTab = 'likes'"
+						:class="{ active: selectedTab === 'likes' }"
+					>
+						<p>Likes</p>
 						<span></span>
 					</div>
 				</nav>
@@ -40,11 +50,29 @@
 			</li>
 		</ul>
 
+		<ul v-if="userProfile && isDataLoaded" class="card-menu">
+			<li v-for="like in likedPosts" :key="like.id">
+				<PostHomeCard :post="like" />
+			</li>
+		</ul>
+
+		<!-- <ul v-if="userProfile && isDataLoaded" class="card-menu">
+			<li v-for="item in displayedItems" :key="item.id">
+				<template v-if="item.type === 'post'">
+					<PostCard :post="item.data" :userProfile="userProfile" />
+				</template>
+				<template v-else-if="item.type === 'like'">
+					<PostHomeCard :post="item.data" />
+				</template>
+			</li>
+		</ul> -->
+
 		<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 	</section>
 </template>
 <script setup>
 	const posts = ref([]);
+	const likedPosts = ref([]);
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
@@ -54,6 +82,16 @@
 	const userProfile = ref(null);
 	const currentUser = ref(null);
 	const formattedDate = ref('');
+	const selectedTab = ref('');
+
+	const displayedItems = computed(() => {
+		if (selectedTab.value === 'posts') {
+			return posts.value.map((post) => ({ type: 'post', data: post }));
+		} else if (selectedTab.value === 'likes') {
+			return likedPosts.value.map((like) => ({ type: 'like', data: like }));
+		}
+		return [];
+	});
 
 	const formatDate = () => {
 		const userValue = user?.value;
@@ -131,10 +169,41 @@
 		}
 	};
 
+	const fetchLikes = async () => {
+		try {
+			const { data: likesData, error: likesError } = await client
+				.from('likes')
+				.select('*')
+				.eq('user_id', userProfile.value.id);
+
+			const postIds = likesData.map((like) => like.post_id);
+
+			if (postIds.length === 0) {
+				likedPosts.value = [];
+				return;
+			}
+
+			const { data: actualLikedPosts, error: postsError } = await client
+				.from('posts')
+				.select('*')
+				.in('id', postIds);
+
+			if (postsError) {
+				throw new Error('Error fetching liked posts:', postsError.message);
+			}
+
+			likedPosts.value = actualLikedPosts;
+		} catch (error) {
+			console.error('Error fetching likes:', error.message);
+		}
+	};
+
 	onMounted(async () => {
+		selectedTab.value = 'posts';
 		await fetchCurrentUser();
 		await fetchUserProfile();
 		await fetchPosts();
+		await fetchLikes();
 		isDataLoaded.value = true;
 	});
 </script>
@@ -177,7 +246,9 @@
 		margin-top: 2rem;
 
 		nav {
+			position: relative;
 			display: flex;
+			cursor: pointer;
 			border-bottom: var(--thin) solid var(--text-faded);
 
 			div {
@@ -193,19 +264,55 @@
 					display: inline-block;
 					padding: 16px 0px;
 				}
-
-				span {
-					position: absolute;
-					height: 4px;
-					border-radius: 999px;
-					background-color: var(--button-bg);
-
-					bottom: -1.5px;
-					left: 50%;
-					transform: translateX(-50%);
-					width: 85%;
-				}
 			}
+		}
+
+		nav div.active span {
+			position: absolute;
+			border-radius: 999px;
+			background-color: var(--button-bg);
+			bottom: -1.5px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 60%;
+			height: 4px;
+			transition: width 0.5s ease-in-out, transform 0.3s ease-in-out;
+			animation: reverse-moving-span 0.5s;
+		}
+		nav div:last-child.active span {
+			animation: moving-span 0.5s;
+		}
+	}
+
+	@keyframes moving-span {
+		0% {
+			left: 0;
+			transform: translateX(-50%);
+			width: 0;
+		}
+		50% {
+			left: 70%;
+			width: 80%;
+		}
+		100% {
+			left: 50%;
+			width: 60%;
+		}
+	}
+
+	@keyframes reverse-moving-span {
+		0% {
+			left: 50%;
+			width: 60%;
+			transform: translateX(-50%);
+		}
+		50% {
+			left: 0;
+			width: 80%;
+		}
+		100% {
+			left: 50%;
+			width: 60%;
 		}
 	}
 
