@@ -2,10 +2,19 @@
 	<div>
 		<ul v-if="posts" class="card-menu" id="explore-cards">
 			<li v-for="post in posts" :key="post.id">
-				<PostHomeCard :post="post" />
+				<template v-if="post.userProfile">
+					<PostHomeCard :post="post" :userProfile="post.userProfile" />
+				</template>
 			</li>
 		</ul>
-		<button @click="loadMorePosts">Load More</button>
+
+		<button
+			class="load-more-btn user-button"
+			@click="loadMorePosts"
+			:disabled="!hasMorePosts"
+		>
+			Load More
+		</button>
 	</div>
 </template>
 
@@ -14,10 +23,9 @@
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
-	const username = ref('');
 
 	const pageSize = 10; // Number of posts to load per page
-	let currentPage = ref(1); // Current page of loaded posts
+	let currentPage = ref(1);
 	let hasMorePosts = ref(true);
 
 	const fetchUsernameById = async (id) => {
@@ -58,7 +66,7 @@
 				console.error('Error fetching posts:', error.message);
 			} else {
 				if (data.length < pageSize) {
-					hasMorePosts.value = false; // No more posts to load
+					hasMorePosts.value = false;
 				}
 				posts.value.push(...data);
 				currentPage.value++;
@@ -68,35 +76,77 @@
 		}
 	};
 
+	const fetchUserProfileById = async (id) => {
+		try {
+			const { data, error } = await client
+				.from('profiles')
+				.select('*')
+				.eq('id', id)
+				.single();
+
+			if (error) {
+				throw error;
+			}
+
+			if (data) {
+				return data;
+			}
+
+			return null;
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+			return null;
+		}
+	};
+
 	const loadMorePosts = async () => {
 		await fetchPosts();
-		for (const post of posts.value) {
-			const user = await getUserByUsername(post.belongs_to);
-			post.username = user; // Add username property to each post
-		}
+		await Promise.all(
+			posts.value.map(async (post) => {
+				const userProfile = await fetchUserProfileById(post.belongs_to);
+				post.userProfile = userProfile;
+			}),
+		);
 	};
 
 	const getUserByUsername = async (id) => {
 		try {
-			const username = await fetchUsernameById(id);
-			return username;
+			const userProfile = await fetchUserProfileById(id);
+			return userProfile;
 		} catch (error) {
-			console.error('Error fetching username:', error.message);
-			return '';
+			console.error('Error fetching user profile:', error.message);
+			return null;
 		}
 	};
 
 	onMounted(async () => {
 		await fetchPosts();
-		for (const post of posts.value) {
-			const user = await getUserByUsername(post.belongs_to);
-			post.username = user;
-		}
+		await Promise.all(
+			posts.value.map(async (post) => {
+				const userProfile = await getUserByUsername(post.belongs_to);
+				post.userProfile = userProfile;
+			}),
+		);
 	});
 </script>
 
 <style lang="scss" scoped>
 	ul {
 		scroll-margin-top: 45px;
+	}
+
+	.load-more-btn {
+		outline: none;
+		border: none;
+		margin: 0 auto;
+		margin-top: 40px;
+		padding-left: 40px;
+		padding-right: 40px;
+
+		&:disabled {
+			background-color: var(--text-faded);
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
 	}
 </style>

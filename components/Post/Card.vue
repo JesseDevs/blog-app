@@ -18,17 +18,18 @@
 						</button>
 
 						<button
+							class="like-btn"
 							:class="{ 'is-liked': isLiked, 'is-not-liked': !isLiked }"
 							@click.prevent="likePost(post.id)"
 						>
 							<span class="small-voice">
-								{{ isLiked ? 'UNLIKE' : 'LIKE' }}</span
-							>
+								{{ isLiked ? 'UNLIKE' : 'LIKE' }}
+								<span class="like-count tiny-voice">{{
+									totalLikes
+								}}</span>
+							</span>
 							<br />
 						</button>
-						<p class="small-voice">
-							Likes:<span>{{ totalLikes }}</span>
-						</p>
 					</ClientOnly>
 				</card-btns-shown>
 			</transition>
@@ -237,8 +238,28 @@
 </script>
 
 <style lang="scss">
+	.like-btn {
+		span {
+			position: relative;
+			span.like-count {
+				position: absolute;
+				pointer-events: none;
+				top: -10px;
+				right: -8px;
+			}
+		}
+	}
 	.is-liked {
 		background-color: var(--liked-red);
+		border-bottom-left-radius: 0px;
+		border-bottom-right-radius: 0px;
+
+		p {
+			transition: background-color 0.3s ease-in-out;
+		}
+		+ .is-liked {
+			border-radius: 0px;
+		}
 	}
 
 	post-card {

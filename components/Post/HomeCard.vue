@@ -1,5 +1,5 @@
 <template>
-	<NuxtLink :to="`${username}/posts/${post.id}`">
+	<NuxtLink :to="`${userProfile.username}/posts/${post.id}`">
 		<post-card class="home-card">
 			<transition name="fade">
 				<card-btns-shown v-if="showModal" @click.stop>
@@ -12,13 +12,11 @@
 						@click.prevent="likePost(post.id)"
 					>
 						<span class="small-voice">
-							{{ isLiked ? 'UNLIKE' : 'LIKE' }}</span
-						>
+							{{ isLiked ? 'UNLIKE' : 'LIKE' }}
+							<span class="like-count tiny-voice">{{ totalLikes }}</span>
+						</span>
 						<br />
 					</button>
-					<p class="small-voice">
-						Likes:<span>{{ totalLikes }}</span>
-					</p>
 				</card-btns-shown>
 			</transition>
 			<card-btns :class="{ active: showModal }">
@@ -45,8 +43,8 @@
 			</picture>
 
 			<text-content>
-				<a class="post-user" @click.stop :href="`/${username}`">
-					{{ username }}</a
+				<a class="post-user" @click.stop :href="`/${userProfile.username}`">
+					{{ userProfile.username }}</a
 				>
 
 				<h3 class="level-one-voice">{{ post.header }}</h3>
@@ -71,6 +69,7 @@
 	import readingTime from '~/utils/readingTime';
 	const props = defineProps({
 		post: Object,
+		userProfile: Object,
 	});
 
 	const showModal = ref(false);
@@ -237,9 +236,6 @@
 	};
 
 	onMounted(async () => {
-		if (props.post && props.post.belongs_to) {
-			onUsernameFetched(props.post.belongs_to);
-		}
 		await fetchTotalLikes();
 	});
 </script>
@@ -283,6 +279,18 @@
 						opacity: 1;
 					}
 				}
+			}
+		}
+	}
+
+	.like-btn {
+		span {
+			position: relative;
+			span.like-count {
+				position: absolute;
+				pointer-events: none;
+				top: -10px;
+				right: -8px;
 			}
 		}
 	}

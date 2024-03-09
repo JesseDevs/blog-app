@@ -44,28 +44,19 @@
 			</dashboard-menu>
 		</profile-dashboard>
 
-		<ul v-if="userProfile && isDataLoaded" class="card-menu">
-			<li v-for="post in posts" :key="post.id">
-				<PostCard :post="post" :userProfile="userProfile" />
-			</li>
-		</ul>
+		<div v-if="userProfile && isDataLoaded">
+			<ul v-if="selectedTab === 'posts'" class="card-menu">
+				<li v-for="post in posts" :key="post.id">
+					<PostCard :post="post" :userProfile="userProfile" />
+				</li>
+			</ul>
 
-		<ul v-if="userProfile && isDataLoaded" class="card-menu">
-			<li v-for="like in likedPosts" :key="like.id">
-				<PostHomeCard :post="like" />
-			</li>
-		</ul>
-
-		<!-- <ul v-if="userProfile && isDataLoaded" class="card-menu">
-			<li v-for="item in displayedItems" :key="item.id">
-				<template v-if="item.type === 'post'">
-					<PostCard :post="item.data" :userProfile="userProfile" />
-				</template>
-				<template v-else-if="item.type === 'like'">
-					<PostHomeCard :post="item.data" />
-				</template>
-			</li>
-		</ul> -->
+			<ul v-if="selectedTab === 'likes'" class="card-menu">
+				<li v-for="like in likedPosts" :key="like.id">
+					<PostHomeCard :post="like" :userProfile="userProfile" />
+				</li>
+			</ul>
+		</div>
 
 		<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 	</section>
@@ -83,15 +74,6 @@
 	const currentUser = ref(null);
 	const formattedDate = ref('');
 	const selectedTab = ref('');
-
-	const displayedItems = computed(() => {
-		if (selectedTab.value === 'posts') {
-			return posts.value.map((post) => ({ type: 'post', data: post }));
-		} else if (selectedTab.value === 'likes') {
-			return likedPosts.value.map((like) => ({ type: 'like', data: like }));
-		}
-		return [];
-	});
 
 	const formatDate = () => {
 		const userValue = user?.value;

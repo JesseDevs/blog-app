@@ -46,15 +46,14 @@
 						</button>
 
 						<button
+							v-if="user"
 							:class="{ 'is-liked': isLiked, 'is-not-liked': !isLiked }"
 							@click.prevent="likePost(post.id)"
 							class="like-btn"
 						>
 							<Icon name="material-symbols:favorite" />
+							<span class="small-voice">{{ totalLikes }}</span>
 						</button>
-						<p class="small-voice">
-							Likes:<span>{{ totalLikes }}</span>
-						</p>
 					</div>
 				</post-header>
 				<text-content>
@@ -464,16 +463,25 @@
 	}
 
 	.like-btn {
+		position: relative;
 		&::after {
 			background-color: var(--liked-red);
 		}
 		&:hover {
-			svg {
+			svg,
+			span {
 				color: rgb(186, 42, 42);
 			}
 			&::after {
 				opacity: 0.2;
 			}
+		}
+
+		span {
+			position: absolute;
+			pointer-events: none;
+			top: -15px;
+			left: -5px;
 		}
 	}
 
