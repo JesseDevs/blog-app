@@ -44,6 +44,17 @@
 						<button @click.prevent="copyLink" class="share-btn">
 							<Icon name="material-symbols:ios-share-rounded" />
 						</button>
+
+						<button
+							:class="{ 'is-liked': isLiked, 'is-not-liked': !isLiked }"
+							@click.prevent="likePost(post.id)"
+							class="like-btn"
+						>
+							<Icon name="material-symbols:favorite" />
+						</button>
+						<p class="small-voice">
+							Likes:<span>{{ totalLikes }}</span>
+						</p>
 					</div>
 				</post-header>
 				<text-content>
@@ -69,6 +80,9 @@
 
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
+
+	const totalLikes = ref(0);
+	const isLiked = ref(false);
 
 	const checkImageSize = (event) => {
 		const img = event.target;
@@ -98,6 +112,68 @@
 
 	const notifyUser = (message) => {
 		alert(message);
+	};
+
+	const likePost = async (postId) => {
+		try {
+			if (isLiked.value) {
+				const { data, error } = await client
+					.from('likes')
+					.select('id')
+					.eq('post_id', postId)
+					.eq('user_id', user.value.id)
+					.single();
+
+				if (error) {
+					throw new Error('Error checking if liked: ' + error.message);
+				}
+
+				if (data) {
+					await client.from('likes').delete().eq('id', data.id);
+					totalLikes.value--;
+					isLiked.value = false;
+				}
+			} else {
+				await client
+					.from('likes')
+					.insert({ post_id: postId, user_id: user.value.id });
+				totalLikes.value++;
+				isLiked.value = true;
+			}
+		} catch (error) {
+			console.error('Error liking/unliking post:', error.message);
+		}
+	};
+
+	const fetchTotalLikes = async () => {
+		try {
+			const { data: likes, error } = await client
+				.from('likes')
+				.select('id')
+				.eq('post_id', post.value.id);
+
+			if (error) {
+				throw new Error('Error fetching likes: ' + error.message);
+			}
+
+			totalLikes.value = likes.length;
+
+			if (user.value) {
+				const { data: liked, error: likeError } = await client
+					.from('likes')
+					.select('id')
+					.eq('post_id', post.value.id)
+					.eq('user_id', user.value.id);
+
+				if (likeError) {
+					throw new Error('Error checking if liked: ' + likeError.message);
+				}
+
+				isLiked.value = liked.length > 0;
+			}
+		} catch (error) {
+			console.error('Error fetching likes:', error.message);
+		}
 	};
 
 	const deletePost = async (postId) => {
@@ -177,6 +253,8 @@
 		await fetchPostDetail();
 		await fetchCurrentUser();
 		await fetchUserProfile();
+		await fetchCurrentUser();
+		await fetchTotalLikes();
 
 		setTimeout(() => {
 			isDataLoaded.value = true;
@@ -322,7 +400,8 @@
 	}
 
 	.delete-btn,
-	.share-btn {
+	.share-btn,
+	.like-btn {
 		display: flex;
 
 		appearance: none;
@@ -372,15 +451,35 @@
 
 	.share-btn {
 		&::after {
-			background-color: green;
+			background-color: var(--success-green);
 		}
 		&:hover {
 			svg {
-				color: green;
+				color: rgb(51, 181, 51);
 			}
 			&::after {
 				opacity: 0.2;
 			}
+		}
+	}
+
+	.like-btn {
+		&::after {
+			background-color: var(--liked-red);
+		}
+		&:hover {
+			svg {
+				color: rgb(186, 42, 42);
+			}
+			&::after {
+				opacity: 0.2;
+			}
+		}
+	}
+
+	.is-liked.like-btn {
+		svg {
+			color: rgb(186, 42, 42);
 		}
 	}
 </style>
