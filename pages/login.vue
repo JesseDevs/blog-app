@@ -65,6 +65,8 @@
 						Don't have an account?
 						<a class="footer-action" href="/register">Sign Up</a>
 					</p>
+
+					<p class="error-message" v-if="loginError">{{ loginError }}</p>
 				</div>
 			</login-page>
 		</inner-column>
@@ -109,6 +111,8 @@
 		middleware: 'confirmed-auth',
 	});
 
+	const loginError = ref('');
+
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
@@ -125,20 +129,16 @@
 	};
 
 	async function signInWithEmail() {
-		const { error } = await client.auth.signInWithPassword({
+		const { error: authError } = await client.auth.signInWithPassword({
 			email: credentials.email,
 			password: credentials.password,
 		});
 
-		if (error) {
-			console.log(error);
-			alert(error);
-		}
-
-		if (!error) {
-			window.location.href = '/';
+		if (authError) {
+			loginError.value = 'Incorrect email or password. Please try again.';
+			console.log(authError);
 		} else {
-			console.error(error);
+			window.location.href = '/';
 		}
 	}
 
@@ -190,6 +190,12 @@
 			height: 100%;
 			padding-top: 1.5rem;
 		}
+	}
+
+	.error-message {
+		color: var(--required-red);
+		margin-top: 20px;
+		font-weight: 600;
 	}
 
 	.sub-head {
