@@ -1,6 +1,6 @@
 <template>
 	<section @click="toggleAnimation" :class="{ 'animation-toggle': animation }">
-		<div class="wrap">
+		<div class="wrap wrap-2">
 			<ul>
 				<li></li>
 				<li></li>
@@ -15,7 +15,7 @@
 				<li></li>
 			</ul>
 		</div>
-		<div class="wrap wrap-2">
+		<div class="wrap">
 			<ul>
 				<li></li>
 				<li></li>
@@ -49,7 +49,7 @@
 		backdrop-filter: blur(4px);
 		overflow: hidden;
 		background: var(--background);
-		height: 300px;
+		height: 250px;
 		position: relative;
 		// &:hover {
 		// 	ul li {
@@ -64,14 +64,17 @@
 		}
 	}
 	.wrap {
-		top: 50%;
-		left: -10%;
+		top: 20%;
+		left: -20%;
 		transform: translate(-50%, -50%);
+		scale: 2;
 
 		position: absolute;
 	}
 
 	.wrap-2 {
+		display: none;
+		opacity: 0;
 		transform: scaleX(-1);
 		left: auto;
 		right: -10%;

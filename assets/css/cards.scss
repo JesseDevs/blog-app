@@ -219,7 +219,7 @@ card-btns-shown {
 	right: 0px;
 	z-index: 1;
 	height: auto;
-	max-height: calc(100% - 22px);
+	// max-height: calc(100% - 22px);
 	// inset: 0px auto auto 0px;
 	border-radius: var(--border-adjust);
 	box-shadow: 0 0 8px rgb(var(--button-bg-rgb) / 0.5);
