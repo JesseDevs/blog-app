@@ -257,7 +257,7 @@
 
 		setTimeout(() => {
 			isDataLoaded.value = true;
-		}, 800);
+		}, 300);
 	});
 </script>
 
