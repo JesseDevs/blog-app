@@ -116,7 +116,6 @@
 				.upload(`${user.value.id}/${filename}`, file);
 
 			if (data && data.path) {
-				// console.log(data.path, filename);
 				return { path: data.path, filename };
 			} else {
 				console.log(error);
@@ -132,7 +131,17 @@
 		try {
 			loading.value = true;
 
+			if (!postData.value.header || !postData.value.content) {
+				console.error('Header or content is empty');
+				return;
+			}
+
 			const { path, filename } = await uploadImage(postData.value.image);
+			if (!filename) {
+				console.error('Filename is empty');
+				return;
+			}
+
 			const { data, error } = await client.from('posts').insert([
 				{
 					belongs_to: user.value.id,
@@ -140,8 +149,7 @@
 					content: postData.value.content,
 					date_created: new Date().toISOString().split('T')[0],
 					time_created: new Date().toISOString().split('T')[1].split('.')[0],
-					likes: [],
-					image_url: `${filename}`,
+					image_url: filename,
 				},
 			]);
 
@@ -149,6 +157,7 @@
 				console.error('Error inserting data:', error);
 			} else {
 				console.log('Data inserted successfully:', data);
+
 				success.value = true;
 				setTimeout(() => {
 					loading.value = false;
@@ -166,7 +175,7 @@
 
 	function adjustTextareaHeight() {
 		if (postContentTextarea.value) {
-			postContentTextarea.value.style.height = `${postContentTextarea.value.scrollHeight}px`; // Set to scrollHeight
+			postContentTextarea.value.style.height = `${postContentTextarea.value.scrollHeight}px`;
 		}
 	}
 
@@ -242,7 +251,7 @@
 			}
 		}
 
-		textarea {
+		textarea.text-title {
 			width: 100%;
 			font-size: inherit;
 			outline: none;

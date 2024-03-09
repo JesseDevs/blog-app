@@ -20,7 +20,12 @@
 					</div>
 					<div class="field">
 						<label for="bio">Bio</label>
-						<textarea id="bio" v-model="bio" maxlength="150" />
+						<textarea
+							id="bio"
+							class="bio-text"
+							v-model="bio"
+							maxlength="150"
+						/>
 					</div>
 					<button type="submit" class="button-filled submit-btn">Save</button>
 				</form>
