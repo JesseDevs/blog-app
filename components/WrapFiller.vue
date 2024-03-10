@@ -64,10 +64,10 @@
 		}
 	}
 	.wrap {
-		top: 20%;
-		left: -20%;
+		top: 40%;
+		left: -40%;
 		transform: translate(-50%, -50%);
-		scale: 2;
+		scale: 1.5;
 
 		position: absolute;
 	}
