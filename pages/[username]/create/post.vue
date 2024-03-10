@@ -57,6 +57,17 @@
 				</form>
 			</create-block>
 			<LoadingContainer v-if="loading" :text="loadingText" />
+			<transition name="fade" appear>
+				<error-box v-if="errorMessage">
+					<text-content>
+						<p class="level-two-voice">{{ errorMessage }}</p>
+					</text-content>
+
+					<button class="close-btn" @click="closeErrorBox">
+						<Icon name="carbon:close" size="21" />
+					</button>
+				</error-box>
+			</transition>
 		</inner-column>
 	</section>
 </template>
@@ -72,6 +83,7 @@
 	const success = ref(false);
 	const loading = ref(false);
 	const loadingText = ref(`Submitting,<br /> your post...`);
+	const errorMessage = ref(null);
 
 	const postImage = ref({
 		preview: null,
@@ -84,6 +96,10 @@
 		image: null,
 	});
 
+	const closeErrorBox = () => {
+		error.value = null;
+	};
+
 	const openFileInput = () => {
 		// trigger click event of file input
 		fileInput.value.click();
@@ -91,7 +107,8 @@
 
 	const generateUniqueFilename = (header) => {
 		const randomNumber = Math.floor(1000 + Math.random() * 9000);
-		return `${header.replace(/\s+/g, '-').toLowerCase()}-${randomNumber}`; // Replace spaces with hyphens and add the random number
+		const sanitizedHeader = header.replace(/[<>:"/\\|?*]/g, '_'); // Replace invalid characters with underscore
+		return `${sanitizedHeader.replace(/\s+/g, '-').toLowerCase()}-${randomNumber}`; // Replace spaces with hyphens and add the random number
 	};
 
 	const onImageUpload = (event) => {
@@ -155,6 +172,7 @@
 
 			if (error) {
 				console.error('Error inserting data:', error);
+				errorMessage.value = error.message;
 			} else {
 				console.log('Data inserted successfully:', data);
 
@@ -195,6 +213,24 @@
 </script>
 
 <style lang="scss" scoped>
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.3s ease-in-out, filter 0.5s ease-in-out;
+	}
+	.fade-enter,
+	.fade-leave-to {
+		opacity: 0;
+		filter: blur(10px);
+	}
+
+	error-box {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: calc(100% - 10%);
+		min-height: 250px;
+	}
 	.hidden {
 		opacity: 0;
 		transition: opacity 0.3s ease;

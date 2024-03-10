@@ -116,6 +116,7 @@
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
+	const error = ref(null);
 
 	const resetBlock = ref(false);
 
@@ -215,38 +216,6 @@
 
 		p.form-support {
 			margin-bottom: 20px;
-
-			// .custom-link {
-			// 	font-size: inherit;
-			// 	position: relative;
-			// 	display: inline-block;
-			// 	text-decoration: underline;
-			// 	transition: color 0.4s ease;
-			// 	padding-left: 5px;
-			// 	padding-right: 5px;
-
-			// 	&:hover {
-			// 		color: var(--white);
-			// 	}
-			// }
-
-			// .custom-link::before {
-			// 	content: '';
-			// 	position: absolute;
-			// 	border-radius: 3px;
-			// 	top: 0;
-			// 	left: 0;
-			// 	width: 0;
-			// 	height: 100%;
-			// 	background-color: var(--button-bg);
-			// 	transition: width 0.3s ease;
-			// 	// transition-delay: 0.1s;
-			// 	z-index: -1;
-			// }
-
-			// .custom-link:hover::before {
-			// 	width: 100%;
-			// }
 		}
 	}
 

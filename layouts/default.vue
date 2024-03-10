@@ -127,7 +127,7 @@
 				rgba(0, 0, 0, 0.3),
 				rgba(0, 0, 0, 0.3)
 			),
-			url('images/sound-texture.jpg');
+			url('/images/sound-texture.jpg');
 		background-size: 100% auto;
 		background-position: center;
 		background-repeat: no-repeat;
