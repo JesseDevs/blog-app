@@ -1,16 +1,11 @@
 <template>
 	<footer class="site-footer small-voice">
-		<inner-column>
-			<site-footer>
-				<div></div>
-			</site-footer>
-		</inner-column>
+		<site-footer>
+			<div></div>
+		</site-footer>
 	</footer>
 </template>
 
 <script setup></script>
 
-<style lang="scss" scoped>
-	.site-footer {
-	}
-</style>
+<style lang="scss" scoped></style>
