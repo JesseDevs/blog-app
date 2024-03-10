@@ -1,29 +1,24 @@
 <template>
 	<div class="app-container">
-		<transition name="fade" appear>
-			<div v-if="shouldShowTransition">
-				<div v-if="initialLoad" @click="closeInitialLoad" key="initialLoad">
-					<div class="ripple-container">
-						<button></button>
-						<button></button>
-						<button></button>
-						<button></button>
-						<button></button>
-					</div>
-				</div>
-				<div v-else key="content" class="content" :style="contentStyle">
-					<div v-if="contentLoaded">
-						<SiteNav />
-						<div class="space-holder"></div>
-						<LazyModalContainer />
-						<main>
-							<slot />
-						</main>
-						<SiteFooter />
-					</div>
-				</div>
-			</div>
-		</transition>
+		<!-- <transition name="fade" appear>
+				</transition> -->
+		<div class="ripple-container" v-if="initialLoad">
+			<button></button>
+			<button></button>
+			<button></button>
+			<button></button>
+			<button></button>
+		</div>
+
+		<div v-show="contentLoaded">
+			<SiteNav />
+			<div class="space-holder"></div>
+			<LazyModalContainer />
+			<main>
+				<slot />
+			</main>
+			<SiteFooter />
+		</div>
 	</div>
 </template>
 
@@ -31,42 +26,17 @@
 	import { useInterfaceService } from '~/services/InterfaceService';
 	const ui = useInterfaceService();
 
-	const contentStyle = ref({
-		opacity: 0,
-		transitionDelay: '0.3s',
-	});
-
-	const shouldShowTransition = computed(() => {
-		return initialLoad.value || contentLoaded.value;
-	});
-
-	const initialLoad = ref(true);
+	const showInitialLoad = ref(true);
 	const expirationTime = 24 * 60 * 60 * 1000; //  1 day in milliseconds
-	const contentLoaded = computed(() => {
-		if (!initialLoad.value) {
-			setTimeout(() => {
-				contentStyle.value = { opacity: 1, transitionDelay: '0s' };
-			}, 500);
-			return true;
-		}
-		return false;
-	});
+	const initialLoad = false;
+	const contentLoaded = ref(true);
 
-	const closeInitialLoad = () => {
-		initialLoad.value = false;
-		contentStyle.value = { opacity: 1, transitionDelay: '0s' };
-	};
+	// const closeInitialLoad = () => {
+	// 	initialLoad.value = false;
 
-	onMounted(() => {
-		let lastVisitTime = localStorage.getItem('lastVisitTime');
-		let currentTime = Date.now();
-		if (lastVisitTime && currentTime - parseInt(lastVisitTime) < expirationTime) {
-			initialLoad.value = false;
-			contentStyle.value = { opacity: 1, transitionDelay: '0s' };
-		} else {
-			localStorage.setItem('lastVisitTime', currentTime.toString());
-		}
-	});
+	// };
+
+	onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>

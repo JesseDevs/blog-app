@@ -45,13 +45,13 @@
 		</profile-dashboard>
 
 		<div v-if="userProfile && isDataLoaded">
-			<ul v-if="selectedTab === 'posts'" class="card-menu">
+			<ul v-show="selectedTab === 'posts'" class="card-menu">
 				<li v-for="post in posts" :key="post.id">
 					<PostCard :post="post" :userProfile="userProfile" />
 				</li>
 			</ul>
 
-			<ul v-if="selectedTab === 'likes'" class="card-menu">
+			<ul v-show="selectedTab === 'likes'" class="card-menu">
 				<li v-for="like in likedPosts" :key="like.id">
 					<PostHomeCard :post="like" :userProfile="userProfile" />
 				</li>

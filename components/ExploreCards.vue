@@ -7,14 +7,15 @@
 				</template>
 			</li>
 		</ul>
-
-		<button
-			class="load-more-btn user-button"
-			@click="loadMorePosts"
-			:disabled="!hasMorePosts"
-		>
-			Load More
-		</button>
+		<div class="load-more-container">
+			<button
+				class="load-more-btn user-button"
+				@click="loadMorePosts"
+				:disabled="!hasMorePosts"
+			>
+				Load More
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -27,29 +28,6 @@
 	const pageSize = 10; // Number of posts to load per page
 	let currentPage = ref(1);
 	let hasMorePosts = ref(true);
-
-	const fetchUsernameById = async (id) => {
-		try {
-			const { data, error } = await client
-				.from('profiles')
-				.select('username')
-				.eq('id', id)
-				.single();
-
-			if (error) {
-				throw error;
-			}
-
-			if (data) {
-				return data.username;
-			}
-
-			return '';
-		} catch (error) {
-			console.error('Error fetching username:', error.message);
-			return '';
-		}
-	};
 
 	const fetchPosts = async () => {
 		try {
@@ -135,11 +113,16 @@
 		scroll-margin-top: 45px;
 	}
 
+	.load-more-container {
+		padding-top: 50px;
+		padding-bottom: 100px;
+	}
+
 	.load-more-btn {
 		outline: none;
 		border: none;
 		margin: 0 auto;
-		margin-top: 40px;
+
 		padding-left: 40px;
 		padding-right: 40px;
 

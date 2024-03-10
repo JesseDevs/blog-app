@@ -64,8 +64,8 @@
 		}
 	}
 	.wrap {
-		top: 40%;
-		left: -40%;
+		top: 50%;
+		left: -20%;
 		transform: translate(-50%, -50%);
 		scale: 1.5;
 
