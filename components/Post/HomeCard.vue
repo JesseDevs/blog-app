@@ -8,6 +8,7 @@
 					</button>
 
 					<button
+						class="like-btn"
 						:class="{ 'is-liked': isLiked, 'is-not-liked': !isLiked }"
 						@click.prevent="likePost(post.id)"
 					>
@@ -66,6 +67,7 @@
 </template>
 
 <script setup>
+	import { formattedDate, formatTime } from '~/utils/dateUtils';
 	import readingTime from '~/utils/readingTime';
 	const props = defineProps({
 		post: Object,
@@ -88,59 +90,6 @@
 		showModal.value = !showModal.value;
 	};
 
-	const onUsernameFetched = async (id) => {
-		try {
-			const { data, error } = await client
-				.from('profiles')
-				.select('username')
-				.eq('id', id)
-				.single();
-
-			if (error) {
-				throw error;
-			}
-
-			if (data) {
-				username.value = data.username;
-			}
-		} catch (error) {
-			console.error('Error fetching username:', error.message);
-		}
-	};
-
-	const fetchUsernameById = async (id) => {
-		try {
-			const { data, error } = await client
-				.from('profiles')
-				.select('username')
-				.eq('id', id)
-				.single();
-
-			if (error) {
-				throw error;
-			}
-
-			if (data) {
-				return data.username;
-			}
-
-			return '';
-		} catch (error) {
-			console.error('Error fetching username:', error.message);
-			return '';
-		}
-	};
-
-	const getUserByUsername = async (id) => {
-		try {
-			const username = await fetchUsernameById(id);
-			return username;
-		} catch (error) {
-			console.error('Error fetching username:', error.message);
-			return '';
-		}
-	};
-
 	const copyLink = () => {
 		const url = `${window.location.origin}/${username.value}/posts/${props.post.id}`;
 		navigator.clipboard.writeText(url);
@@ -155,22 +104,6 @@
 
 	const handleImageError = (event) => {
 		event.target.src = '/images/fallback-logo.jpg';
-	};
-
-	const formattedDate = (dateString) => {
-		const options = { month: 'short', day: 'numeric', year: 'numeric' };
-		const date = new Date(dateString);
-		return date.toLocaleDateString(undefined, options);
-	};
-
-	const formatTime = (timeString) => {
-		const time = new Date(`2000-01-01T${timeString}`);
-		const hours = time.getHours();
-		const minutes = time.getMinutes();
-		const period = hours >= 12 ? 'pm' : 'am';
-		const formattedHours = hours % 12 || 12;
-		const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-		return `${formattedHours}:${formattedMinutes} ${period}`;
 	};
 
 	const likePost = async (postId) => {

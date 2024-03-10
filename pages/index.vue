@@ -52,6 +52,7 @@
 	const router = useRouter();
 	const user = useSupabaseUser();
 	const userProfile = ref(null);
+
 	onMounted(async () => {
 		if (user.value) {
 			const { data, error } = await client
@@ -177,9 +178,5 @@
 				text-align: center;
 			}
 		}
-	}
-
-	body {
-		background: #1c1c1c;
 	}
 </style>
