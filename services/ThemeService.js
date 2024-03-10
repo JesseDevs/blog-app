@@ -16,7 +16,7 @@ export const useThemeService = defineStore('theme', () => {
 		'glitch',
 		'venomized',
 	];
-	const colorModeIndex = ref(0);
+	const colorModeIndex = ref(parseInt(localStorage.getItem('colorModeIndex')) || 0);
 
 	const themeNumber = computed(() => colorModeIndex.value + 1);
 
@@ -30,6 +30,7 @@ export const useThemeService = defineStore('theme', () => {
 	const changePalette = () => {
 		themeShowcase.value = true;
 		colorModeIndex.value = (colorModeIndex.value + 1) % colorModes.length;
+		localStorage.setItem('colorModeIndex', colorModeIndex.value);
 		colorMode.preference = colorModes[colorModeIndex.value];
 		setSelectedTheme(colorModes[colorModeIndex.value]);
 	};
