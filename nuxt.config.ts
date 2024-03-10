@@ -13,7 +13,47 @@ export default defineNuxtConfig({
 					name: 'viewport',
 					content: 'width=device-width, initial-scale=1, maximum-scale=1',
 				},
+				{
+					hid: 'og:description',
+					property: 'og:description',
+					content:
+						'Join Echo, a place where thoughts are not just spoken, but reverberate across the digital landscape. Whether you’re sharing a personal journey, discussing important issues, or simply expressing yourself, this is your platform to make your voice heard.',
+				},
+				{
+					hid: 'og:title',
+					property: 'og:title',
+					content: 'Echo: Where Thoughts Resound',
+				},
+				{
+					hid: 'og-image',
+					property: 'og:image',
+					content: '/images/thumbnail.jpg',
+				},
+				{
+					name: 'keywords',
+					content:
+						'Nuxt.js, Vue.js, Porfolio, web development, Javascript, front-end',
+				},
+				{
+					name: 'twitter:card',
+					content: 'icon.jpg',
+				},
+				{
+					hid: 'og-type',
+					property: 'og:type',
+					content: 'website',
+				},
+				{
+					hid: 'og:url',
+					property: 'og:url',
+					content: `https://theblog-echo.vercel.app/`,
+				},
+				{
+					property: 'og:locale',
+					content: 'en_US',
+				},
 			],
+			link: [{ rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }],
 		},
 	},
 	modules: [

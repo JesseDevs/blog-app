@@ -65,9 +65,9 @@
 	}
 	.wrap {
 		top: 50%;
-		left: -20%;
+		left: -33%;
 		transform: translate(-50%, -50%);
-		scale: 1.5;
+		scale: 1.3;
 
 		position: absolute;
 	}
