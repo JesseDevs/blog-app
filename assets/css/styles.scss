@@ -12,7 +12,7 @@
 	text-decoration: none;
 	display: flex;
 	text-transform: capitalize;
-	transition: background-color .3s ease-in-out;
+	transition: background-color .3s ease-in-out, box-shadow .3s ease-in-out;
 
 	cursor: pointer;
 
@@ -30,6 +30,7 @@
 	font-weight: 600;
 	color: var(--button-text);
 	background-color: var(--button-bg);
+	box-shadow: var(--button-box) 0 4px 9px;
 	justify-content: center;
 	align-items: center;
 	text-decoration: none;
@@ -38,7 +39,7 @@
 	outline: none;
 	cursor: pointer;
 
-	transition: background-color 0.3s ease-in-out;
+	transition: background-color .3s ease-in-out, box-shadow .3s ease-in-out;
 
 	&:hover {
 		background-color: var(--button-bg-hover);

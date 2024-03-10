@@ -110,6 +110,7 @@
 			console.log('User signed out successfully');
 			userProfile.value = null;
 			ui.closeMenu();
+			location.reload();
 			router.push('/');
 		} catch (error) {
 			console.error('Error signing out user:', error.message);

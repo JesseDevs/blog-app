@@ -19,21 +19,21 @@
 							comes around...
 						</p>
 
-						<a
+						<NuxtLink
 							class="user-button"
-							v-if="!user"
-							href="/login"
-							aria-label="Go to register page"
+							v-if="userProfile"
+							:to="`/${userProfile?.username}/Create/Post`"
+							aria-label="Go to create post page"
 						>
-							Login
-						</a>
+							Create an Echo
+						</NuxtLink>
 						<NuxtLink
 							class="user-button"
 							v-else
-							:to="`/${userProfile?.username}/Create/Post`"
+							to="/login"
 							aria-label="Go to login page"
 						>
-							Create an Echo
+							Login
 						</NuxtLink>
 
 						<a class="custom-link" href="#explore-cards">Explore</a>
