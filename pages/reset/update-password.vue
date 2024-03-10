@@ -28,10 +28,6 @@
 </template>
 
 <script setup>
-	definePageMeta({
-		middleware: 'check-reset-token',
-	});
-
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
@@ -70,15 +66,9 @@
 		}
 
 		try {
-			const { error } = await client.auth.updateUser({
-				password: newPassword,
+			const { data, error } = await supabase.auth.updateUser({
+				password: newPassword.value,
 			});
-
-			if (error) {
-				throw new Error(error.message);
-			}
-
-			router.push('/');
 		} catch (error) {
 			console.error('Password reset error:', error.message);
 		}

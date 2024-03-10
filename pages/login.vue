@@ -96,7 +96,11 @@
 								aria-label="Email-reset"
 							/>
 						</div>
-						<button class="button-filled submit-btn" type="submit">
+						<button
+							class="button-filled submit-btn"
+							type="submit"
+							:disabled="disabled"
+						>
 							Submit
 						</button>
 					</form>
@@ -116,8 +120,8 @@
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
-	const error = ref(null);
 
+	const disabled = ref(false);
 	const resetBlock = ref(false);
 
 	const credentials = reactive({
@@ -127,6 +131,7 @@
 
 	const toggleResetBlock = () => {
 		resetBlock.value = !resetBlock.value;
+		disabled.value = false;
 	};
 
 	async function signInWithEmail() {
@@ -143,26 +148,23 @@
 		}
 	}
 
-	const redirectUrl =
-		process.env.NODE_ENV === 'production'
-			? 'https://theblog-echo.vercel.app/update-password'
-			: `${process.env.BASE_URL}/reset/update-password`;
-
 	const resetPassword = async () => {
+		disabled.value = true;
 		if (credentials.email) {
 			try {
 				const { error } = await client.auth.resetPasswordForEmail(
 					credentials.email,
-					// {
-					// 	redirectTo: redirectUrl,
-					// },
+					{
+						redirectTo: 'http://localhost:3000/reset/update-password',
+					},
 				);
 
 				if (error) {
 					console.error(error);
-					alert('Password reset failed. Please try again.');
+					alert(error.message);
 				} else {
 					alert('Password reset instructions sent to your email.');
+					router.push('/');
 				}
 			} catch (error) {
 				console.error(error);
@@ -190,6 +192,14 @@
 			flex-direction: column;
 			height: 100%;
 			padding-top: 1.5rem;
+		}
+	}
+
+	.submit-btn {
+		&:disabled {
+			background-color: var(--text-faded);
+			opacity: 0.5;
+			cursor: not-allowed;
 		}
 	}
 
