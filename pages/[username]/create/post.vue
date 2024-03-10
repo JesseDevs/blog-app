@@ -83,7 +83,7 @@
 	const success = ref(false);
 	const loading = ref(false);
 	const loadingText = ref(`Submitting,<br /> your post...`);
-	const errorMessage = ref(null);
+	const errorMessage = ref(true);
 
 	const postImage = ref({
 		preview: null,
@@ -97,7 +97,7 @@
 	});
 
 	const closeErrorBox = () => {
-		error.value = null;
+		errorMessage.value = null;
 	};
 
 	const openFileInput = () => {
@@ -185,6 +185,7 @@
 			}
 		} catch (error) {
 			console.error('Error:', error.message);
+			errorMessage.value = error.message;
 			loading.value = false;
 		}
 	};
@@ -228,8 +229,24 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		width: calc(100% - 10%);
+		width: 100%;
+		max-width: 80%;
 		min-height: 250px;
+		background-color: var(--button-bg-hover);
+		display: grid;
+		// box-shadow: inset 5px 5px 10px rgb(var(--button-bg-rgb) / 0.7),
+		// 	inset -5px -5px 10px rgb(var(--button-bg-rgb) / 0.7);
+		place-items: center;
+		border-radius: 5px;
+		p {
+			text-align: center;
+		}
+
+		button {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+		}
 	}
 	.hidden {
 		opacity: 0;
@@ -410,6 +427,27 @@
 			width: 100%;
 			border-radius: 6px;
 			transition: opacity 0.5s;
+		}
+	}
+
+	.close-btn {
+		cursor: pointer;
+		border-radius: 3px;
+		font-weight: 700;
+		border: none;
+		padding: 4px;
+		margin-left: auto;
+		margin-bottom: 30px;
+		appearance: none;
+		background-color: var(--background);
+		transition: background-color 0.3s ease-in-out;
+		&:hover {
+			background-color: var(--button-bg);
+		}
+
+		svg {
+			stroke-width: 4px !important;
+			color: var(--white);
 		}
 	}
 </style>
