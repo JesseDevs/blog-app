@@ -1,5 +1,5 @@
 <template>
-	<section class="register">
+	<section class="register" @click="handleOutsidePasswordModal">
 		<inner-column>
 			<login-page>
 				<div>
@@ -49,7 +49,7 @@
 					<button class="button-filled submit-btn" type="submit">Submit</button>
 				</form>
 
-				<div class="login-footer">
+				<div class="login-footer" id="login-footer">
 					<p class="form-support small-voice">
 						Forgot your
 						<button
@@ -72,7 +72,13 @@
 		</inner-column>
 
 		<transition name="move">
-			<password-modal class="modal" v-if="resetBlock" :class="{ open: resetBlock }">
+			<password-modal
+				class="modal"
+				id="password-modal"
+				v-if="resetBlock"
+				:class="{ open: resetBlock }"
+				@click.stop
+			>
 				<inner-column>
 					<button class="close-btn" @click="toggleResetBlock">
 						<Icon name="carbon:close" size="21" />
@@ -130,8 +136,22 @@
 	});
 
 	const toggleResetBlock = () => {
+		console.log('working?');
 		resetBlock.value = !resetBlock.value;
-		disabled.value = false;
+		if (resetBlock.value) {
+			disabled.value = false;
+		}
+	};
+	const handleOutsidePasswordModal = (event) => {
+		if (resetBlock.value == true) {
+			if (
+				!event.target.closest('#password-modal') &&
+				!event.target.closest('#login-footer')
+			) {
+				console.log('test');
+				resetBlock.value = false;
+			}
+		}
 	};
 
 	async function signInWithEmail() {
@@ -191,7 +211,6 @@
 			display: flex;
 			flex-direction: column;
 			height: 100%;
-			padding-top: 1.5rem;
 		}
 	}
 

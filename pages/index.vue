@@ -14,13 +14,13 @@
 						</h1>
 					</title-block>
 					<text-content>
-						<p class="level-two-voice">
+						<p class="level-two-voice animate-fade-in">
 							What goes around,<br />
 							comes around...
 						</p>
 
 						<NuxtLink
-							class="user-button"
+							class="user-button animate-fade-in"
 							v-if="userProfile"
 							:to="`/${userProfile?.username}/Create/Post`"
 							aria-label="Go to create post page"
@@ -28,7 +28,7 @@
 							Create an Echo
 						</NuxtLink>
 						<NuxtLink
-							class="user-button"
+							class="user-button animate-fade-in"
 							v-else
 							to="/login"
 							aria-label="Go to login page"
@@ -36,7 +36,9 @@
 							Login
 						</NuxtLink>
 
-						<a class="custom-link" href="#explore-cards">Explore</a>
+						<a class="custom-link animate-fade-in" href="#explore-cards"
+							>Explore</a
+						>
 					</text-content>
 				</landing-block>
 			</inner-column>
@@ -71,6 +73,21 @@
 </script>
 
 <style lang="scss" scoped>
+	.animate-fade-in {
+		opacity: 0;
+		animation: fadeIn 0.5s forwards;
+		animation-delay: 0.5s;
+	}
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 	landing-block {
 		display: flex;
 		width: 100%;
@@ -86,8 +103,8 @@
 			overflow-y: hidden;
 			background-color: var(--background);
 			opacity: 0.8;
-			img {
-				opacity: 0.5;
+			* {
+				opacity: 0.3;
 			}
 		}
 
