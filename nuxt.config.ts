@@ -27,7 +27,7 @@ export default defineNuxtConfig({
 				{
 					hid: 'og-image',
 					property: 'og:image',
-					content: '/images/thumbnail.jpg',
+					content: '/images/thumbnail.png',
 				},
 				{
 					name: 'keywords',
