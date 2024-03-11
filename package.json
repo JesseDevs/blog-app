@@ -30,6 +30,7 @@
 		"@vueup/vue-quill": "^1.2.0",
 		"@vueuse/nuxt": "^10.5.0",
 		"bcrypt": "^5.1.1",
+		"gsap": "^3.12.5",
 		"nuxt-icon": "^0.5.0",
 		"pinia": "^2.1.6",
 		"uuid": "^9.0.1"
