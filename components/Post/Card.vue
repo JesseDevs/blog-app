@@ -1,15 +1,19 @@
 <template>
 	<NuxtLink
 		class="card-link"
+		v-show="dataLoaded"
 		v-if="userProfile"
-		:to="`${userProfile.username}/posts/${post.id}`"
+		:to="`${userProfile?.username}/posts/${post.id}`"
 		@click="handleOutsideCardBtnsShown"
 	>
 		<post-card>
 			<transition name="fade">
 				<card-btns-shown v-if="showModal">
 					<ClientOnly>
-						<button @click.prevent="deletePost(post.id)">
+						<button
+							@click.prevent="deletePost(post.id)"
+							v-if="currentUser?.id === userProfile?.id"
+						>
 							<span class="small-voice">DELETE</span>
 						</button>
 
@@ -21,6 +25,7 @@
 							class="like-btn"
 							:class="{ 'is-liked': isLiked, 'is-not-liked': !isLiked }"
 							@click.prevent="likePost(post.id)"
+							v-if="currentUser"
 						>
 							<span class="small-voice">
 								{{ isLiked ? 'UNLIKE' : 'LIKE' }}
@@ -34,11 +39,7 @@
 				</card-btns-shown>
 			</transition>
 			<card-btns :class="{ active: showModal }">
-				<button
-					@click.prevent="toggleBtnsModal"
-					v-if="currentUser?.id === userProfile?.id"
-					class="show-btns"
-				>
+				<button @click.prevent="toggleBtnsModal" class="show-btns">
 					<Icon name="mdi:dots-horizontal" size="25px" />
 				</button>
 			</card-btns>
@@ -88,6 +89,7 @@
 	});
 
 	const showModal = ref(false);
+	const dataLoaded = ref(false);
 
 	const handleOutsideCardBtnsShown = (event) => {
 		if (showModal == true) {
@@ -234,6 +236,7 @@
 	onMounted(async () => {
 		await fetchCurrentUser();
 		await fetchTotalLikes();
+		dataLoaded.value = true;
 	});
 </script>
 

@@ -56,6 +56,12 @@
 					<PostHomeCard :post="like" :userProfile="userProfile" />
 				</li>
 			</ul>
+			<p
+				class="level-one-voice no-likes"
+				v-if="selectedTab === 'likes' && likedPosts.length === 0"
+			>
+				No liked posts found.
+			</p>
 		</div>
 
 		<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
@@ -331,5 +337,10 @@
 			color: var(--text-faded);
 			// font-family: 'Roboto Slab', serif;
 		}
+	}
+
+	.no-likes {
+		text-align: center;
+		padding-top: 3rem;
 	}
 </style>

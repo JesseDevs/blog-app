@@ -17,11 +17,16 @@
 		}
 
 		>a {
-			padding: 1rem 1.5rem;
+
 			display: block;
 
-			post-card text-content {
-				padding-right: 20px;
+			post-card {
+				padding: 1rem 1.5rem;
+				padding-top: calc(1rem + 10px);
+
+				text-content {
+					padding-right: 20px;
+				}
 			}
 		}
 	}
@@ -154,8 +159,8 @@ card-footer {
 
 card-btns {
 	position: absolute;
-	top: -2px;
-	right: 2px;
+	top: 1.7rem;
+	right: 1.5rem;
 	z-index: 1;
 
 	.show-btns {
