@@ -5,7 +5,7 @@
 				<landing-block>
 					<picture>
 						<source srcset="/tilt-1.jpeg" media="(min-width: 701px)" />
-						<img src="/images/unsplash-1.jpg" alt="Home wave image" />
+						<img src="/images/unsplash-1.webp" alt="Home wave image" />
 					</picture>
 					<title-block>
 						<h1 class="logo level-five-voice">
@@ -21,8 +21,8 @@
 
 						<NuxtLink
 							class="user-button animate-fade-in"
-							v-if="userProfile"
-							:to="`/${userProfile?.username}/Create/Post`"
+							v-if="currentUser"
+							:to="`/${currentUser?.username}/Create/Post`"
 							aria-label="Go to create post page"
 						>
 							Create an Echo
@@ -36,16 +36,20 @@
 							Login
 						</NuxtLink>
 
-						<a class="custom-link animate-fade-in" href="#explore-cards"
-							>Explore</a
+						<p
+							v-show="postEmpty"
+							class="custom-link animate-fade-in"
+							@click="scrollDown"
 						>
+							Explore
+						</p>
 					</text-content>
 				</landing-block>
 			</inner-column>
 		</section>
 		<WrapFiller />
 
-		<ExploreCards />
+		<ExploreCards @empty-posts="handleEmptyPosts" />
 	</div>
 </template>
 
@@ -53,7 +57,16 @@
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
-	const userProfile = ref(null);
+	const currentUser = ref(null);
+
+	const scrollDown = () => {
+		window.scrollBy(0, 500);
+	};
+
+	const postEmpty = ref(null);
+	const handleEmptyPosts = () => {
+		postEmpty.value = false;
+	};
 
 	onMounted(async () => {
 		if (user.value) {
@@ -66,7 +79,7 @@
 			if (error) {
 				console.error('Error fetching user profile:', error.message);
 			} else {
-				userProfile.value = data;
+				currentUser.value = data;
 			}
 		}
 	});
@@ -117,6 +130,7 @@
 			margin: 1rem auto 0;
 			width: fit-content;
 			height: fit-content;
+			cursor: pointer;
 
 			letter-spacing: 0.8px;
 			font-weight: 500;

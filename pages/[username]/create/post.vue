@@ -83,7 +83,7 @@
 	const success = ref(false);
 	const loading = ref(false);
 	const loadingText = ref(`Submitting,<br /> your post...`);
-	const errorMessage = ref(true);
+	const errorMessage = ref(false);
 
 	const postImage = ref({
 		preview: null,

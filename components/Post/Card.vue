@@ -212,6 +212,20 @@
 		event.target.src = '/images/fallback-logo.jpg';
 	};
 
+	async function deleteImageFromStorage(imageUrl) {
+		const filePath = new URL(imageUrl).pathname;
+		try {
+			const { error } = await supabase.storage
+				.from('your-storage-bucket-name')
+				.remove([filePath]);
+			if (error) {
+				throw error;
+			}
+			console.log('Image deleted successfully from storage.');
+		} catch (error) {
+			console.error('Error deleting image from storage:', error.message);
+		}
+	}
 	const deletePost = async (postId) => {
 		const confirmed = confirm('Are you sure you want to delete this post?');
 		showModal.value = false;
@@ -220,6 +234,27 @@
 			return;
 		}
 		try {
+			const { data: post, error: fetchError } = await client
+				.from('posts')
+				.select('image_url')
+				.eq('id', postId)
+				.single();
+
+			if (fetchError) {
+				throw fetchError;
+			}
+			if (post && post.image_url) {
+				const filePath = `${user.value.id}/${post.image_url}`;
+				const { error: deleteError } = await client.storage
+					.from('post-images')
+					.remove([filePath]);
+				if (deleteError) {
+					throw deleteError;
+				}
+				console.log('Image deleted successfully from storage.');
+			}
+
+			// Now you can delete the post from the database
 			const { error } = await client.from('posts').delete().eq('id', postId);
 
 			if (error) {

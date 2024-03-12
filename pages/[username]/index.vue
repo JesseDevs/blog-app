@@ -50,6 +50,12 @@
 					<PostCard :post="post" :userProfile="userProfile" />
 				</li>
 			</ul>
+			<p
+				class="level-one-voice no-likes"
+				v-if="selectedTab === 'posts' && posts.length === 0"
+			>
+				No posts found.
+			</p>
 
 			<ul v-show="selectedTab === 'likes'" class="card-menu">
 				<li v-for="like in likedPosts" :key="like.id">

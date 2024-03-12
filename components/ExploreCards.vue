@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<ul v-if="posts" class="card-menu" id="explore-cards">
+	<div v-if="posts">
+		<ul class="card-menu" id="explore-cards">
 			<li v-for="post in posts" :key="post.id">
 				<template v-if="post.userProfile">
 					<PostHomeCard :post="post" :userProfile="post.userProfile" />
@@ -20,10 +20,14 @@
 </template>
 
 <script setup>
-	const posts = ref([]);
+	const posts = ref(null);
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
+
+	if (posts.length === 0) {
+		emit('empty-posts');
+	}
 
 	const pageSize = 10; // Number of posts to load per page
 	let currentPage = ref(1);
@@ -99,12 +103,14 @@
 
 	onMounted(async () => {
 		await fetchPosts();
-		await Promise.all(
-			posts.value.map(async (post) => {
-				const userProfile = await getUserByUsername(post.belongs_to);
-				post.userProfile = userProfile;
-			}),
-		);
+		if (posts.value.length > 0) {
+			await Promise.all(
+				posts.value.map(async (post) => {
+					const userProfile = await getUserByUsername(post.belongs_to);
+					post.userProfile = userProfile;
+				}),
+			);
+		}
 	});
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="confirm">
 		<inner-column>
 			<text-content>
 				<p class="level-two-voice">Thank you for creating an account!</p>
@@ -21,6 +21,12 @@
 <script setup></script>
 
 <style lang="scss" scoped>
+	section.confirm {
+		height: 100%;
+		flex-grow: 1;
+		display: FLEX;
+		flex-direction: column;
+	}
 	inner-column {
 		margin-bottom: 100px;
 
