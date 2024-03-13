@@ -118,11 +118,9 @@
 	ul {
 		scroll-margin-top: 45px;
 
-		li a {
+		li:first-of-type a {
 			post-card {
-				&:first-of-type {
-					border-top: var(--thin) solid var(--text-faded);
-				}
+				border-top: var(--thin) solid var(--text-faded);
 			}
 		}
 	}

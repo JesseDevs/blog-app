@@ -91,7 +91,7 @@
 	};
 
 	const copyLink = () => {
-		const url = `${window.location.origin}/${username.value}/posts/${props.post.id}`;
+		const url = `${window.location.origin}/${props.userProfile.username}/posts/${props.post.id}`;
 		navigator.clipboard.writeText(url);
 		showModal.value = false;
 		notifyUser('Link copied to clipboard');
@@ -174,8 +174,16 @@
 </script>
 
 <style lang="scss">
-	.home-card {
+	ul {
+		scroll-margin-top: 45px;
 
+		li:first-of-type a {
+			post-card {
+				border-top: var(--thin) solid var(--text-faded);
+			}
+		}
+	}
+	.home-card {
 		text-content {
 			position: relative;
 			pointer-events: all;
