@@ -67,12 +67,7 @@
 					</p>
 					<ul v-show="selectedTab === 'likes'" class="card-menu">
 						<li v-for="like in likedPosts" :key="like.id">
-							<PostHomeCard
-								:post="like"
-								:userProfile="userProfile"
-								@load="setCardLoaded('like', like.id)"
-								v-if="isCardLoaded('like', like.id)"
-							/>
+							<PostHomeCard :post="like" :userProfile="userProfile" />
 						</li>
 					</ul>
 					<p
@@ -128,7 +123,7 @@
 		if (selectedTab.value === 'posts') {
 			tabPosition.value = '0px';
 		} else if (selectedTab.value === 'likes') {
-			tabPosition.value = '22.5%';
+			tabPosition.value = '85px';
 		}
 	});
 
@@ -320,7 +315,7 @@
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				width: 23%;
+				width: 85px;
 				height: 100%;
 				background-color: rgba(79, 79, 79, 0.11);
 				z-index: 0;
