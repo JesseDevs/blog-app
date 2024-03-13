@@ -478,6 +478,7 @@
 		}
 
 		span {
+			color: rgb(var(--white-rgb) / 0.85);
 			position: absolute;
 			pointer-events: none;
 			top: -15px;

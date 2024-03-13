@@ -48,7 +48,6 @@
 			</inner-column>
 		</section>
 		<WrapFiller />
-
 		<ExploreCards @empty-posts="handleEmptyPosts" />
 	</div>
 </template>
@@ -194,13 +193,13 @@
 			}
 			span {
 				padding-bottom: 5px;
-				font-weight: 200;
+				font-weight: 300;
 				position: absolute;
 				top: -12px;
 
 				left: 50%;
 				transform: translate(-50%, -50%);
-				color: var(--text-faded);
+				color: rgb(var(--white-rgb) / 0.85);
 			}
 			h1 {
 				text-transform: initial;

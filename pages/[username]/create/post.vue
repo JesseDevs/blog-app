@@ -43,15 +43,14 @@
 							@input="adjustTextareaHeight"
 						></textarea>
 					</div>
-
-					<div class="field text-content editor-container">
-						<ClientOnly>
+					<ClientOnly>
+						<div class="field text-content editor-container">
 							<QuillEditor
 								theme="snow"
 								v-model:content="postData.content"
 							/>
-						</ClientOnly>
-					</div>
+						</div>
+					</ClientOnly>
 
 					<button class="button-filled" type="submit">Add Post</button>
 				</form>
@@ -214,16 +213,6 @@
 </script>
 
 <style lang="scss" scoped>
-	.fade-enter-active,
-	.fade-leave-active {
-		transition: opacity 0.3s ease-in-out, filter 0.5s ease-in-out;
-	}
-	.fade-enter,
-	.fade-leave-to {
-		opacity: 0;
-		filter: blur(10px);
-	}
-
 	error-box {
 		position: fixed;
 		top: 50%;
@@ -316,7 +305,7 @@
 			height: 47px;
 
 			&::placeholder {
-				color: var(--text-placeholder);
+				color: rgb(var(--white-rgb) / 0.65);
 			}
 		}
 
@@ -350,7 +339,7 @@
 			align-items: center;
 			padding-top: 30px;
 			gap: 10px;
-			color: var(--text-placeholder);
+			color: rgb(var(--white-rgb) / 0.65);
 			p {
 				text-transform: uppercase;
 				letter-spacing: 0.02em;

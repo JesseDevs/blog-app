@@ -1,14 +1,13 @@
 .card-menu {
 	li {
 
-		&:first-of-type {
-			border-top: var(--thin) solid var(--text-faded);
-		}
-
+		// &:first-of-type {
+		// 	border-top: var(--thin) solid var(--text-faded);
+		// }
 
 		display: block;
 		width: 100%;
-		border-bottom:var(--thin) solid var(--text-faded);
+
 		transition: background-color 0.2s ease-in-out;
 
 
@@ -17,7 +16,7 @@
 		}
 
 		>a {
-
+			border-bottom: var(--thin) solid var(--text-faded);
 			display: block;
 
 			post-card {
@@ -183,7 +182,7 @@ card-btns {
 			width: 1.7rem;
 			height: 1.7rem;
 			border-radius: var(--border-circle);
-			background-color: var(--text-faded);
+			background-color: var(--button-bg);
 			position: absolute;
 			opacity: 0;
 			transition: opacity 0.2s ease-in-out;
@@ -191,11 +190,12 @@ card-btns {
 
 		&:hover {
 			svg {
-				color: var(--button-bg);
+				z-index: 1;
+				color: var(--white);
 			}
 
 			&::after {
-				opacity: 0.2;
+				opacity: 0.4;
 			}
 		}
 	}
@@ -204,7 +204,7 @@ card-btns {
 card-btns.active {
 	.show-btns {
 		&::after {
-			opacity: 1;
+			opacity: 2;
 			z-index: -1;
 		}
 
@@ -220,18 +220,20 @@ card-btns-shown {
 	background-color: var(--background);
 	width: 250px;
 	position: absolute;
-	top: 15px;
-	right: 0px;
+	top: 35px;
+	right: 30px;
 	z-index: 1;
 	height: auto;
 	// max-height: calc(100% - 22px);
 	// inset: 0px auto auto 0px;
 	border-radius: var(--border-adjust);
-	box-shadow: 0 0 8px rgb(var(--button-bg-rgb) / 0.5);
+	box-shadow: 0 0 12px rgb(var(--button-bg-rgb)/ 0.5);
+	border: 1px solid rgb(var(--button-bg-rgb)/ 0.5);
+
 
 	button {
 		cursor: pointer;
-		border-radius: var(--border-adjust);
+
 		font-weight: 700;
 		border: none;
 		margin: 0;
@@ -245,6 +247,21 @@ card-btns-shown {
 			background-color: var(--button-bg-hover);
 		}
 	}
+
+	button:not(:first-of-type) {
+		border-top: 1px solid rgba(var(--button-bg-rgb)/ 0.5);
+	}
+
+	button:first-of-type {
+		border-top-left-radius: var(--border-adjust);
+		border-top-right-radius: var(--border-adjust);
+	}
+
+	button:last-of-type {
+		border-bottom-left-radius: var(--border-adjust);
+		border-bottom-right-radius: var(--border-adjust);
+	}
+
 
 	p {
 		display: flex;

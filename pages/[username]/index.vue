@@ -1,76 +1,103 @@
 <template>
 	<section>
-		<profile-dashboard v-if="userProfile">
-			<inner-container>
-				<NuxtLink
-					v-if="currentUser?.id === userProfile.id"
-					:to="`${userProfile.username}/edit/profile`"
-					aria-label="edit profile"
-					class="outline-button"
-					>Edit Profile</NuxtLink
-				>
-				<h2 class="level-two-voice full-name">
-					{{ userProfile.full_name }}
-				</h2>
-				<p class="username">@{{ userProfile.username }}</p>
-				<details-box>
-					<p v-if="userProfile.bio">
-						{{ userProfile.bio }}
-					</p>
-					<p>
-						<Icon name="clarity:calendar-line" /> Joined
-						{{ formattedDate }}
-					</p>
-				</details-box>
-			</inner-container>
-
-			<dashboard-menu>
-				<nav>
-					<div
-						@click="selectedTab = 'posts'"
-						:class="{ active: selectedTab === 'posts' }"
+		<div v-if="userProfile">
+			<profile-dashboard>
+				<inner-container>
+					<NuxtLink
+						v-if="currentUser?.id === userProfile.id"
+						:to="`${userProfile.username}/edit/profile`"
+						aria-label="edit profile"
+						class="outline-button"
+						>Edit Profile</NuxtLink
 					>
-						<p>Posts</p>
-						<span></span>
-					</div>
-					<div
-						@click="selectedTab = 'likes'"
-						:class="{ active: selectedTab === 'likes' }"
+					<h2 class="level-two-voice full-name">
+						{{ userProfile.full_name }}
+					</h2>
+					<p class="username">@{{ userProfile.username }}</p>
+					<details-box>
+						<p class="support-text" v-if="userProfile.bio">
+							{{ userProfile.bio }}
+						</p>
+						<p class="joined-date">
+							<Icon name="clarity:calendar-line" /> Joined
+							{{ formattedDate }}
+						</p>
+					</details-box>
+				</inner-container>
+				<dashboard-menu>
+					<nav>
+						<div
+							@click="selectedTab = 'posts'"
+							:class="{ active: selectedTab === 'posts' }"
+						>
+							<p>Posts</p>
+							<span></span>
+						</div>
+						<div
+							@click="selectedTab = 'likes'"
+							:class="{ active: selectedTab === 'likes' }"
+						>
+							<p>Likes</p>
+							<span></span>
+						</div>
+						<span
+							class="active-tab-support"
+							:style="{ left: tabPosition }"
+						></span>
+					</nav>
+				</dashboard-menu>
+			</profile-dashboard>
+			<Transition mode="out-in" name="card-swap">
+				<div v-show="userProfile && isDataLoaded">
+					<ul v-show="selectedTab === 'posts'" class="card-menu">
+						<li v-for="post in posts" :key="post.id">
+							<PostCard
+								:post="post"
+								:userProfile="userProfile"
+								@load="setCardLoaded('post', post.id)"
+								v-show="isCardLoaded('post', post.id)"
+							/>
+						</li>
+					</ul>
+					<p
+						class="level-one-voice no-likes"
+						v-if="selectedTab === 'posts' && posts.length === 0"
 					>
-						<p>Likes</p>
-						<span></span>
-					</div>
-				</nav>
-			</dashboard-menu>
-		</profile-dashboard>
+						No posts found.
+					</p>
+					<ul v-show="selectedTab === 'likes'" class="card-menu">
+						<li v-for="like in likedPosts" :key="like.id">
+							<PostHomeCard
+								:post="like"
+								:userProfile="userProfile"
+								@load="setCardLoaded('like', like.id)"
+								v-if="isCardLoaded('like', like.id)"
+							/>
+						</li>
+					</ul>
+					<p
+						class="level-one-voice no-likes"
+						v-if="selectedTab === 'likes' && likedPosts.length === 0"
+					>
+						No liked posts found.
+					</p>
+				</div>
+			</Transition>
+			<div v-if="!isDataLoaded" class="spinner-container">
+				<div class="spinner">
+					<Icon name="svg-spinners:pulse-2" size="100" />
+				</div>
+				<div class="spinner-2">
+					<Icon
+						name="svg-spinners:pulse-2"
+						size="40"
+						color="var(--button-bg)"
+					/>
+				</div>
+			</div>
 
-		<div v-if="userProfile && isDataLoaded">
-			<ul v-show="selectedTab === 'posts'" class="card-menu">
-				<li v-for="post in posts" :key="post.id">
-					<PostCard :post="post" :userProfile="userProfile" />
-				</li>
-			</ul>
-			<p
-				class="level-one-voice no-likes"
-				v-if="selectedTab === 'posts' && posts.length === 0"
-			>
-				No posts found.
-			</p>
-
-			<ul v-show="selectedTab === 'likes'" class="card-menu">
-				<li v-for="like in likedPosts" :key="like.id">
-					<PostHomeCard :post="like" :userProfile="userProfile" />
-				</li>
-			</ul>
-			<p
-				class="level-one-voice no-likes"
-				v-if="selectedTab === 'likes' && likedPosts.length === 0"
-			>
-				No liked posts found.
-			</p>
+			<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 		</div>
-
-		<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 	</section>
 </template>
 <script setup>
@@ -80,12 +107,30 @@
 	const user = useSupabaseUser();
 	const route = useRoute();
 
-	const isDataLoaded = ref(false);
-
 	const userProfile = ref(null);
 	const currentUser = ref(null);
 	const formattedDate = ref('');
-	const selectedTab = ref('');
+	const selectedTab = ref('posts');
+	const tabPosition = ref('0px');
+
+	const isDataLoaded = ref(false);
+	const loadedCards = ref({});
+
+	const setCardLoaded = (type, id) => {
+		loadedCards.value[`${type}_${id}`] = true;
+	};
+
+	const isCardLoaded = (type, id) => {
+		return loadedCards.value[`${type}_${id}`];
+	};
+
+	watchEffect(() => {
+		if (selectedTab.value === 'posts') {
+			tabPosition.value = '0px';
+		} else if (selectedTab.value === 'likes') {
+			tabPosition.value = '22.5%';
+		}
+	});
 
 	const formatDate = () => {
 		const userValue = user?.value;
@@ -130,7 +175,7 @@
 			const { data, error } = await client
 				.from('profiles')
 				.select('*')
-				.eq('username', route.params.username)
+				.ilike('username', route.params.username)
 				.single();
 
 			if (error) {
@@ -193,16 +238,27 @@
 	};
 
 	onMounted(async () => {
-		selectedTab.value = 'posts';
 		await fetchCurrentUser();
 		await fetchUserProfile();
 		await fetchPosts();
 		await fetchLikes();
-		isDataLoaded.value = true;
+		setTimeout(() => {
+			isDataLoaded.value = true;
+		}, 600);
 	});
 </script>
 
 <style lang="scss" scoped>
+	.card-swap-enter-active,
+	.card-swap-leave-active {
+		transition: opacity 0.5s ease;
+	}
+
+	.card-swap-enter-from,
+	.card-swap-leave-to {
+		opacity: 0;
+	}
+
 	section {
 		min-height: 100vh;
 
@@ -217,8 +273,9 @@
 	details-box {
 		display: flex;
 		flex-direction: column;
+		gap: 3px;
 		width: 100%;
-		color: var(--text-faded);
+
 		padding-top: 10px;
 		max-width: 250px;
 
@@ -226,6 +283,9 @@
 			display: flex;
 			align-items: center;
 			gap: 5px;
+		}
+		p.support-text {
+			color: rgb(var(--white-rgb) / 0.85);
 		}
 	}
 
@@ -250,63 +310,35 @@
 				position: relative;
 				transition: background-color 0.2s ease-in-out;
 
-				&:hover {
-					background-color: var(--dash-hover);
-				}
-
 				p {
 					display: inline-block;
 					padding: 16px 0px;
 				}
 			}
-		}
 
-		nav div.active span {
-			position: absolute;
-			border-radius: 999px;
-			background-color: var(--button-bg);
-			bottom: -1.5px;
-			left: 50%;
-			transform: translateX(-50%);
-			width: 60%;
-			height: 4px;
-			transition: width 0.5s ease-in-out, transform 0.3s ease-in-out;
-			animation: reverse-moving-span 0.5s;
-		}
-		nav div:last-child.active span {
-			animation: moving-span 0.5s;
-		}
-	}
+			span.active-tab-support {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 23%;
+				height: 100%;
+				background-color: rgba(79, 79, 79, 0.11);
+				z-index: 0;
+				transition: transform 0.3s, width 0.3s, left 0.3s;
 
-	@keyframes moving-span {
-		0% {
-			left: 0;
-			transform: translateX(-50%);
-			width: 0;
-		}
-		50% {
-			left: 70%;
-			width: 80%;
-		}
-		100% {
-			left: 50%;
-			width: 60%;
-		}
-	}
-
-	@keyframes reverse-moving-span {
-		0% {
-			left: 50%;
-			width: 60%;
-			transform: translateX(-50%);
-		}
-		50% {
-			left: 0;
-			width: 80%;
-		}
-		100% {
-			left: 50%;
-			width: 60%;
+				&:after {
+					content: '';
+					position: absolute;
+					border-radius: 999px;
+					background-color: var(--button-bg);
+					bottom: 0;
+					left: 50%;
+					transform: translate(-50%, 50%);
+					width: 60%;
+					height: 4px;
+					transition: transform 0.3s, width 0.3s, left 0.3s;
+				}
+			}
 		}
 	}
 
@@ -339,7 +371,8 @@
 			font-weight: 600;
 		}
 
-		.username {
+		.username,
+		.joined-date {
 			color: var(--text-faded);
 			// font-family: 'Roboto Slab', serif;
 		}
@@ -348,5 +381,17 @@
 	.no-likes {
 		text-align: center;
 		padding-top: 3rem;
+	}
+
+	.spinner-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 40px 20px;
+
+		.spinner-2 {
+			position: absolute;
+		}
 	}
 </style>

@@ -64,6 +64,8 @@
 					currentUser.value = data;
 					fullName.value = currentUser.value.full_name;
 					username.value = currentUser.value.username;
+
+					bio.value = currentUser.value.bio || '';
 				}
 			}
 		} catch (error) {

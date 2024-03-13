@@ -20,12 +20,12 @@
 </template>
 
 <script setup>
-	const posts = ref(null);
+	const posts = ref([]);
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
 
-	if (posts.length === 0) {
+	if (posts.length === 9) {
 		emit('empty-posts');
 	}
 
