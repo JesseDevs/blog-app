@@ -7,28 +7,28 @@
 						<source srcset="/tilt-1.jpeg" media="(min-width: 701px)" />
 						<img src="/images/unsplash-1.webp" alt="Home wave image" />
 					</picture>
-					<title-block>
+					<title-block class="animate-scale-out">
 						<h1 class="logo level-five-voice">
 							<span class="level-one-voice">The Blog Site</span>
 							ECHO
 						</h1>
 					</title-block>
-					<text-content>
-						<p class="level-two-voice animate-fade-in">
+					<text-content class="animate-fade-in">
+						<p class="level-two-voice">
 							What goes around,<br />
 							comes around...
 						</p>
 
 						<NuxtLink
 							class="user-button animate-fade-in"
-							v-if="currentUser"
+							v-if="currentUser !== null && currentUser"
 							:to="`/${currentUser?.username}/Create/Post`"
 							aria-label="Go to create post page"
 						>
 							Create an Echo
 						</NuxtLink>
 						<NuxtLink
-							class="user-button animate-fade-in"
+							class="user-button"
 							v-else
 							to="/login"
 							aria-label="Go to login page"
@@ -36,18 +36,14 @@
 							Login
 						</NuxtLink>
 
-						<p
-							v-show="postEmpty"
-							class="custom-link animate-fade-in"
-							@click="scrollDown"
-						>
+						<p v-show="postEmpty" class="custom-link" @click="scrollDown">
 							Explore
 						</p>
 					</text-content>
 				</landing-block>
 			</inner-column>
 		</section>
-		<WrapFiller />
+		<WrapFiller class="animate-fade-in" />
 		<ExploreCards @empty-posts="handleEmptyPosts" />
 	</div>
 </template>
@@ -90,6 +86,18 @@
 		animation: fadeIn 0.5s forwards;
 		animation-delay: 0.5s;
 	}
+
+	section + .animate-fade-in {
+		animation-delay: 0.8s;
+	}
+
+	.animate-scale-out {
+		opacity: 0;
+		transform: scale(2);
+		animation: scaleOut 0.3s forwards;
+		animation-delay: 0.2s;
+	}
+
 	@keyframes fadeIn {
 		from {
 			opacity: 0;
@@ -98,6 +106,17 @@
 		to {
 			opacity: 1;
 			transform: translateY(0);
+		}
+	}
+
+	@keyframes scaleOut {
+		from {
+			opacity: 0;
+			transform: scale(1.7);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
 		}
 	}
 	landing-block {

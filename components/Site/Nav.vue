@@ -1,7 +1,7 @@
 <template>
-	<header :class="` ${ui.menuClass} main-tool-bar site-header`">
+	<header :class="` ${ui.menuClass} main-tool-bar site-header `">
 		<inner-column>
-			<nav class="main-menu">
+			<nav class="main-menu animate-drop-in">
 				<button
 					class="hamburger-button icon-button"
 					@click="ui.toggleMainMenu"
@@ -36,6 +36,23 @@
 </script>
 
 <style lang="scss">
+	.animate-drop-in {
+		opacity: 0;
+		animation: dropIn 0.5s forwards;
+		animation-delay: 0.2s;
+	}
+
+	@keyframes dropIn {
+		from {
+			opacity: 0;
+			transform: translateY(-46px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 	header {
 		position: fixed;
 		top: 0;
