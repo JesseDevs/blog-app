@@ -175,6 +175,7 @@
 
 <style lang="scss">
 	.home-card {
+
 		text-content {
 			position: relative;
 			pointer-events: all;

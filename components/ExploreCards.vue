@@ -117,6 +117,14 @@
 <style lang="scss" scoped>
 	ul {
 		scroll-margin-top: 45px;
+
+		li a {
+			post-card {
+				&:first-of-type {
+					border-top: var(--thin) solid var(--text-faded);
+				}
+			}
+		}
 	}
 
 	.load-more-container {
