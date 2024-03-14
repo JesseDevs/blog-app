@@ -244,8 +244,10 @@
 		await fetchPosts();
 		await fetchLikes();
 
-		useHead({
-			title: userProfile.value ? `${userProfile.value.username} @ ECHO` : 'ECHO',
+		watch(userProfile, (newValue) => {
+			useHead({
+				title: newValue ? `${newValue.username} @ ECHO` : 'ECHO',
+			});
 		});
 
 		setTimeout(() => {
