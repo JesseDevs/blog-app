@@ -17,7 +17,6 @@
 							type="email"
 							placeholder="Email"
 							v-model="credentials.email"
-							autocomplete="off"
 							aria-label="Email"
 						/>
 					</div>
@@ -184,7 +183,7 @@
 					alert(error.message);
 				} else {
 					alert('Password reset instructions sent to your email.');
-					router.push('/');
+					router.push('/login');
 				}
 			} catch (error) {
 				console.error(error);
