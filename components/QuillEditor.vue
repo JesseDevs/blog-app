@@ -23,7 +23,7 @@
 		modules: {
 			toolbar: toolbarOptions,
 		},
-		placeholder: 'Write out blog post...',
+		placeholder: 'Start your journal post...',
 	});
 </script>
 
