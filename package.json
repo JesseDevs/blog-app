@@ -27,6 +27,7 @@
 		"@nuxt/image-edge": "^1.0.0-rc.3-28282346.a10323e",
 		"@pinia/nuxt": "^0.4.11",
 		"@tiptap/vue-3": "^2.2.4",
+		"@vercel/analytics": "^1.2.2",
 		"@vueup/vue-quill": "^1.2.0",
 		"@vueuse/nuxt": "^10.5.0",
 		"bcrypt": "^5.1.1",
