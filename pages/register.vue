@@ -37,6 +37,7 @@
 						id="username"
 						required
 						placeholder="Username"
+						autocomplete="off"
 						v-model="credentials.username"
 						aria-label="Username"
 					/>
