@@ -16,8 +16,13 @@
 					</div>
 
 					<div class="field">
-						<label for="newPassword">Full Name</label>
+						<label for="newPassword">New Password</label>
 						<input id="newPassword" v-model="newPassword" />
+					</div>
+
+					<div class="field">
+						<label for="newPassword">Confirm New Password</label>
+						<input id="confirmNewPassword" v-model="confirmNewPassword" />
 					</div>
 
 					<button type="submit" class="button-filled submit-btn">Save</button>
@@ -35,6 +40,7 @@
 	const currentUser = ref(null);
 
 	const newPassword = ref('');
+	const confirmNewPassword = ref('');
 	const email = ref('');
 
 	const fetchCurrentUser = async () => {
@@ -65,12 +71,17 @@
 			return;
 		}
 
-		try {
-			const { data, error } = await supabase.auth.updateUser({
-				password: newPassword.value,
-			});
-		} catch (error) {
-			console.error('Password reset error:', error.message);
+		if (newPassword.value == confirmNewPassword.value) {
+			try {
+				const { data, error } = await client.auth.updateUser({
+					password: newPassword.value,
+				});
+				if (!error) {
+					router.push('/');
+				}
+			} catch (error) {
+				console.error('Password reset error:', error.message);
+			}
 		}
 	};
 
