@@ -72,7 +72,7 @@ export const useAuthService = defineStore('auth', () => {
 					username,
 					email,
 				},
-				emailRedirectTo: 'http://localhost:3000/login',
+				emailRedirectTo: 'https://echo-waves.vercel.app/login',
 			},
 		});
 

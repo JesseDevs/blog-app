@@ -174,7 +174,7 @@
 				const { error } = await client.auth.resetPasswordForEmail(
 					credentials.email,
 					{
-						redirectTo: 'http://localhost:3000/reset/update-password',
+						redirectTo: 'https://echo-waves.vercel.app/reset/update-password',
 					},
 				);
 

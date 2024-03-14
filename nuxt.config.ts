@@ -46,7 +46,7 @@ export default defineNuxtConfig({
 				{
 					hid: 'og:url',
 					property: 'og:url',
-					content: `https://theblog-echo.vercel.app/`,
+					content: `https://echo-waves.vercel.app/`,
 				},
 				{
 					property: 'og:locale',
