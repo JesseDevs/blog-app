@@ -92,9 +92,8 @@
 			</div>
 
 			{{ userProfile.created_at }}
-
-			<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 		</div>
+		<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 	</section>
 </template>
 <script setup>
@@ -114,7 +113,7 @@
 	const loadedCards = ref({});
 
 	useHead({
-		title: '',
+		title: userProfile.value ? `${userProfile.value.username} @ ECHO` : 'ECHO',
 	});
 
 	const setCardLoaded = (type, id) => {
