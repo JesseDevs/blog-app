@@ -5,9 +5,12 @@ export const formattedDate = (dateString) => {
 };
 
 export const formatTime = (timeString) => {
-	const time = new Date(`2000-01-01T${timeString}`);
-	const hours = time.getHours();
-	const minutes = time.getMinutes();
+	const time = new Date(`2000-01-01T${timeString}Z`);
+	const localTime = new Date(
+		time.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
+	);
+	const hours = localTime.getHours();
+	const minutes = localTime.getMinutes();
 	const period = hours >= 12 ? 'pm' : 'am';
 	const formattedHours = hours % 12 || 12;
 	const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
