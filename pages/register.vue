@@ -113,7 +113,6 @@
 				full_name: fullName,
 				username: username,
 				email,
-				likes: [],
 				role: 'role',
 				created_at: new Date().toISOString(),
 			},
@@ -126,21 +125,7 @@
 			credentials.errorMessage = 'Registration failed. Please try again.';
 			console.error(error);
 		} else {
-			const { data: userData, error: updateError } = await client
-				.from('profiles')
-				.update({
-					role: 'role',
-					created_at: new Date().toISOString(),
-				})
-				.eq('id', user.id)
-				.single();
-			if (updateError) {
-				errorMessage.value = updateError.message;
-				credentials.errorMessage = 'Error adding additional data';
-			} else {
-				console.log('User signed up successfully and data was updated.');
-				router.push('/confirmation');
-			}
+			router.push('/confirmation');
 		}
 	}
 
