@@ -21,7 +21,7 @@
 
 						<NuxtLink
 							class="user-button animate-fade-in"
-							v-if="currentUser !== null && currentUser"
+							v-if="user"
 							:to="`/${currentUser?.username}/Create/Post`"
 							aria-label="Go to create post page"
 						>

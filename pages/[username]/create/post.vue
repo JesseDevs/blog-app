@@ -246,10 +246,6 @@
 		margin: 0;
 	}
 	section.create-post {
-		inner-column {
-			padding-top: 1rem;
-		}
-
 		.placeholder {
 			position: absolute;
 			color: rgb(127, 126, 126);
@@ -287,6 +283,8 @@
 			flex-direction: column;
 			gap: 20px;
 			min-height: 80vh;
+			max-width: none !important;
+			margin-bottom: none !important;
 
 			.button-filled {
 				margin-top: 0;
@@ -302,7 +300,11 @@
 			z-index: 0;
 			color: var(--white);
 			resize: none;
-			height: 47px;
+			border: 1px solid var(--button-bg);
+			padding-left: 1rem;
+			padding-top: 10px;
+			height: 65px;
+			padding-bottom: 10px;
 
 			&::placeholder {
 				color: rgb(var(--white-rgb) / 0.65);
@@ -334,16 +336,21 @@
 		}
 
 		div.add-picture {
+			border: 1px solid var(--button-bg);
 			cursor: pointer;
 			flex-direction: row;
 			align-items: center;
-			padding-top: 30px;
-			gap: 10px;
+			gap: 15px;
+			padding-top: 10px;
+			height: 65px;
+			padding-bottom: 10px;
+
+			padding-left: 1rem;
 			color: rgb(var(--white-rgb) / 0.65);
 			p {
-				text-transform: uppercase;
+				text-transform: capitalize;
 				letter-spacing: 0.02em;
-				font-weight: 800;
+				font-weight: 700;
 			}
 		}
 
