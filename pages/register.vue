@@ -69,6 +69,7 @@
 				<button class="button-filled submit-btn" type="submit">Submit</button>
 			</form>
 			<div class="error" v-if="credentials.errorMessage">
+				<p>{{ errorMessage }}</p>
 				<p>{{ credentials.errorMessage }}</p>
 			</div>
 
@@ -95,11 +96,13 @@
 		middleware: 'confirmed-auth',
 	});
 
+	const errorMessage = ref('');
 	const client = useSupabaseClient();
 	const router = useRouter();
 	const user = useSupabaseUser();
 	const isDataLoading = ref(false);
 	const loadingText = ref(`Creating your account...`);
+
 	async function register() {
 		isDataLoading.value = true;
 		const { fullName, username, email, password } = credentials;
@@ -112,20 +115,20 @@
 					username: username,
 					email,
 					likes: [],
+					role: 'role',
+					created_at: new Date().toISOString(),
 				},
-				emailRedirectTo: 'http://localhost:3000/',
+				emailRedirectTo: 'localhost:3000',
 			},
 		});
 
-		router.push('/confirmation');
 		if (error) {
-			if (error.message.includes('unique constraint')) {
-				credentials.errorMessage = 'Email or username already exists.';
-			} else {
-				credentials.errorMessage = 'Registration failed. Please try again.';
-			}
+			isDataLoading.value = false;
+			errorMessage.value = error;
+			credentials.errorMessage = 'Registration failed. Please try again.';
 			console.error(error);
-			return;
+		} else {
+			router.push('/confirmation');
 		}
 	}
 
