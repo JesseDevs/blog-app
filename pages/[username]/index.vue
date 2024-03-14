@@ -67,7 +67,7 @@
 					</p>
 					<ul v-show="selectedTab === 'likes'" class="card-menu">
 						<li v-for="like in likedPosts" :key="like.id">
-							<PostHomeCard :post="like" :userProfile="userProfile" />
+							<PostHomeCard :post="like" :userProfile="like.userProfile" />
 						</li>
 					</ul>
 					<p
@@ -111,6 +111,10 @@
 	const isDataLoaded = ref(false);
 	const loadedCards = ref({});
 
+	useHead({
+		title: '',
+	});
+
 	const setCardLoaded = (type, id) => {
 		loadedCards.value[`${type}_${id}`] = true;
 	};
@@ -123,9 +127,19 @@
 		if (selectedTab.value === 'posts') {
 			tabPosition.value = '0px';
 		} else if (selectedTab.value === 'likes') {
-			tabPosition.value = '85px';
+			tabPosition.value = '80px';
 		}
 	});
+
+	const getUserByUsername = async (id) => {
+		try {
+			const userProfile = await fetchUserProfileById(id);
+			return userProfile;
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+			return null;
+		}
+	};
 
 	const formatDate = () => {
 		const userValue = user?.value;
@@ -226,7 +240,29 @@
 				throw new Error('Error fetching liked posts:', postsError.message);
 			}
 
-			likedPosts.value = actualLikedPosts;
+			const profiles = await Promise.all(
+				actualLikedPosts.map(async (post) => {
+					const { data: profile, error: profileError } = await client
+						.from('profiles')
+						.select('*')
+						.eq('id', post.belongs_to)
+						.single();
+					if (profileError) {
+						throw new Error(
+							'Error fetching user profile:',
+							profileError.message,
+						);
+					}
+					return profile;
+				}),
+			);
+
+			const likedPostsWithProfiles = actualLikedPosts.map((post, index) => ({
+				...post,
+				userProfile: profiles[index],
+			}));
+
+			likedPosts.value = likedPostsWithProfiles;
 		} catch (error) {
 			console.error('Error fetching likes:', error.message);
 		}
@@ -237,6 +273,7 @@
 		await fetchUserProfile();
 		await fetchPosts();
 		await fetchLikes();
+
 		setTimeout(() => {
 			isDataLoaded.value = true;
 		}, 600);
