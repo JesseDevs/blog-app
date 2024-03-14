@@ -117,7 +117,7 @@
 				role: 'role',
 				created_at: new Date().toISOString(),
 			},
-			redirectTo: 'http://localhost:3000',
+			redirectTo: 'https://echo-waves.vercel.app/',
 		});
 		isDataLoading.value = false;
 
