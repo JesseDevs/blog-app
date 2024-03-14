@@ -3,6 +3,12 @@
 		<post-card class="home-card">
 			<transition name="fade">
 				<card-btns-shown v-if="showModal" @click.stop>
+					<button
+						@click.prevent="deletePost(post.id)"
+						v-if="currentUser?.id === userProfile?.id"
+					>
+						<span class="small-voice">DELETE</span>
+					</button>
 					<button @click.prevent="copyLink">
 						<span class="small-voice">SHARE</span>
 					</button>
@@ -78,10 +84,14 @@
 
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
+
+	const route = useRoute();
+	const router = useRouter();
 	const userPosts = ref([]);
 	const imageLoaded = ref(false);
 	const fallbackImageUrl = '/images/fallback-logo.jpg';
 	const username = ref('');
+	const currentUser = ref(null);
 
 	const totalLikes = ref(0);
 	const isLiked = ref(false);
@@ -168,7 +178,68 @@
 		}
 	};
 
+	const fetchCurrentUser = async () => {
+		try {
+			const { data, error } = await client
+				.from('profiles')
+				.select('*')
+				.eq('id', user.value.id)
+				.single();
+
+			if (error) {
+				console.error('Error fetching user profile:', error.message);
+			} else {
+				currentUser.value = data;
+			}
+		} catch (error) {
+			console.error('Error fetching user profile:', error.message);
+		}
+	};
+
+	const deletePost = async (postId) => {
+		const confirmed = confirm('Are you sure you want to delete this post?');
+		showModal.value = false;
+
+		if (!confirmed) {
+			return;
+		}
+		try {
+			const { data: post, error: fetchError } = await client
+				.from('posts')
+				.select('image_url')
+				.eq('id', postId)
+				.single();
+
+			if (fetchError) {
+				throw fetchError;
+			}
+			if (post && post.image_url) {
+				const filePath = `${user.value.id}/${post.image_url}`;
+				const { error: deleteError } = await client.storage
+					.from('post-images')
+					.remove([filePath]);
+				if (deleteError) {
+					throw deleteError;
+				}
+				console.log('Image deleted successfully from storage.');
+			}
+
+			// Now you can delete the post from the database
+			const { error } = await client.from('posts').delete().eq('id', postId);
+
+			if (error) {
+				console.error('Error deleting post:', error.message);
+			} else {
+				console.log('deleted post');
+				router.go();
+			}
+		} catch (error) {
+			console.error('Error deleting post:', error.message);
+		}
+	};
+
 	onMounted(async () => {
+		await fetchCurrentUser();
 		await fetchTotalLikes();
 	});
 </script>

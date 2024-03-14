@@ -20,7 +20,7 @@
 						</p>
 						<p class="joined-date">
 							<Icon name="clarity:calendar-line" /> Joined
-							{{ formattedDate }}
+							{{ formattedDate() }}
 						</p>
 					</details-box>
 				</inner-container>
@@ -91,11 +91,14 @@
 				</div>
 			</div>
 
+			{{ userProfile.created_at }}
+
 			<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 		</div>
 	</section>
 </template>
 <script setup>
+	import { formattedDate, formatTime } from '~/utils/dateUtils';
 	const posts = ref([]);
 	const likedPosts = ref([]);
 	const client = useSupabaseClient();
@@ -104,7 +107,6 @@
 
 	const userProfile = ref(null);
 	const currentUser = ref(null);
-	const formattedDate = ref('');
 	const selectedTab = ref('posts');
 	const tabPosition = ref('0px');
 
@@ -127,37 +129,9 @@
 		if (selectedTab.value === 'posts') {
 			tabPosition.value = '0px';
 		} else if (selectedTab.value === 'likes') {
-			tabPosition.value = '80px';
+			tabPosition.value = '50%';
 		}
 	});
-
-	const getUserByUsername = async (id) => {
-		try {
-			const userProfile = await fetchUserProfileById(id);
-			return userProfile;
-		} catch (error) {
-			console.error('Error fetching user profile:', error.message);
-			return null;
-		}
-	};
-
-	const formatDate = () => {
-		const userValue = user?.value;
-		if (userValue && userValue.identities && userValue.identities.length > 0) {
-			const created_at_timestamp = userValue.identities[0].created_at;
-			const created_at_datetime = new Date(created_at_timestamp);
-			const options = { year: 'numeric', month: 'long' };
-			formattedDate.value = created_at_datetime.toLocaleDateString(
-				'en-US',
-				options,
-			);
-		} else {
-			console.error(
-				'No identity found or missing created_at property in identities array.',
-			);
-		}
-	};
-	formatDate();
 
 	const fetchCurrentUser = async () => {
 		try {
@@ -329,13 +303,14 @@
 	dashboard-menu {
 		display: block;
 		width: 100%;
+		border-bottom: var(--thin) solid var(--text-faded);
 		margin-top: 2rem;
 
 		nav {
+			max-width: fit-content;
 			position: relative;
 			display: flex;
 			cursor: pointer;
-			border-bottom: var(--thin) solid var(--text-faded);
 
 			div {
 				padding: 0px 1.5rem;
@@ -352,7 +327,7 @@
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				width: 85px;
+				width: 50%;
 				height: 100%;
 				background-color: rgba(79, 79, 79, 0.11);
 				z-index: 0;
