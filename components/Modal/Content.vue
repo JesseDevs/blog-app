@@ -136,6 +136,7 @@
 
 <style lang="scss" scoped>
 	modal-content {
+		touch-action: manipulation;
 		background-color: var(--background);
 		display: flex;
 		flex-direction: column;
