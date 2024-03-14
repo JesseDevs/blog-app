@@ -52,7 +52,7 @@ post-card {
 		border-radius: var(--border-card);
 		max-height: 50px;
 
-		box-shadow: 0 0 0var(--thin) var(--box-shadow);
+		box-shadow: 0 0 0 var(--thin) var(--box-shadow);
 
 		img {
 			object-fit: cover;
@@ -71,7 +71,7 @@ post-card {
 			background: var(--black);
 			background: radial-gradient(circle,
 					rgb(var(--white-rgb) / 0) 0%,
-					rgba(var(--black-rgb)/ 0.6) 90%);
+					rgba(var(--black-rgb)/ 0.4) 90%);
 			pointer-events: none;
 		}
 	}

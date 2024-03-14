@@ -244,6 +244,7 @@
 		height: 0;
 		padding: 0;
 		margin: 0;
+		display: none !important;
 	}
 	section.create-post {
 		.placeholder {

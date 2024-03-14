@@ -376,7 +376,7 @@
 				background: radial-gradient(
 					circle,
 					rgb(var(--white-rgb) / 0) 0%,
-					rgba(var(--black-rgb) / 0.6) 90%
+					rgba(var(--black-rgb) / 0.4) 90%
 				);
 				opacity: 0.9;
 				transition: opacity 0.5s;

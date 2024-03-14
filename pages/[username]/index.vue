@@ -112,10 +112,6 @@
 	const isDataLoaded = ref(false);
 	const loadedCards = ref({});
 
-	useHead({
-		title: userProfile.value ? `${userProfile.value.username} @ ECHO` : 'ECHO',
-	});
-
 	const setCardLoaded = (type, id) => {
 		loadedCards.value[`${type}_${id}`] = true;
 	};
@@ -246,6 +242,10 @@
 		await fetchUserProfile();
 		await fetchPosts();
 		await fetchLikes();
+
+		useHead({
+			title: userProfile.value ? `${userProfile.value.username} @ ECHO` : 'ECHO',
+		});
 
 		setTimeout(() => {
 			isDataLoaded.value = true;

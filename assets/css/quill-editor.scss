@@ -47,7 +47,10 @@
 .ql-editor {
 	min-height: 120px;
 
+}
 
+.ql-snow a {
+	color: var(--button-bg) !important;
 }
 
 .ql-toolbar.ql-snow .ql-formats button,

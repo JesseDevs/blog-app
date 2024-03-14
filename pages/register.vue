@@ -106,29 +106,41 @@
 	async function register() {
 		isDataLoading.value = true;
 		const { fullName, username, email, password } = credentials;
-		const { error } = await client.auth.signUp({
+		const { user, error } = await client.auth.signUp({
 			email,
 			password,
-			options: {
-				data: {
-					full_name: fullName,
-					username: username,
-					email,
-					likes: [],
-					role: 'role',
-					created_at: new Date().toISOString(),
-				},
-				emailRedirectTo: 'localhost:3000',
+			data: {
+				full_name: fullName,
+				username: username,
+				email,
+				likes: [],
+				role: 'role',
+				created_at: new Date().toISOString(),
 			},
+			redirectTo: 'http://localhost:3000',
 		});
+		isDataLoading.value = false;
 
 		if (error) {
-			isDataLoading.value = false;
-			errorMessage.value = error;
+			errorMessage.value = error.message;
 			credentials.errorMessage = 'Registration failed. Please try again.';
 			console.error(error);
 		} else {
-			router.push('/confirmation');
+			const { data: userData, error: updateError } = await client
+				.from('profiles')
+				.update({
+					role: 'role',
+					created_at: new Date().toISOString(),
+				})
+				.eq('id', user.id)
+				.single();
+			if (updateError) {
+				errorMessage.value = updateError.message;
+				credentials.errorMessage = 'Error adding additional data';
+			} else {
+				console.log('User signed up successfully and data was updated.');
+				router.push('/confirmation');
+			}
 		}
 	}
 
