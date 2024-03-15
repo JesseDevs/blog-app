@@ -5,7 +5,7 @@
 				<h2 class="level-three-voice">Sign Up</h2>
 				<p class="sub-head">Get started with an account</p>
 			</div>
-			<form @submit.prevent="register()">
+			<form @submit.prevent="register()" autocomplete="off">
 				<div class="field">
 					<label for="email">Email <span class="required">*</span></label>
 					<input

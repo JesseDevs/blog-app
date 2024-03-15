@@ -20,7 +20,7 @@
 						</p>
 						<p class="joined-date">
 							<Icon name="clarity:calendar-line" /> Joined
-							{{ formattedDate() }}
+							{{ formatCreatedAt(userProfile.created_at) }}
 						</p>
 					</details-box>
 				</inner-container>
@@ -90,8 +90,6 @@
 					/>
 				</div>
 			</div>
-
-			{{ userProfile.created_at }}
 		</div>
 		<PostNoUser v-if="isDataLoaded && !userProfile" :user="user" />
 	</section>
@@ -127,6 +125,12 @@
 			tabPosition.value = '50%';
 		}
 	});
+
+	function formatCreatedAt(created_at) {
+		const date = new Date(created_at);
+		const options = { month: 'long', year: 'numeric' };
+		return `Joined ${date.toLocaleDateString('en-US', options)}`;
+	}
 
 	const fetchCurrentUser = async () => {
 		try {
