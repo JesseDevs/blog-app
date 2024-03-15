@@ -1,8 +1,18 @@
 <template>
 	<div v-if="posts">
 		<ul class="card-menu" id="explore-cards">
-			<li v-for="post in posts" :key="post.id">
-				<template v-if="post.userProfile">
+			<li v-if="pinnedPost && pinnedPost.id" :key="pinnedPost.id">
+				<template v-if="pinnedPost.userProfile">
+					<PostHomeCard
+						:post="pinnedPost"
+						:userProfile="pinnedPost.userProfile"
+						:isPinnedInExploreCards="true"
+					/>
+				</template>
+			</li>
+
+			<li v-for="post in sortedPosts" :key="post.id">
+				<template v-if="post.userProfile && post !== pinnedPost">
 					<PostHomeCard
 						:post="post"
 						:userProfile="post.userProfile"
@@ -30,16 +40,13 @@
 	const user = useSupabaseUser();
 	const route = useRoute();
 
-	const sortedPosts = ref([]);
-
-	watch([posts, pinnedPosts], () => {
-		sortedPosts.value = [
-			...pinnedPosts.value,
-			...posts.value.filter((post) => !pinnedPosts.value.includes(post)),
-		];
+	const sortedPosts = computed(() => {
+		return [...posts.value.filter((post) => !post.pinned)];
 	});
 
-	if (posts.length === 9) {
+	const pinnedPost = ref(null);
+
+	if (posts.value.length === 9) {
 		emit('empty-posts');
 	}
 
@@ -47,15 +54,29 @@
 	let currentPage = ref(1);
 	let hasMorePosts = ref(true);
 
-	const fetchPinnedPosts = async () => {
-		const { data, error } = await client.from('posts').select('*').eq('pinned', true);
+	const fetchPinnedPost = async () => {
+		try {
+			const { data, error } = await client
+				.from('posts')
+				.select('*')
+				.eq('pinned', true)
+				.single();
 
-		if (error) {
-			console.error('Error fetching pinned posts:', error.message);
-			return;
+			if (error) {
+				console.error('Error fetching pinned post:', error.message);
+				return;
+			}
+
+			pinnedPost.value = data;
+			if (pinnedPost.value) {
+				const userProfile = await fetchUserProfileById(
+					pinnedPost.value.belongs_to,
+				);
+				pinnedPost.value.userProfile = userProfile;
+			}
+		} catch (error) {
+			console.error('Error fetching pinned post:', error.message);
 		}
-
-		pinnedPosts.value = data;
 	};
 
 	const fetchPosts = async () => {
@@ -127,8 +148,8 @@
 	};
 
 	onMounted(async () => {
-		await fetchPinnedPosts();
 		await fetchPosts();
+		await fetchPinnedPost();
 		if (posts.value.length > 0) {
 			await Promise.all(
 				posts.value.map(async (post) => {
