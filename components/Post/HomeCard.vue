@@ -266,6 +266,9 @@
 		);
 
 		border-bottom: 1px solid rgb(191, 145, 29);
+		p {
+			font-weight: 600;
+		}
 	}
 	.home-card {
 		text-content {
