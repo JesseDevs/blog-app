@@ -158,13 +158,25 @@
 				return;
 			}
 
+			const currentDate = new Date().toLocaleDateString('en-US', {
+				timeZone: 'America/Los_Angeles',
+			});
+
+			const currentTime = new Date().toLocaleTimeString('en-US', {
+				timeZone: 'America/Los_Angeles',
+				hour12: true,
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+			});
+
 			const { data, error } = await client.from('posts').insert([
 				{
 					belongs_to: user.value.id,
 					header: postData.value.header,
 					content: postData.value.content,
-					date_created: new Date().toISOString().split('T')[0],
-					time_created: new Date().toISOString().split('T')[1].split('.')[0],
+					date_created: currentDate,
+					time_created: currentTime,
 					image_url: filename,
 				},
 			]);
@@ -178,7 +190,6 @@
 				success.value = true;
 				setTimeout(() => {
 					loading.value = false;
-
 					router.push('/');
 				}, 1250);
 			}

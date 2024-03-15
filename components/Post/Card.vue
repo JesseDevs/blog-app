@@ -66,7 +66,7 @@
 				<p v-html="post.content" class="visible-content"></p>
 			</text-content>
 			<card-footer class="small-voice">
-				<p class="faded">{{ formatTime(post.time_created) }}</p>
+				<p class="faded">{{ formatTimeNew(post.time_created) }}</p>
 				<p>
 					<Icon name="ph:dot-outline-fill" />
 				</p>
@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-	import { formattedDate, formatTime } from '~/utils/dateUtils';
+	import { formattedDate, formatTime, formatTimeNew } from '~/utils/dateUtils';
 	import readingTime from '~/utils/readingTime';
 	const props = defineProps({
 		post: Object,
