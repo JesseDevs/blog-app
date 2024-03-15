@@ -1,5 +1,9 @@
 <template>
 	<NuxtLink :to="`${userProfile.username}/posts/${post.id}`">
+		<div v-if="isPinnedInExploreCards && post.pinned" class="pinned-box">
+			<Icon name="codicon:pinned-dirty" size="20" />
+			<p class="small-voice">PINNNED POST</p>
+		</div>
 		<post-card class="home-card">
 			<transition name="fade">
 				<card-btns-shown v-if="showModal" @click.stop>
@@ -78,6 +82,7 @@
 	const props = defineProps({
 		post: Object,
 		userProfile: Object,
+		isPinnedInExploreCards: Boolean,
 	});
 
 	const showModal = ref(false);
@@ -245,14 +250,21 @@
 </script>
 
 <style lang="scss">
-	ul {
-		scroll-margin-top: 45px;
+	.pinned-box {
+		border-top: var(--thin) solid var(--text-faded);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		padding: 3px 2rem;
+		background: linear-gradient(
+			0.25turn,
+			rgb(199, 166, 82) 0%,
+			rgba(199, 166, 82, 0.767) 50%,
+			rgb(199, 166, 82)
+		);
 
-		li:first-of-type a {
-			post-card {
-				border-top: var(--thin) solid var(--text-faded);
-			}
-		}
+		border-bottom: 1px solid rgb(191, 145, 29);
 	}
 	.home-card {
 		text-content {

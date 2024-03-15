@@ -3,7 +3,11 @@
 		<ul class="card-menu" id="explore-cards">
 			<li v-for="post in posts" :key="post.id">
 				<template v-if="post.userProfile">
-					<PostHomeCard :post="post" :userProfile="post.userProfile" />
+					<PostHomeCard
+						:post="post"
+						:userProfile="post.userProfile"
+						:isPinnedInExploreCards="true"
+					/>
 				</template>
 			</li>
 		</ul>
@@ -21,9 +25,19 @@
 
 <script setup>
 	const posts = ref([]);
+	const pinnedPosts = ref([]);
 	const client = useSupabaseClient();
 	const user = useSupabaseUser();
 	const route = useRoute();
+
+	const sortedPosts = ref([]);
+
+	watch([posts, pinnedPosts], () => {
+		sortedPosts.value = [
+			...pinnedPosts.value,
+			...posts.value.filter((post) => !pinnedPosts.value.includes(post)),
+		];
+	});
 
 	if (posts.length === 9) {
 		emit('empty-posts');
@@ -32,6 +46,17 @@
 	const pageSize = 10; // Number of posts to load per page
 	let currentPage = ref(1);
 	let hasMorePosts = ref(true);
+
+	const fetchPinnedPosts = async () => {
+		const { data, error } = await client.from('posts').select('*').eq('pinned', true);
+
+		if (error) {
+			console.error('Error fetching pinned posts:', error.message);
+			return;
+		}
+
+		pinnedPosts.value = data;
+	};
 
 	const fetchPosts = async () => {
 		try {
@@ -102,6 +127,7 @@
 	};
 
 	onMounted(async () => {
+		await fetchPinnedPosts();
 		await fetchPosts();
 		if (posts.value.length > 0) {
 			await Promise.all(
