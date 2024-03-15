@@ -3,16 +3,27 @@ export const formattedDate = (dateString) => {
 	const date = new Date(dateString);
 	return date.toLocaleDateString(undefined, options);
 };
-
 export const formatTime = (timeString) => {
 	const time = new Date(`2000-01-01T${timeString}Z`);
-	const localTime = new Date(
-		time.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }),
-	);
-	const hours = localTime.getHours();
-	const minutes = localTime.getMinutes();
-	const period = hours >= 12 ? 'pm' : 'am';
-	const formattedHours = hours % 12 || 12;
-	const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-	return `${formattedHours}:${formattedMinutes} ${period}`;
+	const options = {
+		hour: 'numeric',
+		minute: '2-digit',
+		hour12: true,
+		timeZone: 'America/Los_Angeles',
+	};
+	return time.toLocaleTimeString('en-US', options);
+};
+
+export const formatTimeNew = (timeString) => {
+	const [hours, minutes, seconds] = timeString.split(':');
+	const date = new Date();
+	date.setHours(hours);
+	date.setMinutes(minutes);
+	date.setSeconds(seconds);
+
+	return date.toLocaleTimeString('en-US', {
+		hour: 'numeric',
+		minute: '2-digit',
+		hour12: true,
+	});
 };
