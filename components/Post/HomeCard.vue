@@ -74,7 +74,6 @@
 			</card-footer>
 		</post-card>
 	</NuxtLink>
-	{{ post.time_created }}
 </template>
 
 <script setup>
