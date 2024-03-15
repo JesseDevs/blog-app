@@ -13,6 +13,7 @@
 						required
 						type="email"
 						placeholder="Email"
+						autocomplete="off"
 						v-model="credentials.email"
 						aria-label="Email"
 					/>
@@ -26,6 +27,7 @@
 						id="fullName"
 						required
 						placeholder="Full Name"
+						autocomplete="off"
 						v-model="credentials.fullName"
 						aria-label="Full Name"
 					/>
@@ -107,25 +109,25 @@
 	async function register() {
 		isDataLoading.value = true;
 		const { fullName, username, email, password } = credentials;
-		const { user, error } = await client.auth.signUp({
+		const { error } = await client.auth.signUp({
 			email,
 			password,
-			data: {
-				full_name: fullName,
-				username: username,
-				email,
-				role: 'role',
-				created_at: new Date().toISOString(),
+			options: {
+				data: {
+					full_name: fullName,
+					username: username,
+					email,
+				},
+				redirectTo: 'https://echo-waves.vercel.app/',
 			},
-			redirectTo: 'https://echo-waves.vercel.app/',
 		});
-		isDataLoading.value = false;
 
 		if (error) {
 			errorMessage.value = error.message;
 			credentials.errorMessage = 'Registration failed. Please try again.';
 			console.error(error);
 		} else {
+			isDataLoading.value = false;
 			router.push('/confirmation');
 		}
 	}
