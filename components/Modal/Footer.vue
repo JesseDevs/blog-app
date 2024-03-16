@@ -1,6 +1,6 @@
 <template>
 	<div class="modal-footer">
-		<a class="small-voice" href="/settings/about"> About</a>
+		<!-- <a class="small-voice" href="/settings/about"> About</a> -->
 		<a class="small-voice" href="/settings/terms">Terms of Service</a>
 		<a class="small-voice" href="/settings/privacy"> Privacy</a>
 		<a class="small-voice" target="_blank" href="https://jessedevs.net/">
