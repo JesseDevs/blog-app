@@ -417,4 +417,31 @@
 		animation: noise-anim-2 3s infinite linear alternate-reverse;
 		pointer-events: none;
 	}
+
+	@media(min-width:600px) {
+		.glitch-mode p.show-theme .glitch {
+			height: auto;
+		}
+
+		.glitch-mode .glitch {
+			color: #fff;
+
+			pointer-events: none;
+			margin-bottom: 70px;
+			position: relative;
+			width: auto;
+			height: auto;
+			margin: auto;
+
+		}
+
+		.glitch-mode p.show-theme .glitch:before {
+			left: -1px !important;
+			top: 66px;
+		}
+
+		.glitch-mode .glitch:after {
+			top: 102px;
+		}
+	}
 }
