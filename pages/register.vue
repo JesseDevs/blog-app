@@ -65,9 +65,13 @@
 				</div>
 				<p class="form-support small-voice">
 					By signing up, you agree to the
-					<a class="small-voice" href="/settings/terms">Terms of Service</a>
+					<NuxtLink class="small-voice" to="/settings/terms"
+						>Terms of Service</NuxtLink
+					>
 					and
-					<a class="small-voice" href="/settings/privacy">Privacy Policy</a>
+					<NuxtLink class="small-voice" to="/settings/privacy"
+						>Privacy Policy</NuxtLink
+					>
 				</p>
 				<button class="button-filled submit-btn" type="submit">Submit</button>
 			</form>
@@ -78,7 +82,7 @@
 
 			<p class="form-support small-voice">
 				Already have an account?
-				<a class="custom-link" href="/login">Login</a>
+				<NuxtLink class="custom-link" to="/login">Login</NuxtLink>
 			</p>
 		</signup-page>
 

@@ -62,7 +62,7 @@
 					</p>
 					<p class="form-support small-voice">
 						Don't have an account?
-						<a class="footer-action" href="/register">Sign Up</a>
+						<NuxtLink class="footer-action" to="/register">Sign Up</NuxtLink>
 					</p>
 
 					<p class="error-message" v-if="loginError">{{ loginError }}</p>
