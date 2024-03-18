@@ -25,6 +25,7 @@
 							class="bio-text"
 							v-model="bio"
 							maxlength="150"
+							style="white-space: pre-wrap"
 						/>
 					</div>
 					<button type="submit" class="button-filled submit-btn">Save</button>
