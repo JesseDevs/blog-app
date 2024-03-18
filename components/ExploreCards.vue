@@ -23,6 +23,7 @@
 		</ul>
 		<div class="load-more-container">
 			<button
+				v-show="hasMorePosts"
 				class="load-more-btn user-button"
 				@click="loadMorePosts"
 				:disabled="!hasMorePosts"

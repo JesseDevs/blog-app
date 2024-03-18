@@ -131,8 +131,8 @@
 			credentials.errorMessage = 'Registration failed. Please try again.';
 			console.error(error);
 		} else {
-			isDataLoading.value = false;
 			router.push('/confirmation');
+			isDataLoading.value = false;
 		}
 	}
 
