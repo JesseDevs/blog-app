@@ -1,24 +1,22 @@
 <template>
 	<div class="app-container">
-		<!-- <transition name="fade" appear>
-				</transition> -->
+		<!-- <transition name="fade" appear> </transition>
 		<div class="ripple-container" v-if="initialLoad">
 			<button></button>
 			<button></button>
 			<button></button>
 			<button></button>
 			<button></button>
-		</div>
+		</div> -->
 
-		<div v-show="contentLoaded">
-			<SiteNav />
-			<div class="space-holder"></div>
-			<LazyModalContainer />
-			<main>
-				<slot />
-			</main>
-			<SiteFooter />
-		</div>
+		<SiteNav />
+		<ModalBig class="mid-size-display" />
+		<div class="space-holder"></div>
+		<LazyModalContainer />
+		<main>
+			<slot />
+		</main>
+		<SiteFooter />
 	</div>
 </template>
 
@@ -28,8 +26,8 @@
 
 	const showInitialLoad = ref(true);
 	const expirationTime = 24 * 60 * 60 * 1000; //  1 day in milliseconds
-	const initialLoad = false;
-	const contentLoaded = ref(true);
+	// const initialLoad = true;
+	// const contentLoaded = ref(false);
 
 	// const closeInitialLoad = () => {
 	// 	initialLoad.value = false;
@@ -51,6 +49,7 @@
 	}
 
 	.app-container {
+		--big-view-size: 68px;
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
@@ -61,6 +60,25 @@
 			section {
 				overflow-y: hidden;
 			}
+		}
+	}
+
+	.mid-size-display {
+		display: none;
+	}
+
+	@media (min-width: 600px) {
+		.app-container {
+			padding-left: var(--big-view-size);
+		}
+		.mid-size-display {
+			display: flex;
+		}
+	}
+
+	@media (min-width: 850px) {
+		.app-container {
+			--big-view-size: 250px;
 		}
 	}
 
