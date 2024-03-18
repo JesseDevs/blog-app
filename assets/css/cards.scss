@@ -98,10 +98,11 @@ post-card {
 
 
 		p.visible-content {
-			max-height: 5.1em;
+			max-height: 13vh;
+			min-height: 3em;
 			opacity: .7;
 			font-style: italic;
-			min-height: 3em;
+
 
 
 			a {
@@ -123,8 +124,7 @@ post-card {
 
 			blockquote {
 				border-left: 4px solid var(--white);
-				padding: 5px;
-				margin: 5px 0;
+				padding: 1px 5px;
 				border-radius: var(--border-adjust);
 
 				background-color: var(--input-placeholder);
