@@ -1,6 +1,6 @@
 <template>
 	<section @click="toggleAnimation" :class="{ 'animation-toggle': animation }">
-		<div class="wrap wrap-2">
+		<div class="wrap-2">
 			<ul>
 				<li></li>
 				<li></li>
@@ -75,9 +75,22 @@
 	.wrap-2 {
 		display: none;
 		opacity: 0;
-		transform: scaleX(-1);
+		transform: translate(-50%, -50%) scale(-1);
 		left: auto;
-		right: -10%;
+		top: 55%;
+		right: -18%;
+		position: absolute;
+	}
+
+	@media (min-width: 600px) {
+		.wrap {
+			left: -20%;
+			scale: 1.2;
+		}
+		.wrap-2 {
+			display: block;
+			opacity: 1;
+		}
 	}
 
 	ul {

@@ -134,7 +134,7 @@
 	});
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	modal-content {
 		touch-action: manipulation;
 		background-color: var(--background);

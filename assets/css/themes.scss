@@ -156,6 +156,12 @@
 	.modal-footer a {
 		padding: 0px 9px !important;
 	}
+
+	@media(min-width:850px) {
+		big-view .modal-footer a {
+			padding: 5px 5px !important;
+		}
+	}
 }
 
 .canary-mode {
@@ -208,6 +214,17 @@
 			&:hover {
 				background-color: var(--button-bg);
 			}
+		}
+	}
+
+
+	blockquote {
+		color: white !important;
+	}
+
+	@media(min-width:850px) {
+		big-view .modal-footer a {
+			padding: 5px 5px !important;
 		}
 	}
 }
