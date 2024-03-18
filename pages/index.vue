@@ -4,7 +4,7 @@
 			<inner-column>
 				<landing-block>
 					<picture>
-						<source srcset="/tilt-1.jpeg" media="(min-width: 701px)" />
+						<!-- <source srcset="/tilt-1.jpeg" media="(min-width: 701px)" /> -->
 						<img src="/images/unsplash-1.webp" alt="Home wave image" />
 					</picture>
 					<title-block class="animate-scale-out">
@@ -130,12 +130,16 @@
 			z-index: -100;
 			left: 0;
 			top: 0;
-			border-top: var(--thin) solid var(--box-shadow);
+
 			overflow-y: hidden;
 			background-color: var(--background);
 			opacity: 0.8;
 			* {
 				opacity: 0.3;
+			}
+
+			@media (min-width: 1400px) {
+				opacity: 0.4 !important;
 			}
 		}
 
