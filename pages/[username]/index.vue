@@ -129,7 +129,7 @@
 	function formatCreatedAt(created_at) {
 		const date = new Date(created_at);
 		const options = { month: 'long', year: 'numeric' };
-		return `Joined ${date.toLocaleDateString('en-US', options)}`;
+		return `${date.toLocaleDateString('en-US', options)}`;
 	}
 
 	const fetchCurrentUser = async () => {
@@ -289,7 +289,7 @@
 		width: 100%;
 
 		padding-top: 10px;
-		max-width: 250px;
+		max-width: 400px;
 
 		p {
 			display: flex;
@@ -298,6 +298,7 @@
 		}
 		p.support-text {
 			color: rgb(var(--white-rgb) / 0.85);
+			white-space: pre-wrap;
 		}
 	}
 
