@@ -16,7 +16,12 @@ export const useThemeService = defineStore('theme', () => {
 		'glitch',
 		'venomized',
 	];
-	const colorModeIndex = ref(parseInt(localStorage.getItem('colorModeIndex')) || 0);
+
+	const colorModeIndexValue =
+		typeof localStorage !== 'undefined'
+			? parseInt(localStorage.getItem('colorModeIndex')) || 0
+			: 0;
+	const colorModeIndex = ref(colorModeIndexValue);
 
 	const themeNumber = computed(() => colorModeIndex.value + 1);
 
@@ -39,6 +44,7 @@ export const useThemeService = defineStore('theme', () => {
 		const savedTheme = localStorage.getItem('nuxt-color-mode');
 		if (savedTheme && colorModes.includes(savedTheme)) {
 			selectedTheme.value = savedTheme;
+			colorModeIndex.value = colorModes.indexOf(savedTheme);
 		}
 	});
 
