@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 	pages: true,
 
 	app: {
-		pageTransition: { name: 'layout', mode: 'out-in' },
+		pageTransition: { name: 'page', mode: 'out-in' },
 		head: {
 			title: 'ECHO',
 
