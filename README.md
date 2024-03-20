@@ -1,33 +1,32 @@
-# Nuxt 3 Minimal Starter
+### ECHO : The blog app
 
-The page should always look and feel structurally sound.
+A simple blog app built with Nuxt 3. Using Supabase for authentication and storage.
+Check out ECHO by making your own accounts and posting an echo.
 
-## Init Setup
+[ECHO](https://echo-waves.vercel.app/)
 
--   npx nuxi@latest init **my-app**
+## Table of Contents
+
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Features](#features)
+-   [Contributing](#contributing)
+
+## Installation
+
+-   npx nuxi@latest init <project-name>
 -   npm install
--   npm i @pinia/nuxt nuxt-icon uuid @nuxt/image-edge
--   npm i pinia -f
--   npm install sass sass-loader --save-dev
--   npm install @nuxtjs/supabase --save-dev
 
-## Folder Setup
+## Usage
 
--   assets/css
--   components
--   composables
--   error.vue
--   .env
--   layouts
--   middleware
--   pages
--   services
--   fix up nuxt.config
+-   View other users' blog posts.
+-   Register an account or log in if you already have one.
+-   Create, edit, or delete blog posts.
+-   Save your favorite posts by liking or sharing the link.
 
-## TO DO
+## Features
 
--   Add the ability to see other peoples post based on user name
--   Add edit profile. Add a bio, birthday, and profile image. Change display name.
--   Add an explore page or home that shows all post based on time
--   Add detail routes for the post to see the whole thing.
--   Add likes
+-   User authentication and authorization.
+-   CRUD operations for blog posts.
+-   Like and share blog posts.
+-   Responsive design for mobile and desktop.
