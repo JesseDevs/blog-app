@@ -103,6 +103,9 @@ post-card {
 			opacity: .7;
 			font-style: italic;
 
+			@media(min-width:850px) {
+				max-height: 110px;
+			}
 
 
 			a {

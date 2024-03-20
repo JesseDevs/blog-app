@@ -11,12 +11,12 @@
 					</div>
 				</NuxtLink>
 
-				<NuxtLink v-if="!user" to="/login" aria-label="Go to login page">
+				<NuxtLink v-if="!user" to="/register" aria-label="Go to login page">
 					<div>
 						<span class="icon-holder">
 							<Icon name="ph:user-circle-plus" class="your-icon-class" />
 						</span>
-						<p class="only-850plus">Login</p>
+						<p class="only-850plus">Sign Up</p>
 					</div>
 				</NuxtLink>
 

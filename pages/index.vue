@@ -30,10 +30,10 @@
 						<NuxtLink
 							class="user-button"
 							v-else
-							to="/login"
+							to="/register"
 							aria-label="Go to login page"
 						>
-							Login
+							Sign Up
 						</NuxtLink>
 
 						<p v-show="postEmpty" class="custom-link" @click="scrollDown">
