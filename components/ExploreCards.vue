@@ -1,5 +1,5 @@
 <template>
-	<div v-if="posts">
+	<div v-if="posts" class="explore-cards-container">
 		<ul class="card-menu" id="explore-cards">
 			<li v-if="pinnedPost && pinnedPost.id" :key="pinnedPost.id">
 				<template v-if="pinnedPost.userProfile">
@@ -163,6 +163,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.explore-cards-container {
+		scroll-margin-top: 45px;
+	}
 	ul {
 		scroll-margin-top: 45px;
 

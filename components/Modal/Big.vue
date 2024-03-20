@@ -50,6 +50,8 @@
 						<p class="only-850plus">Create An Echo</p>
 					</div>
 				</NuxtLink>
+
+				<!-- <p class="custom-link yes850px explore" @click="scrollDown">Explore</p> -->
 			</modal-actions>
 
 			<div class="modal-bottom">
@@ -183,6 +185,18 @@
 </script>
 
 <style lang="scss">
+	.none {
+		display: none !important;
+	}
+	.yes850px {
+		display: none !important;
+	}
+	@media (min-width: 850px) {
+		.yes850px {
+			display: block !important;
+		}
+	}
+
 	.theme-enter-active,
 	.theme-leave-active {
 		transition: opacity 0.3s ease-in-out, filter 0.5s ease-in-out;
@@ -436,11 +450,11 @@
 
 		nav {
 			align-items: flex-start;
-			padding-left: 8px;
-			padding-right: 8px;
+
 			modal-actions {
 				align-items: flex-start;
 				gap: 10px;
+				padding: 0 10px;
 
 				a,
 				button {

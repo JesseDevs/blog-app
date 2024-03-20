@@ -36,15 +36,13 @@
 							Sign Up
 						</NuxtLink>
 
-						<p v-show="postEmpty" class="custom-link" @click="scrollDown">
-							Explore
-						</p>
+						<p class="custom-link not850px" @click="scrollDown">Explore</p>
 					</text-content>
 				</landing-block>
 			</inner-column>
 		</section>
 		<WrapFiller class="animate-fade-in" />
-		<ExploreCards @empty-posts="handleEmptyPosts" />
+		<ExploreCards ref="scrollTarget" @empty-posts="handleEmptyPosts" />
 	</div>
 </template>
 
@@ -54,13 +52,21 @@
 	const user = useSupabaseUser();
 	const currentUser = ref(null);
 
-	const scrollDown = () => {
-		window.scrollBy(0, 500);
-	};
+	const scrollTarget = ref(null);
+
+	// const scrollDown = () => {
+	// 	window.scrollBy(0, 500);
+	// };
 
 	const postEmpty = ref(null);
 	const handleEmptyPosts = () => {
 		postEmpty.value = false;
+	};
+
+	const scrollDown = () => {
+		if (scrollTarget.value.$el) {
+			scrollTarget.value.$el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
 	};
 
 	onMounted(async () => {
@@ -81,6 +87,12 @@
 </script>
 
 <style lang="scss" scoped>
+	@media (min-width: 850px) {
+		.not850px {
+			display: none !important;
+		}
+	}
+
 	.animate-fade-in {
 		opacity: 0;
 		animation: fadeIn 0.5s forwards;
