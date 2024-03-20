@@ -419,11 +419,11 @@
 	}
 
 	@media(min-width:600px) {
-		.glitch-mode p.show-theme .glitch {
+		p.show-theme .glitch {
 			height: auto;
 		}
 
-		.glitch-mode .glitch {
+		.glitch {
 			color: #fff;
 
 			pointer-events: none;
@@ -435,12 +435,12 @@
 
 		}
 
-		.glitch-mode p.show-theme .glitch:before {
+		p.show-theme .glitch:before {
 			left: -1px !important;
 			top: 66px;
 		}
 
-		.glitch-mode .glitch:after {
+		.glitch:after {
 			top: 102px;
 		}
 	}
