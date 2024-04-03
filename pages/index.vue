@@ -36,7 +36,7 @@
 							Sign Up
 						</NuxtLink>
 
-						<p class="custom-link not850px" @click="scrollDown">Explore</p>
+						<p class="custom-link" @click="scrollDown">Explore</p>
 					</text-content>
 				</landing-block>
 			</inner-column>
