@@ -35,8 +35,25 @@ export default defineNuxtConfig({
 						'Nuxt.js, Vue.js, Porfolio, web development, Javascript, front-end',
 				},
 				{
-					name: 'twitter:card',
-					content: 'icon.jpg',
+					hid: 'twitter:url',
+					name: 'twitter:url',
+					content: `https://echo-waves.vercel.app/`,
+				},
+				{
+					hid: 'twitter:title',
+					name: 'twitter:title',
+					content: 'Echo: Where Thoughts Resound',
+				},
+				{
+					hid: 'twitter:description',
+					name: 'twitter:description',
+					content:
+						'Whether you’re sharing a personal journey, discussing important issues, or simply expressing yourself, this is your platform to make your voice heard.',
+				},
+				{
+					hid: 'twitter:image',
+					name: 'twitter:image',
+					content: '/images/thumbnail.png',
 				},
 				{
 					hid: 'og-type',
